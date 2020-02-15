@@ -14,6 +14,7 @@
 		84F9336223F835F00046F243 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F9336023F835F00046F243 /* LaunchScreen.storyboard */; };
 		84F9336D23F835F00046F243 /* MovieWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9336C23F835F00046F243 /* MovieWorldTests.swift */; };
 		84F9337823F835F10046F243 /* MovieWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9337723F835F10046F243 /* MovieWorldUITests.swift */; };
+		84F9338823F837830046F243 /* git_ignore.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 84F9338723F837820046F243 /* git_ignore.gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		84F9337323F835F10046F243 /* MovieWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F9337723F835F10046F243 /* MovieWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieWorldUITests.swift; sourceTree = "<group>"; };
 		84F9337923F835F10046F243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84F9338723F837820046F243 /* git_ignore.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = git_ignore.gitignore; path = "../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/05165B06-B26C-4196-A0DD-42F21EA9CD2B/git_ignore.gitignore"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				84F9336B23F835F00046F243 /* MovieWorldTests */,
 				84F9337623F835F10046F243 /* MovieWorldUITests */,
 				84F9335323F835F00046F243 /* Products */,
+				84F9338723F837820046F243 /* git_ignore.gitignore */,
 			);
 			sourceTree = "<group>";
 		};
@@ -230,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F9336223F835F00046F243 /* LaunchScreen.storyboard in Resources */,
+				84F9338823F837830046F243 /* git_ignore.gitignore in Resources */,
 				84F9335F23F835F00046F243 /* Assets.xcassets in Resources */,
 				84F9335D23F835F00046F243 /* Main.storyboard in Resources */,
 			);
