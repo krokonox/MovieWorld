@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		84F9335623F835F00046F243 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9335523F835F00046F243 /* AppDelegate.swift */; };
-		84F9335823F835F00046F243 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9335723F835F00046F243 /* SceneDelegate.swift */; };
 		84F9335A23F835F00046F243 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9335923F835F00046F243 /* ViewController.swift */; };
 		84F9335D23F835F00046F243 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F9335B23F835F00046F243 /* Main.storyboard */; };
 		84F9335F23F835F00046F243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F9335E23F835F00046F243 /* Assets.xcassets */; };
@@ -37,7 +36,6 @@
 /* Begin PBXFileReference section */
 		84F9335223F835F00046F243 /* MovieWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F9335523F835F00046F243 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		84F9335723F835F00046F243 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		84F9335923F835F00046F243 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		84F9335C23F835F00046F243 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84F9335E23F835F00046F243 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				84F9335523F835F00046F243 /* AppDelegate.swift */,
-				84F9335723F835F00046F243 /* SceneDelegate.swift */,
 				84F9335923F835F00046F243 /* ViewController.swift */,
 				84F9335B23F835F00046F243 /* Main.storyboard */,
 				84F9335E23F835F00046F243 /* Assets.xcassets */,
@@ -261,7 +258,6 @@
 			files = (
 				84F9335A23F835F00046F243 /* ViewController.swift in Sources */,
 				84F9335623F835F00046F243 /* AppDelegate.swift in Sources */,
-				84F9335823F835F00046F243 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +433,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWKB54QJ7K;
 				INFOPLIST_FILE = MovieWorld/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,7 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuricyna.MovieWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -455,6 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWKB54QJ7K;
 				INFOPLIST_FILE = MovieWorld/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,7 +460,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuricyna.MovieWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
