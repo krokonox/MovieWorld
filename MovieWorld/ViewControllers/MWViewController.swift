@@ -13,7 +13,7 @@ class MWViewController: UIViewController {
 
     private let edgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     private let buttonSize = CGSize(width: 200, height: 150)
-
+    private let customView = MWMovieView(frame: CGRect(x: 0, y: 0, width: 414, height: 300))
     private var topButtonConstraint: Constraint?
 
     private lazy var saveButton: UIButton = {
@@ -34,13 +34,14 @@ class MWViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(customView)
+//        self.view.backgroundColor = .green
+//
+//        self.view.addSubview(self.saveButton)
+//        self.view.addSubview(self.textLabel)
+//
+//        self.makeConstraints()
 
-        self.view.backgroundColor = .green
-
-        self.view.addSubview(self.saveButton)
-        self.view.addSubview(self.textLabel)
-
-        self.makeConstraints()
     }
 
     private func makeConstraints() {
