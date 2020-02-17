@@ -11,8 +11,67 @@ import UIKit
 import SnapKit
 
 class MWMovieView: UIView {
-    private let edgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    
+    // MARK: - Configurable properties
+    
+    private lazy var movieStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .leading
+        stackView.spacing = 5
+        
+        stackView.addArrangedSubview(movieTitleView)
+        stackView.addArrangedSubview(movieYearView)
+        stackView.addArrangedSubview(movieGenreView)
+        stackView.addArrangedSubview(movieRatingView)
 
+        return stackView
+    }()
+    
+    private lazy var movieImageView: UIImageView = {
+        let image = UIImageView()
+        
+        image.layer.cornerRadius = 8.0
+        image.clipsToBounds = true
+        image.image = UIImage(named: "")
+        image.image = #imageLiteral(resourceName: "Image")
+        return image
+    }()
+    
+    private lazy var movieTitleView: UILabel = {
+        let label = UILabel()
+        label.text = "Green Book"
+        label.font = .boldSystemFont(ofSize: 21)
+        
+        return label
+    }()
+    
+    private lazy var movieYearView: UILabel = {
+        let label = UILabel()
+        label.text = "2018, USA"
+        
+        return label
+    }()
+    
+    private lazy var movieGenreView: UILabel = {
+        let label = UILabel()
+        label.text = "Comedy, Drama, Foreign"
+        label.textColor = UIColor(hexString: "#b9b9b9")
+        
+        return label
+    }()
+    
+    private lazy var movieRatingView: UILabel = {
+        let label = UILabel()
+        label.text = "IMDB 8.2, KP 8.3"
+       
+        return label
+    }()
+
+    // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -24,101 +83,35 @@ class MWMovieView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Private functions
+    
     private func setupView() {
-        self.backgroundColor = .red
-//        self.addSubview(movieStackView)
+        self.backgroundColor = .white
         self.addSubview(movieImageView)
+        self.addSubview(movieStackView)
         makeConstraintsWithSnapKit()
     }
     
-    private lazy var movieStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.backgroundColor = .green
-        stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .center
-        stackView.spacing = 7
-//        stackView.addArrangedSubview(movieImageView)
-        stackView.addArrangedSubview(movieTitleView)
-        
-        return stackView
-    }()
-    
-    private lazy var movieImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "trash")
-        return image
-    }()
-    
-    private lazy var movieTitleView: UILabel = {
-        let label = UILabel()
-        label.text = "Green Book"
-        label.backgroundColor = .blue
-        label.sizeToFit()
-
-        return label
-    }()
-
     private func makeConstraintsWithSnapKit() {
         
         self.movieStackView.snp.makeConstraints { (make) in
-            make.height.equalTo(200)
-            make.bottom.top.equalToSuperview().offset(20)
-            make.left.equalTo(movieImageView).offset(20)
+            make.left.equalTo(movieImageView).offset(135)
+            make.bottom.top.equalToSuperview().inset(20)
+        }
+
+        self.movieRatingView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(movieGenreView).offset(70)
         }
         
         self.movieImageView.snp.makeConstraints { (make) in
-            make.height.equalTo(200)
+            make.height.equalTo(120)
             make.width.equalTo(100)
-            make.left.right.equalTo(movieStackView).offset(20)
+            make.left.equalToSuperview().offset(25)
+            make.top.bottom.equalToSuperview().inset(15)
         }
               
     }
+    
     private func makeConstraintsWithAnchors () {}
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    private lazy var movieTitleLabel: UILabel = {
-//        let label = UILabel()
-//        label.textAlignment = .center
-//        label.font = FontHelper.light(withSize: 12.0)
-//        return label
-//    }()
-//
-//    private lazy var voteAverageLabel: UILabel = {
-//        let label = UILabel()
-//        label.textAlignment = .center
-//        label.font = FontHelper.light(withSize: 12.0)
-//        return label
-//    }()
-//
-//    private lazy var voteAverageLabel: UILabel = {
-//        let label = UILabel()
-//        label.textAlignment = .center
-//        label.font = FontHelper.light(withSize: 12.0)
-//        return label
-//    }()
-//
-//    private lazy var voteAverageLabel: UILabel = {
-//        let label = UILabel()
-//        label.textAlignment = .center
-//        label.font = FontHelper.light(withSize: 12.0)
-//        return label
-//    }()
-//
 }

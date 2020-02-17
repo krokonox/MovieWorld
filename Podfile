@@ -7,7 +7,7 @@ target 'MovieWorld' do
 
   # Pods for MovieWorld
     pod 'SnapKit', '~> 5.0.0'
-
+    pod 'Reveal-SDK', :configurations => ['Debug']
   target 'MovieWorldTests' do
     inherit! :search_paths
     # Pods for testing

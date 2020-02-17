@@ -10,6 +10,8 @@
 		2E766467A82F45B2EEB04405 /* Pods_MovieWorld_MovieWorldUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE27A0999FEBC42126A2D84D /* Pods_MovieWorld_MovieWorldUITests.framework */; };
 		53939C52370EA1FDA478A862 /* Pods_MovieWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D670443D9A78BF620656 /* Pods_MovieWorldTests.framework */; };
 		84E4460E23F980ED00505A0B /* MWMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4460D23F980ED00505A0B /* MWMovieView.swift */; };
+		84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4461123FA7F7500505A0B /* UIColor+Hex.swift */; };
+		84E4461423FAA35A00505A0B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4461323FAA35A00505A0B /* Constants.swift */; };
 		84F9335623F835F00046F243 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9335523F835F00046F243 /* AppDelegate.swift */; };
 		84F9335A23F835F00046F243 /* MWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9335923F835F00046F243 /* MWViewController.swift */; };
 		84F9335F23F835F00046F243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F9335E23F835F00046F243 /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 		48B47F2D75002E9B6A8011E8 /* Pods-MovieWorld-MovieWorldUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld-MovieWorldUITests/Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		84E4460823F97E7800505A0B /* git_ignore.gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = git_ignore.gitignore; sourceTree = "<group>"; };
 		84E4460D23F980ED00505A0B /* MWMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieView.swift; sourceTree = "<group>"; };
+		84E4461123FA7F7500505A0B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		84E4461323FAA35A00505A0B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84F9335223F835F00046F243 /* MovieWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F9335523F835F00046F243 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F9335923F835F00046F243 /* MWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 		84E4460B23F9807D00505A0B /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				84E4461323FAA35A00505A0B /* Constants.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 		84E4460C23F9808700505A0B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				84E4461123FA7F7500505A0B /* UIColor+Hex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -454,7 +460,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F9335A23F835F00046F243 /* MWViewController.swift in Sources */,
+				84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */,
 				84F9335623F835F00046F243 /* AppDelegate.swift in Sources */,
+				84E4461423FAA35A00505A0B /* Constants.swift in Sources */,
 				84E4460E23F980ED00505A0B /* MWMovieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

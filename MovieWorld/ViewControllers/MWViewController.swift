@@ -13,7 +13,7 @@ class MWViewController: UIViewController {
 
     private let edgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     private let buttonSize = CGSize(width: 200, height: 150)
-    private let customView = MWMovieView(frame: CGRect(x: 0, y: 0, width: 414, height: 300))
+    private let customView = MWMovieView(frame: CGRect(x: 0, y: 250, width: 414, height: 200))
     private var topButtonConstraint: Constraint?
 
     private lazy var saveButton: UIButton = {
@@ -35,26 +35,23 @@ class MWViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(customView)
-//        self.view.backgroundColor = .green
-//
-//        self.view.addSubview(self.saveButton)
-//        self.view.addSubview(self.textLabel)
-//
-//        self.makeConstraints()
-
+        
+        self.view.backgroundColor = UIColor(hexString: "#fafafa")
     }
 
-    private func makeConstraints() {
-
-        self.saveButton.snp.makeConstraints { (make) in
-            self.topButtonConstraint = make.top.equalToSuperview().inset(self.edgeInsets).constraint
-            make.left.right.equalToSuperview().inset(self.edgeInsets)
-            make.height.equalTo(self.buttonSize)
-        }
-
-        self.textLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self.saveButton.snp.bottom).offset(self.edgeInsets.top)
-            make.left.right.equalToSuperview().inset(self.edgeInsets)
-        }
-    }
+   
 }
+
+//private func makeConstraints() {
+//
+//       self.saveButton.snp.makeConstraints { (make) in
+//           self.topButtonConstraint = make.top.equalToSuperview().inset(self.edgeInsets).constraint
+//           make.left.right.equalToSuperview().inset(self.edgeInsets)
+//           make.height.equalTo(self.buttonSize)
+//       }
+//
+//       self.textLabel.snp.makeConstraints { (make) in
+//           make.top.equalTo(self.saveButton.snp.bottom).offset(self.edgeInsets.top)
+//           make.left.right.equalToSuperview().inset(self.edgeInsets)
+//       }
+//   }
