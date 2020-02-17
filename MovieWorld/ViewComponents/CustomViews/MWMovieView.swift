@@ -12,6 +12,9 @@ import SnapKit
 
 class MWMovieView: UIView {
     
+    private let ImageSize = CGSize(width: 100, height: 120)
+    private let edgeInsets = UIEdgeInsets(top: 20, left: 135, bottom: 20, right: 20)
+
     // MARK: - Configurable properties
     
     private lazy var movieStackView: UIStackView = {
@@ -87,8 +90,13 @@ class MWMovieView: UIView {
     
     private func setupView() {
         self.backgroundColor = .white
+        
+        movieImageView.translatesAutoresizingMaskIntoConstraints = false
+        movieStackView.translatesAutoresizingMaskIntoConstraints = false
+        
         self.addSubview(movieImageView)
         self.addSubview(movieStackView)
+        
         makeConstraintsWithSnapKit()
     }
     
@@ -96,7 +104,7 @@ class MWMovieView: UIView {
         
         self.movieStackView.snp.makeConstraints { (make) in
             make.left.equalTo(movieImageView).offset(135)
-            make.bottom.top.equalToSuperview().inset(20)
+            make.bottom.top.equalToSuperview().inset(edgeInsets)
         }
 
         self.movieRatingView.snp.makeConstraints { (make) in
@@ -104,14 +112,31 @@ class MWMovieView: UIView {
         }
         
         self.movieImageView.snp.makeConstraints { (make) in
-            make.height.equalTo(120)
-            make.width.equalTo(100)
+            make.height.width.equalTo(ImageSize)
             make.left.equalToSuperview().offset(25)
             make.top.bottom.equalToSuperview().inset(15)
         }
               
     }
     
-    private func makeConstraintsWithAnchors () {}
-
+    private func makeConstraintsWithAnchors () {
+        
+        NSLayoutConstraint.activate([
+             movieImageView.topAnchor.constraint(equalTo: self.movieImageView.topAnchor, constant: 15),
+             movieImageView.bottomAnchor.constraint(equalTo: self.movieImageView.bottomAnchor, constant: 15),
+             movieImageView.leftAnchor.constraint(equalTo: self.movieImageView.leftAnchor, constant: 25),
+             movieImageView.heightAnchor.constraint(equalToConstant: 120),
+             movieImageView.widthAnchor.constraint(equalToConstant: 100)
+        ])
+        
+        NSLayoutConstraint.activate([
+            movieStackView.topAnchor.constraint(equalTo: self.movieStackView.topAnchor, constant: 20),
+            movieStackView.bottomAnchor.constraint(equalTo: self.movieStackView.bottomAnchor, constant: 20),
+            movieStackView.leftAnchor.constraint(equalTo: movieImageView.leftAnchor, constant: 135)
+        ])
+        
+        NSLayoutConstraint.activate([
+            movieRatingView.bottomAnchor.constraint(equalTo: self.movieGenreView.bottomAnchor, constant: 70)
+        ])
+    }
 }

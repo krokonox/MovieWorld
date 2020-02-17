@@ -15,32 +15,59 @@ class MWViewController: UIViewController {
     private let buttonSize = CGSize(width: 200, height: 150)
     private let customView = MWMovieView(frame: CGRect(x: 0, y: 250, width: 414, height: 200))
     private var topButtonConstraint: Constraint?
-
-    private lazy var saveButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Save", for: UIControl.State())
-        button.backgroundColor = .red
-
-        return button
-    }()
-
-    private lazy var textLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .gray
-        label.text = "I am label"
-
-        return label
-    }()
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(customView)
         
+        self.view.addSubview(customView)
         self.view.backgroundColor = UIColor(hexString: "#fafafa")
     }
-
-   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------REMOVE!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+//    private lazy var saveButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("Save", for: UIControl.State())
+//        button.backgroundColor = .red
+//
+//        return button
+//    }()
+//
+//    private lazy var textLabel: UILabel = {
+//        let label = UILabel()
+//        label.backgroundColor = .gray
+//        label.text = "I am label"
+//
+//        return label
+//    }()
+
+ 
 
 //private func makeConstraints() {
 //
