@@ -9,13 +9,51 @@
 import Foundation
 import UIKit
 
-class MWInterface {
-    static let sh = MWInterface()
+typealias MWI = MWInterface
 
+class MWInterface {
+    
+    static let sh = MWInterface()
+    
+    weak var window: UIWindow?
+    
+    private lazy var tabBarController = MWMainTabBarController()
+    
     private init() {}
+
+    func setup(window: UIWindow) {
+        
+        self.window = window
+        
+        self.setUpNavigationBarStyle()
+        
+        window.rootViewController = self.tabBarController
+        window.makeKeyAndVisible()
+    }
     
-    func setup() {}
+    private func setUpNavigationBarStyle() {
+        let standartNavBar = UINavigationBar.appearance()
+        standartNavBar.backgroundColor = .white
+        standartNavBar.tintColor = .red
+        standartNavBar.prefersLargeTitles = true
+        
+        if #available(iOS 13.0, *) {
+            let newVavBar = UINavigationBarAppearance()
+            newVavBar.configureWithDefaultBackground()
+            newVavBar.configureWithDefaultBackground()
+            standartNavBar.scrollEdgeAppearance = newVavBar
+        } else {
+            // Fallback on earlier versions
+        }
+    }
     
-    func push(vc: ViewController) {}
-    func pop() {}
+    func push(vc: UIViewController) {
+        guard let navigationController = self.tabBarController.selectedViewController as? UINavigationController else { return }
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func popVC() {
+        guard let navigationController = self.tabBarController.selectedViewController as? UINavigationController else { return }
+        navigationController.popViewController(animated: true)
+    }
 }

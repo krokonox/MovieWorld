@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import UIKit
+
+class MainViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "MainViewController"
+        self.view.backgroundColor = .green
+    }
+}

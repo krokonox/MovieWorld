@@ -9,8 +9,20 @@
 import Foundation
 import UIKit
 
-class  MWViewController: UIKit {
+class  MWViewController: UIViewController {
     
-    private _init {}
-    public init {}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    private func _init() {}
+    
+//    public init() {}
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+   
+    
 }

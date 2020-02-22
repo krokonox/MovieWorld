@@ -11,4 +11,12 @@ import UIKit
 import SnapKit
 
 
-class CategoryViewController: MWViewController {}
+class CategoryViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "CategoryViewController"
+        self.view.backgroundColor = .blue
+    }
+}
