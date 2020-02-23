@@ -8,15 +8,13 @@
 
 import Foundation
 import UIKit
-import SnapKit
-
 
 class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "CategoryViewController"
+        self.title = "Category"
         self.view.backgroundColor = .blue
     }
 }

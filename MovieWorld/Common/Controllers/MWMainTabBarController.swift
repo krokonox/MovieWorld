@@ -11,11 +11,30 @@ import UIKit
 
 class MWMainTabBarController: UITabBarController {
     
-    let viewController = [MainViewController(), SearchViewController(), CategoryViewController()]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.viewControllers = viewController
-//        self.viewControllers.map(UINavigationController(rootViewController: $0))
+        
+        setupTabBar()
     }
+    
+    func setupTabBar() {
+        
+        self.view.backgroundColor = .white
+        self.tabBar.tintColor = UIColor(named: "RedColor")
+        self.tabBar.barTintColor = .white
+        
+        let mainController = createNavigationController(MainViewController(), title: "main")
+        let categoryController = createNavigationController(CategoryViewController(), title: "category")
+        let searchController = createNavigationController(SearchViewController(), title: "search")
+
+        viewControllers = [mainController, searchController, categoryController]
+    }
+    
+    func createNavigationController(_ viewController: UIViewController, title: String) -> UINavigationController {
+          let navController = UINavigationController(rootViewController: viewController)
+          navController.tabBarItem.title = title
+          navController.tabBarItem.image = UIImage(named: title)
+          
+          return navController
+      }
 }

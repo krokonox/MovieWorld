@@ -22,7 +22,7 @@ class MWInterface {
     private init() {}
 
     func setup(window: UIWindow) {
-        
+    
         self.window = window
         
         self.setUpNavigationBarStyle()
