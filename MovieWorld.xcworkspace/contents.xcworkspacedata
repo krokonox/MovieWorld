@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/admin/Desktop/MovieWorld/MovieWorld/Resources/Images.xcassets">
-   </FileRef>
-   <FileRef
       location = "group:MovieWorld.xcodeproj">
    </FileRef>
    <FileRef

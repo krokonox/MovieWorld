@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class MainViewController: UIViewController {
-    
+     
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        
         self.title = "Main"
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = .white
     }
 }

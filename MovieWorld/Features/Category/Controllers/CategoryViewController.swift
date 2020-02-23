@@ -9,12 +9,11 @@
 import Foundation
 import UIKit
 
-class CategoryViewController: UIViewController {
+class CategoryViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Category"
-        self.view.backgroundColor = .blue
     }
 }
