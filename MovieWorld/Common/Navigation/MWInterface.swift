@@ -36,6 +36,7 @@ class MWInterface {
         standartNavBar.backgroundColor = .white
         standartNavBar.tintColor = .red
         standartNavBar.prefersLargeTitles = true
+        standartNavBar.backItem?.title = " "
         
         if #available(iOS 13.0, *) {
             let newVavBar = UINavigationBarAppearance()

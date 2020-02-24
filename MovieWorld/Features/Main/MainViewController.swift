@@ -16,5 +16,7 @@ class MainViewController: UIViewController {
         
         self.title = "Main"
         self.view.backgroundColor = .white
+        
+        MWI.sh.push(vc: UIViewController())
     }
 }

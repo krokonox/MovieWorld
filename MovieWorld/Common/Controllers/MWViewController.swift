@@ -11,25 +11,24 @@ import UIKit
 
 class MWViewController: UIViewController {
     
-//    var name: String
-//    var backgroundColor: UIColor
-//    var nextVC: UIViewController
-//
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .white
-//        self.title = name
-    }
+    var name: String
+    var backgroundColor: UIColor
+    var nextVC: UIViewController
 
-//   func _init(name: String, color: UIColor) {
-//        self.name = name
-//        self.backgroundColor = color
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-   
+    init(_ name: String, _ backgroundColor: UIColor, _ nextVC: UIViewController) {
+        self.name = name
+        self.backgroundColor = backgroundColor
+        self.nextVC = nextVC
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+            super.viewDidLoad()
+            self.view.backgroundColor = backgroundColor
+            self.title = name
+        }
 }

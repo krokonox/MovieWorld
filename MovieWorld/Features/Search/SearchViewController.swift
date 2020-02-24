@@ -16,5 +16,6 @@ class SearchViewController: UIViewController {
         
         self.title = "Search"
         self.view.backgroundColor = .white
+        MWI.sh.push(vc: UIViewController())
     }
 }
