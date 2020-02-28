@@ -5,39 +5,37 @@
 //  Created by Admin on 25/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import SnapKit
 
-class MWMovieCell: UIView {
+class MWMovieCell: UICollectionViewCell {
     
-    var image: UIImage = #imageLiteral(resourceName: "main")
-    var movieTitle: String = ""
-    var movieYear: String = ""
-    var movieGenre: String = ""
-        
+    var movie: MWMovie? {
+        didSet {
+            guard let movie = movie else { return }
+            set(movie: movie)
+        }
+    }
     
     lazy var imageView: UIImageView = {
-      let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 130, height: 185))
-      imageView.image = image
-      return imageView
+        let imageView = UIImageView()
+        
+        return imageView
     }()
     
     lazy var Title: UILabel = {
-      let Title = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
-      Title.font = UIFont.systemFont(ofSize: 22, weight: .medium)
-      Title.text = movieTitle
-      Title.textAlignment = .center
-      return Title
+        let Title = UILabel()
+        Title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        Title.textAlignment = .left
+        return Title
     }()
     
     lazy var genreAndYear: UILabel = {
-      let genreAndYear = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
-      genreAndYear.font = UIFont.systemFont(ofSize: 22, weight: .medium)
-      genreAndYear.text = "\(movieYear), \(movieGenre))"
-      genreAndYear.textAlignment = .center
-      return genreAndYear
+        let genreAndYear = UILabel()
+        genreAndYear.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        genreAndYear.textAlignment = .left
+        return genreAndYear
     }()
     
     override init(frame: CGRect) {
@@ -53,23 +51,30 @@ class MWMovieCell: UIView {
         self.addSubview(imageView)
         self.addSubview(Title)
         self.addSubview(genreAndYear)
+        setUpConstrants()
+    }
+    
+    func set(movie: MWMovie) {
+            self.imageView.image = movie.image
+            self.Title.text = movie.title
+            self.genreAndYear.text = "\(movie.genre), \(movie.year)"
     }
     
     private func setUpConstrants() {
         self.imageView.snp.makeConstraints { (make) in
-            make.height.equalTo(185)
-            make.width.equalTo(130)
-            make.bottom.equalTo(Title)
+            make.height.equalTo(180)
+            make.left.right.equalToSuperview().offset(10)
         }
         
         self.Title.snp.makeConstraints { (make) in
-            make.height.equalTo(305)
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().offset(15)
+            make.top.equalTo(imageView).offset(190)
+//            make.bottom.equalTo(genreAndYear).offset(30)
         }
         
         self.genreAndYear.snp.makeConstraints { (make) in
-            make.height.equalTo(305)
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().offset(15)
+            make.bottom.equalTo(Title).offset(15)
         }
     }
 }

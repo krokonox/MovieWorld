@@ -15,11 +15,5 @@ struct MWMovie {
     var genre: String
     var year: Int
     var image: UIImage
-    
-    init(title: String, genre: String, year: Int, image: UIImage) {
-        self.title = title
-        self.year = year
-        self.genre = genre
-        self.image = image
-    }
+   
 }
