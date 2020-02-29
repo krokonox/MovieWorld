@@ -9,11 +9,10 @@
 import Foundation
 import UIKit
 
-struct MWMovie {
+struct MWMovie: Decodable {
     
     var title: String
-    var genre: String
-    var year: Int
-    var image: UIImage
-   
+    var genre_ids: String
+    var release_date: String
+    var poster_path: String
 }
