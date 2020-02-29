@@ -758,7 +758,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CF6EA920AF6992A50A2BB3E5 /* Pods-MovieWorld.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWKB54QJ7K;
 				INFOPLIST_FILE = MovieWorld/Info.plist;
@@ -778,7 +777,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CC6029B36009B915AB17DD79 /* Pods-MovieWorld.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HWKB54QJ7K;
 				INFOPLIST_FILE = MovieWorld/Info.plist;
