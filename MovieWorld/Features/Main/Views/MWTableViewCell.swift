@@ -56,7 +56,7 @@ class MWTableViewCell: UITableViewCell {
 
 extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func updateCellWith(row: [MWMovieRowCell]) {
+    func updateCellWith(row: [MWMovieCell]) {
         self.collectionView.reloadData()
     }
     

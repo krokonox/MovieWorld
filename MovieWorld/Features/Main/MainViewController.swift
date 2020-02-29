@@ -7,7 +7,7 @@
 //
 import Foundation
 import UIKit
-import Snapkit
+import SnapKit
 
 class MainViewController: UIViewController {
     
