@@ -14,21 +14,21 @@ class MainViewController: UIViewController {
     let tableView = UITableView()
     var cellId = "cellId"
     
-    var movies: [Int: [MWMovie]] = [ 0 : [ MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")) ],
+    var movies: [Int: [MWMovie]] = [ 0 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")],
         
-                                     1 : [ MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")) ],
+                                     1 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")],
                                        
-                                     2 : [ MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")) ],
+                                     2 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "") ],
                                      
-                                     3 : [ MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")),
-                                           MWMovie.init(title: "201", genre: "Comedy", year: 2029, image: #imageLiteral(resourceName: "movieImage")) ]]
+                                     3 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +41,9 @@ class MainViewController: UIViewController {
         self.view.backgroundColor = .white
         tableView.reloadData()
         MWI.sh.push(vc: UIViewController())
+        print(MWNet.sh.request(urlPath: URLPaths.latest, queryParameters: MWNet.sh.URLParameters, successHandler: { (movies: [MWMovie]) in
+            
+        }))
     }
     
     func setupTableView() {
