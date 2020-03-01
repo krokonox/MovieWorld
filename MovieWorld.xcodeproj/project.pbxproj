@@ -17,7 +17,7 @@
 		84F4F6A8240A3C4C00C01562 /* MWNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6A7240A3C4C00C01562 /* MWNetwork.swift */; };
 		84F4F6AA240A3D5500C01562 /* MWError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6A9240A3D5500C01562 /* MWError.swift */; };
 		84F4F6AC240A3EC100C01562 /* MWApiResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6AB240A3EC100C01562 /* MWApiResults.swift */; };
-		84F4F6AE240A79CA00C01562 /* MWURLPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6AD240A79CA00C01562 /* MWURLPaths.swift */; };
+		84F4F6AE240A79CA00C01562 /* URLPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6AD240A79CA00C01562 /* URLPaths.swift */; };
 		84F4F6B0240AA53900C01562 /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6AF240AA53900C01562 /* String+Ex.swift */; };
 		84F4F6B2240AA53E00C01562 /* MWNetwork+ExUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6B1240AA53E00C01562 /* MWNetwork+ExUtility.swift */; };
 		84F4F6B4240AD5F600C01562 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4F6B3240AD5F600C01562 /* APIKey.swift */; };
@@ -66,7 +66,7 @@
 		84F4F6A7240A3C4C00C01562 /* MWNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWNetwork.swift; sourceTree = "<group>"; };
 		84F4F6A9240A3D5500C01562 /* MWError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWError.swift; sourceTree = "<group>"; };
 		84F4F6AB240A3EC100C01562 /* MWApiResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWApiResults.swift; sourceTree = "<group>"; };
-		84F4F6AD240A79CA00C01562 /* MWURLPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWURLPaths.swift; sourceTree = "<group>"; };
+		84F4F6AD240A79CA00C01562 /* URLPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLPaths.swift; sourceTree = "<group>"; };
 		84F4F6AF240AA53900C01562 /* String+Ex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ex.swift"; path = "../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/7CDA97D0-B3BC-4FA1-81E7-FDA676026699/String+Ex.swift"; sourceTree = "<group>"; };
 		84F4F6B1240AA53E00C01562 /* MWNetwork+ExUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MWNetwork+ExUtility.swift"; path = "../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/6828F7C6-89E7-4EF3-A22F-289740BCBFE2/MWNetwork+ExUtility.swift"; sourceTree = "<group>"; };
 		84F4F6B3240AD5F600C01562 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 			children = (
 				84F4F6A7240A3C4C00C01562 /* MWNetwork.swift */,
 				84F4F6A9240A3D5500C01562 /* MWError.swift */,
-				84F4F6AD240A79CA00C01562 /* MWURLPaths.swift */,
+				84F4F6AD240A79CA00C01562 /* URLPaths.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -628,7 +628,7 @@
 				84F4F6B2240AA53E00C01562 /* MWNetwork+ExUtility.swift in Sources */,
 				84F4F6AC240A3EC100C01562 /* MWApiResults.swift in Sources */,
 				84F4F6AA240A3D5500C01562 /* MWError.swift in Sources */,
-				84F4F6AE240A79CA00C01562 /* MWURLPaths.swift in Sources */,
+				84F4F6AE240A79CA00C01562 /* URLPaths.swift in Sources */,
 				84FB6F742403C5D2004685C4 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

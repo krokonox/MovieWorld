@@ -13,22 +13,14 @@ class MainViewController: UIViewController {
     
     let tableView = UITableView()
     var cellId = "cellId"
+    var MWNetwork: MWNet = MWNet.sh
+    var categories = URLPaths.allCases
     
-    var movies: [Int: [MWMovie]] = [ 0 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")],
-        
-                                     1 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")],
-                                       
-                                     2 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "") ],
-                                     
-                                     3 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
-                                           MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")]]
+    var movies: [Int: [MWMovie]] = [:] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,11 +31,7 @@ class MainViewController: UIViewController {
         
         self.title = "Main"
         self.view.backgroundColor = .white
-        tableView.reloadData()
         MWI.sh.push(vc: UIViewController())
-        print(MWNet.sh.request(urlPath: URLPaths.latest, queryParameters: MWNet.sh.URLParameters, successHandler: { (movies: [MWMovie]) in
-            
-        }))
     }
     
     func setupTableView() {
@@ -59,6 +47,22 @@ class MainViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
+        for category in categories {
+            initRequest(category: category)
+            print(category.hashValue)
+        }
+    }
+    
+    private func initRequest(category: URLPaths) {
+        MWNetwork.request(urlPath: category, successHandler: { [weak self] (_ response: MWApiResults) in
+            self?.movies[category.hashValue] = response.results
+        }, errorHandler: { [weak self] (error) in
+            self!.showError(error.localizedDescription)
+        })
+    }
+    
+    private func showError(_ error: String) {
+        print(error)
     }
 }
 
@@ -80,3 +84,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
   }
+
+//var movies: [Int: [MWMovie]] = [ 0 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")],
+//
+//                             1 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")],
+//
+//                             2 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "") ],
+//
+//                             3 : [ MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: ""),
+//                                   MWMovie.init(title: "201", genre_ids: "Comedy", release_date: "2029", poster_path: "")]]

@@ -13,5 +13,5 @@ struct MWApiResults: Decodable {
     let page: Int
     let total_results: Int
     let total_pages: Int
-    let movies: [MWMovie]
+    let results: [MWMovie]
 }

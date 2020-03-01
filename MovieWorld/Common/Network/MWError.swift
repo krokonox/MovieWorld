@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum MWEroor {
-    case incorrectUrl(url: String)
-    case networkError(error: Error)
-    case serverError(error: Error)
-    case parsingError(error: Error)
+public enum MWEroor: Error {
+    case incorrectUrl
+    case networkError
+    case serverError
+    case parsingError
     
     case unknown
 }
