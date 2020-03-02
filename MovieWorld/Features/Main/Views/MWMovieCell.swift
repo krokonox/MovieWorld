@@ -55,7 +55,7 @@ class MWMovieCell: UICollectionViewCell {
     }
     
     func set(movie: MWMovie) {
-        self.imageView.image = UIImage(named: movie.poster_path)
+        self.imageView.image = UIImage(named: movie.poster_path!)
             self.Title.text = movie.title
         self.genreAndYear.text = "\(movie.genre_ids), \(movie.release_date)"
     }

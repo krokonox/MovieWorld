@@ -12,7 +12,7 @@ import UIKit
 struct MWMovie: Decodable {
     
     var title: String
-    var genre_ids: String
+    var genre_ids: [Int]
     var release_date: String
-    var poster_path: String
+    var poster_path: String?
 }

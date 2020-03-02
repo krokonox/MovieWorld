@@ -44,7 +44,7 @@ class MWNetwork {
             if error != nil {
                 self?.handleErrors(errorHandler: errorHandler, error: MWEroor.networkError)
             }
-            
+
             guard let httpResponse = response as? HTTPURLResponse, let receivedData = data else { self?.handleErrors(errorHandler: errorHandler, error: MWEroor.networkError)
                 return
             }
@@ -53,10 +53,8 @@ class MWNetwork {
             case 200...300:
                 do {
                     let movies = try JSONDecoder().decode(T.self, from: receivedData)
-                    print(movies)
                     DispatchQueue.main.async {
                         successHandler(movies)
-                        
                     }
                 } catch {
                     self?.handleErrors(errorHandler: errorHandler, error: MWEroor.parsingError)
@@ -68,7 +66,6 @@ class MWNetwork {
             default:
                 break
             }
-            
         }.resume()
     }
     
