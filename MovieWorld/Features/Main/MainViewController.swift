@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     let tableView = UITableView()
     var cellId = "cellId"
     var MWNetwork: MWNet = MWNet.sh
-    var categories = URLPaths.allCases
+    var paths = URLPaths.allCases
     
     var movies: [Int: [MWMovie]] = [:] {
         didSet {
@@ -35,28 +35,23 @@ class MainViewController: UIViewController {
     }
     
     func setupTableView() {
-        
-        for category in categories {
-            initRequest(category: category)
+        for path in paths {
+            initRequest(path: path)
         }
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 305
-        tableView.reloadData()
-      
         tableView.register(MWTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = .none
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        
-        
     }
     
-    private func initRequest(category: URLPaths) {
-        MWNetwork.request(urlPath: category, successHandler: { [weak self] (_ response: MWApiResults) in
-            self?.movies[category.index!] = response.results
+    private func initRequest(path: URLPaths) {
+        MWNetwork.request(urlPath: path, successHandler: { [weak self] (_ response: MWApiResults) in
+            self?.movies[path.index!] = response.results
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
         }
@@ -75,7 +70,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
-        cell.movies = movies[indexPath.row]!
+//        cell.movies = movies[indexPath.row]!
+        print(movies)
         return cell
     }
     
