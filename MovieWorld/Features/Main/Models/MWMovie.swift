@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct MWMovie: Decodable {
+struct MWMovie: Decodable, Equatable {
     
     var title: String
     var genre_ids: [Int]

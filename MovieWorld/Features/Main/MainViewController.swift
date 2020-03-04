@@ -12,19 +12,18 @@ import SnapKit
 class MainViewController: UIViewController {
     
     let tableView = UITableView()
+    let activityIndicator = UIActivityIndicatorView()
+    var refreshControl = UIRefreshControl()
     var cellId = "cellId"
     var MWNetwork: MWNet = MWNet.sh
     var paths = URLPaths.allCases
     
-    var movies: [Int: [MWMovie]] = [:] {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
-        
+    var movies: [Int: [MWMovie]] = [:]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setRefresh()
         self.view.addSubview(tableView)
         
         setupTableView()
@@ -35,10 +34,6 @@ class MainViewController: UIViewController {
     }
     
     func setupTableView() {
-        for path in paths {
-            initRequest(path: path)
-        }
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 305
@@ -49,12 +44,31 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func setRefresh() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        if movies == [:] {
+            for path in paths {
+                initRequest(path: path)
+            }
+        } else {
+            self.activityIndicator.stopAnimating()
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
     private func initRequest(path: URLPaths) {
         MWNetwork.request(urlPath: path, successHandler: { [weak self] (_ response: MWApiResults) in
             self?.movies[path.index!] = response.results
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
         }
+        tableView.reloadData()
     }
     
     private func showError(_ error: String) {
@@ -70,8 +84,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
-//        cell.movies = movies[indexPath.row]!
-        print(movies)
+        if movies.count != 0 {
+           cell.movies = movies[indexPath.row]!
+        }
         return cell
     }
     
