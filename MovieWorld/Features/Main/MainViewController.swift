@@ -18,11 +18,15 @@ class MainViewController: UIViewController {
     var MWNetwork: MWNet = MWNet.sh
     var paths = URLPaths.allCases
     
-    var movies: [Int: [MWMovie]] = [:]
-    
+    var movies: [Int: [MWMovie]] = [:] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setRefresh()
         self.view.addSubview(tableView)
         
@@ -31,6 +35,7 @@ class MainViewController: UIViewController {
         self.title = "Main"
         self.view.backgroundColor = .white
         MWI.sh.push(vc: UIViewController())
+    
     }
     
     func setupTableView() {
@@ -68,7 +73,7 @@ class MainViewController: UIViewController {
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
         }
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     private func showError(_ error: String) {
@@ -79,12 +84,12 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        return movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
-        if movies.count != 0 {
+        if movies.count >= 0 {
            cell.movies = movies[indexPath.row]!
         }
         return cell
@@ -94,4 +99,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return 270
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
   }

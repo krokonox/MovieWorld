@@ -20,7 +20,9 @@ class MWMovieCell: UICollectionViewCell {
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        
+        imageView.layer.cornerRadius = 5
+        imageView.layer.masksToBounds = false
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -55,8 +57,8 @@ class MWMovieCell: UICollectionViewCell {
     }
     
     func set(movie: MWMovie) {
-        self.imageView.image = UIImage(named: movie.poster_path!)
-            self.Title.text = movie.title
+        self.imageView.load(url: URL(string: "https://image.tmdb.org/t/p/w500" + movie.poster_path!)!)
+        self.Title.text = movie.title
         self.genreAndYear.text = "\(movie.genre_ids), \(movie.release_date)"
     }
     
@@ -69,7 +71,6 @@ class MWMovieCell: UICollectionViewCell {
         self.Title.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(15)
             make.top.equalTo(imageView).offset(190)
-//            make.bottom.equalTo(genreAndYear).offset(30)
         }
         
         self.genreAndYear.snp.makeConstraints { (make) in

@@ -20,7 +20,6 @@ class MWTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "cell")
         configureCollectionView()
-        
     }
     
     required init?(coder: NSCoder) {
