@@ -16,6 +16,7 @@ class MWViewController: UIViewController {
     var nextVC: UIViewController
 
     init(_ name: String, _ backgroundColor: UIColor, _ nextVC: UIViewController) {
+        
         self.name = name
         self.backgroundColor = backgroundColor
         self.nextVC = nextVC
@@ -27,8 +28,8 @@ class MWViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-            self.view.backgroundColor = backgroundColor
-            self.title = name
-        }
+        super.viewDidLoad()
+        self.view.backgroundColor = backgroundColor
+        self.title = name
+    }
 }

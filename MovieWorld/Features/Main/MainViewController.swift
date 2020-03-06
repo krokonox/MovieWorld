@@ -18,11 +18,12 @@ class MainViewController: UIViewController {
     var MWNetwork: MWNet = MWNet.sh
     var paths = URLPaths.allCases
     
-    var movies: [Int: [MWMovie]] = [:] {
+    var movies: [String: [MWMovie]] = [:] {
         didSet {
             self.tableView.reloadData()
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,20 +61,18 @@ class MainViewController: UIViewController {
             for path in paths {
                 initRequest(path: path)
             }
-        } else {
-            self.activityIndicator.stopAnimating()
-            self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
         }
     }
     
     private func initRequest(path: URLPaths) {
-        MWNetwork.request(urlPath: path, successHandler: { [weak self] (_ response: MWApiResults) in
-            self?.movies[path.index!] = response.results
+        MWNetwork.request(urlPath: path.rawValue, successHandler: { [weak self] (_ response: MWApiResults) in
+            self?.movies[path.description] = response.results
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
         }
         self.tableView.reloadData()
+        self.activityIndicator.stopAnimating()
+        self.refreshControl.endRefreshing()
     }
     
     private func showError(_ error: String) {
@@ -88,15 +87,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
+        let movieCategory = paths[indexPath.row].description
         if movies.count >= 0 {
-           cell.movies = movies[indexPath.row]!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
+            cell.set(movies: movies[movieCategory]!, title: movieCategory)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+            return cell
         }
-        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 270
+        return 280
     }
     
     override func didReceiveMemoryWarning() {

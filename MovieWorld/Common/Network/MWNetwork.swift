@@ -28,9 +28,9 @@ class MWNetwork {
     
     lazy var session = URLSession(configuration: .default)
     
-    func request<T: Decodable>(urlPath: URLPaths, successHandler: @escaping(_ response: T) -> Void, errorHandler: @escaping(Error) -> Void) {
+    func request<T: Decodable>(urlPath: String, successHandler: @escaping(_ response: T) -> Void, errorHandler: @escaping(Error) -> Void) {
         
-        let url = "\(baseURL)\(urlPath.rawValue)"
+        let url = "\(baseURL)\(urlPath)"
         let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
         
         guard let fullURL = URL(string: fullPath) else { errorHandler(MWEroor.incorrectUrl)
@@ -52,9 +52,9 @@ class MWNetwork {
             switch (httpResponse.statusCode) {
             case 200...300:
                 do {
-                    let movies = try JSONDecoder().decode(T.self, from: receivedData)
+                    let result = try JSONDecoder().decode(T.self, from: receivedData)
                     DispatchQueue.main.async {
-                        successHandler(movies)
+                        successHandler(result)
                     }
                 } catch {
                     self?.handleErrors(errorHandler: errorHandler, error: MWEroor.parsingError)

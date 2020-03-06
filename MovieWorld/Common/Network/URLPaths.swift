@@ -14,14 +14,14 @@ public enum URLPaths: String, CaseIterable {
     case topRated = "movie/top_rated"
     case upcoming = "movie/upcoming"
     
-//    public var description: String {
-//        switch self {
-//        case .popular: return "Popular"
-//        case .latest: return "Latest"
-//        case .topRated: return "Top Rated"
-//        case .upcoming: return "Upcoming"
-//        }
-//    }
+    public var description: String {
+        switch self {
+        case .popular: return "Popular"
+        case .latest: return "Latest"
+        case .topRated: return "Top Rated"
+        case .upcoming: return "Upcoming"
+        }
+    }
     
     public init?(index: Int) {
         switch index {
