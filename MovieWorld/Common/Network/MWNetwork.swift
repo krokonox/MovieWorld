@@ -33,7 +33,7 @@ class MWNetwork {
         let url = "\(baseURL)\(urlPath)"
         let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
         
-        guard let fullURL = URL(string: fullPath) else { errorHandler(MWEroor.incorrectUrl)
+        guard let fullURL = URL(string: fullPath) else { errorHandler(MWError.incorrectUrl)
             return
         }
         
@@ -42,10 +42,10 @@ class MWNetwork {
         session.dataTask(with: request) { [weak self] data, response, error in
             
             if error != nil {
-                self?.handleErrors(errorHandler: errorHandler, error: MWEroor.networkError)
+                self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
             }
 
-            guard let httpResponse = response as? HTTPURLResponse, let receivedData = data else { self?.handleErrors(errorHandler: errorHandler, error: MWEroor.networkError)
+            guard let httpResponse = response as? HTTPURLResponse, let receivedData = data else { self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
                 return
             }
             
@@ -57,14 +57,14 @@ class MWNetwork {
                         successHandler(result)
                     }
                 } catch {
-                    self?.handleErrors(errorHandler: errorHandler, error: MWEroor.parsingError)
+                    self?.handleErrors(errorHandler: errorHandler, error: MWError.parsingError)
                 }
             case 401:
-                break
+                errorHandler(MWError.serverError)
             case 404:
-                break
+                errorHandler(MWError.serverError)
             default:
-                break
+                errorHandler(MWError.unknown)
             }
         }.resume()
     }

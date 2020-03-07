@@ -17,7 +17,7 @@ class MWTableViewCell: UITableViewCell {
     var movies: [MWMovie] = []
     var edgeInsects = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     var title: String = ""
-    var button: UIButton = UIButton()
+    var button: RedButton = RedButton()
     
     lazy var Title: UILabel = {
         let Title = UILabel()
@@ -26,14 +26,8 @@ class MWTableViewCell: UITableViewCell {
         return Title
     }()
     
-    lazy var Button: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.textColor = .white
-        button.setTitle(" All -> ", for: .normal)
-        button.backgroundColor = UIColor(named: "RedColor")
-        button.layer.cornerRadius = 5.0
+    lazy var Button: RedButton = {
+        let button = RedButton()
         return button
     }()
     

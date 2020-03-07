@@ -9,10 +9,25 @@
 import Foundation
 import UIKit
 
-var redButton: UIButton = {
-    let button = UIButton()
-    button.backgroundColor = UIColor(named: "RedColor")
-    button.layer.cornerRadius = 5.0
-    return button
-}()
-
+class RedButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        self.layer.cornerRadius = 5.0
+        self.layer.masksToBounds = true
+        self.backgroundColor = UIColor(named: "redColor")
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        self.titleLabel?.textAlignment = .center
+        self.titleLabel?.textColor = .white
+        self.setTitle(" All -> ", for: .normal)
+    }
+}

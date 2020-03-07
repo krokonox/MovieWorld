@@ -10,8 +10,6 @@ import Foundation
 
 class MWSystem {
     
-    var genres: [Genre] = []
-    
     let session: URLSession
     
     init() {
@@ -20,7 +18,7 @@ class MWSystem {
     
     func loadGenres(successHandler: @escaping(_ response: GenreResults) -> Void, errorHandler: @escaping(Error) -> Void) {
         MWNet.sh.request(urlPath: "/list",successHandler: { [weak self] (_ response: GenreResults) in
-            self?.genres = response.genres
+            MWGenreHelper.sh.genres = response.genres
         }) { [weak self] (error) in
             print(error.localizedDescription)
         }
