@@ -24,7 +24,7 @@ class RedButton: UIButton {
     private func setup() {
         self.layer.cornerRadius = 5.0
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor(named: "redColor")
+        self.backgroundColor = UIColor(named: "RedColor")
         self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.textColor = .white

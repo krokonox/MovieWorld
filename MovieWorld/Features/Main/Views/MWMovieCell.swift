@@ -57,11 +57,15 @@ class MWMovieCell: UICollectionViewCell {
     }
     
     func set(movie: MWMovie) {
-        self.imageView.load(url: URL(string: "https://image.tmdb.org/t/p/w500" + movie.poster_path!)!)
+        if let posterPath = movie.poster_path, let imageURL = URL(string: MWConfiguration.baseURL + posterPath) {
+            self.imageView.load(url: imageURL)
+        } else {
+            self.imageView.image = #imageLiteral(resourceName: "movieImage")
+        }
         self.Title.text = movie.title
         self.genreAndYear.text = "\(movie.genre_ids), \(movie.release_date)"
     }
-    
+
     private func setUpConstrants() {
         self.imageView.snp.makeConstraints { (make) in
             make.height.equalTo(180)

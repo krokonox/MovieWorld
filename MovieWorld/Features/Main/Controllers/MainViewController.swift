@@ -36,7 +36,6 @@ class MainViewController: UIViewController {
         self.title = "Main"
         self.view.backgroundColor = .white
         MWI.sh.push(vc: UIViewController())
-    
     }
     
     func setupTableView() {
@@ -57,10 +56,8 @@ class MainViewController: UIViewController {
     }
     
     @objc func refresh(sender:AnyObject) {
-        if movies == [:] {
             for path in paths {
                 initRequest(path: path)
-            }
         }
     }
     
@@ -88,7 +85,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movieCategory = paths[indexPath.row].description
-        if movies.count >= 0 {
+        if movies[movieCategory] != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
             cell.set(movies: movies[movieCategory]!, title: movieCategory)
             return cell
