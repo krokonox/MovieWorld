@@ -7,27 +7,15 @@
 //
 
 import Foundation
-import UIKit
 
-class MWSystem: UIViewController {
+
+class MWSystem {
     
-    let session: URLSession
+    static let sh = MWSystem()
     
-    func loadGenres() {
-        MWNet.sh.request(urlPath: "/list", successHandler: { [weak self] (_ response: GenreResults) in
-            MWGenreHelper.sh.genres = response.genres
-            }, errorHandler: { [weak self] ( MWError ) in
-                print(MWError.localizedDescription)})
-    }
+    var configuration: MWConfiguration?
+    var movieGenres: MWCategories?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadGenres()
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private init() {}
 }
 
