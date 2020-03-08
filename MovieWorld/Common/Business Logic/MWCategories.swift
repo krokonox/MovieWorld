@@ -8,13 +8,9 @@
 
 import Foundation
 
-class MWGenreHelper {
-    
-    static let sh = MWGenreHelper()
-    
+class MWCategories {
+   
     var genres: [Genre] = []
-    
-    private init() {}
     
     func setGenres(_ genres: [Genre]) {
         self.genres = genres

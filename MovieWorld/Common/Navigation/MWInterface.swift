@@ -18,7 +18,7 @@ class MWInterface {
     weak var window: UIWindow?
     
     private lazy var tabBarController = MWMainTabBarController()
-    
+    private lazy var initController = MWInitController()
     private init() {}
 
     func setup(window: UIWindow) {
@@ -27,7 +27,7 @@ class MWInterface {
         
         self.setUpNavigationBarStyle()
         
-        window.rootViewController = self.tabBarController
+        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
     }
     

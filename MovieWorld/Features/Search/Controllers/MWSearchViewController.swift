@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SearchViewController: UIViewController {
+class MWSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

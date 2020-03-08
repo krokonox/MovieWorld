@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController {
+class MWMainViewController: UIViewController {
     
     var cellId = "cellId"
     var MWNetwork: MWNet = MWNet.sh
@@ -77,7 +77,7 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count

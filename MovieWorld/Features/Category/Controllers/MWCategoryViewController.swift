@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class CategoryViewController: UIViewController, UITableViewDelegate,  UITableViewDataSource {
+class MWCategoryViewController: UIViewController, UITableViewDelegate,  UITableViewDataSource {
    
     let tableView = UITableView()
     let cellText = "Top 250 films"

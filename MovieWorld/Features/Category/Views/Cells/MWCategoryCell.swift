@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CategoryCell: UITableViewCell {
+class MWCategoryCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

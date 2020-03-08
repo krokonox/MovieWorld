@@ -23,9 +23,9 @@ class MWMainTabBarController: UITabBarController {
         self.tabBar.tintColor = UIColor(named: "RedColor")
         self.tabBar.barTintColor = .white
         
-        let mainController = createNavigationController(MainViewController(), title: "main")
-        let categoryController = createNavigationController(CategoryViewController(), title: "category")
-        let searchController = createNavigationController(SearchViewController(), title: "search")
+        let mainController = createNavigationController(MWMainViewController(), title: "main")
+        let categoryController = createNavigationController(MWCategoryViewController(), title: "category")
+        let searchController = createNavigationController(MWSearchViewController(), title: "search")
 
         viewControllers = [mainController, searchController, categoryController]
     }
