@@ -20,20 +20,23 @@ class MWNetwork {
     private let baseURL = "https://api.themoviedb.org/3/"
     private let api_key = "79d5894567be5b76ab7434fc12879584"
     
-    var URLParameters: [String: String] {
+    private var URLParameters: [String: String] {
         return ["api_key" : api_key]
     }
    
-    var dataTask: URLSessionDataTask?
+    private var dataTask: URLSessionDataTask?
     
-    lazy var session = URLSession(configuration: .default)
+    private lazy var session = URLSession(configuration: .default)
     
-    func request<T: Decodable>(urlPath: String, successHandler: @escaping(_ response: T) -> Void, errorHandler: @escaping(Error) -> Void) {
+    func request<T: Decodable>(urlPath: String,
+                               successHandler: @escaping(_ response: T) -> Void,
+                               errorHandler: @escaping(Error) -> Void) {
         
         let url = "\(baseURL)\(urlPath)"
         let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
         
-        guard let fullURL = URL(string: fullPath) else { errorHandler(MWError.incorrectUrl)
+        guard let fullURL = URL(string: fullPath) else {
+            errorHandler(MWError.incorrectUrl)
             return
         }
         
@@ -45,8 +48,10 @@ class MWNetwork {
                 self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
             }
 
-            guard let httpResponse = response as? HTTPURLResponse, let receivedData = data else { self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
-                return
+            guard let httpResponse = response as? HTTPURLResponse,
+                let receivedData = data else {
+                    self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
+                    return
             }
             
             switch (httpResponse.statusCode) {

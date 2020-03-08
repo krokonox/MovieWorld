@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = "Reveal-SDK";
+			productName = "Reveal-SDK";
 		};
 /* End PBXAggregateTarget section */
 
@@ -149,15 +150,15 @@
 		886F452EB38688E5EC351F9A8513DB85 /* Pods-MovieWorldTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MovieWorldTests-umbrella.h"; sourceTree = "<group>"; };
 		8DB8D91A1CA3EE4AA249A8FAA69FC394 /* ConstraintDirectionalInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsetTarget.swift; path = Source/ConstraintDirectionalInsetTarget.swift; sourceTree = "<group>"; };
 		8E478759A7840EAAFA0C65C6EC00CC31 /* Pods-MovieWorld-MovieWorldUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MovieWorld-MovieWorldUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		989C603DA07795CEE846EBACDF92BC6A /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		9D63CF0F62F3DE635BE3F1DF9F9287B4 /* Pods-MovieWorld-MovieWorldUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MovieWorld-MovieWorldUITests-frameworks.sh"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A5701A751A0B21AE4594FFCC33BD5565 /* Pods-MovieWorld-MovieWorldUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MovieWorld-MovieWorldUITests-Info.plist"; sourceTree = "<group>"; };
 		A69BC2BF7CAF6A3394D6C57237D286E0 /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Source/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
 		A7485F0C3F9C53A0D30AA28F851CAC2B /* Pods-MovieWorld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MovieWorld.debug.xcconfig"; sourceTree = "<group>"; };
 		AA57BB4AB856EA769DE455CCBDF2B543 /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Source/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
-		ACAA73534C26EE69A8172B21DC7318CE /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MovieWorld.framework; path = "Pods-MovieWorld.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACAA73534C26EE69A8172B21DC7318CE /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B548ACEC12B2CD52F736B00B971272 /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
 		B55DB8796A7E8E6560763044629B55C2 /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Source/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
 		B60470A385F6877268EFFB0364732208 /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Source/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
@@ -179,8 +180,8 @@
 		E0CDA0A5EABEE7B3559309279AE40085 /* Pods-MovieWorld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MovieWorld.release.xcconfig"; sourceTree = "<group>"; };
 		E1283323FBE708E46F56D39D5E0046C6 /* Pods-MovieWorldTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MovieWorldTests-Info.plist"; sourceTree = "<group>"; };
 		E260A20424556E6409F8DF1166D209D3 /* Pods-MovieWorld-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MovieWorld-acknowledgements.markdown"; sourceTree = "<group>"; };
-		EEE70A7A9E2E6E54A8E36F351777B56D /* Pods_MovieWorldTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MovieWorldTests.framework; path = "Pods-MovieWorldTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F78D7B82CE6FFBD89B3DD2ECFEEEAD48 /* Pods_MovieWorld_MovieWorldUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MovieWorld_MovieWorldUITests.framework; path = "Pods-MovieWorld-MovieWorldUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEE70A7A9E2E6E54A8E36F351777B56D /* Pods_MovieWorldTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorldTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F78D7B82CE6FFBD89B3DD2ECFEEEAD48 /* Pods_MovieWorld_MovieWorldUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld_MovieWorldUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F808AB2DBB20F0BCA68631075DFB16A0 /* Pods-MovieWorld-MovieWorldUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MovieWorld-MovieWorldUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FBD05E7B1B7CEC8C6E8AAB99C4795F43 /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Source/ConstraintDSL.swift; sourceTree = "<group>"; };
 		FE29E3586753F8CE47FA430B2B859283 /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
@@ -228,7 +229,6 @@
 				7C49DBDB77D38DF2E1D6DE0C15AAD618 /* Frameworks */,
 				CCAB30AE0EF76D5116D2727A3C6964EA /* Support Files */,
 			);
-			name = "Reveal-SDK";
 			path = "Reveal-SDK";
 			sourceTree = "<group>";
 		};
@@ -376,7 +376,6 @@
 				CD0E4B59476C433C344D5BFCC3D8179E /* UILayoutSupport+Extensions.swift */,
 				2EF6813F2E0FED422B4FE90437A87AF7 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};

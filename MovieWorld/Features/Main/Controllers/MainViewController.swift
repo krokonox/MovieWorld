@@ -11,12 +11,12 @@ import SnapKit
 
 class MainViewController: UIViewController {
     
-    let tableView = UITableView()
-    let activityIndicator = UIActivityIndicatorView()
-    var refreshControl = UIRefreshControl()
     var cellId = "cellId"
     var MWNetwork: MWNet = MWNet.sh
     var paths = URLPaths.allCases
+    let tableView = UITableView()
+    let activityIndicator = UIActivityIndicatorView()
+    var refreshControl = UIRefreshControl()
     
     var movies: [String: [MWMovie]] = [:] {
         didSet {
@@ -28,10 +28,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setRefresh()
+        self.setRefresh()
         self.view.addSubview(tableView)
         
-        setupTableView()
+        self.setupTableView()
         
         self.title = "Main"
         self.view.backgroundColor = .white
@@ -56,8 +56,8 @@ class MainViewController: UIViewController {
     }
     
     @objc func refresh(sender:AnyObject) {
-            for path in paths {
-                initRequest(path: path)
+        for path in paths {
+            initRequest(path: path)
         }
     }
     
@@ -98,8 +98,4 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 280
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-  }
+}

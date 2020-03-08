@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/D08158B5-5D7D-4D27-8F26-1A20E43DDBCE/g.gitignore">
+   </FileRef>
+   <FileRef
       location = "group:MovieWorld.xcodeproj">
    </FileRef>
    <FileRef

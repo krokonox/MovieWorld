@@ -19,15 +19,15 @@ public enum MWError: Error {
     var description: String {
         switch self {
         case .incorrectUrl:
-            return ErrorMessages.Default.IncorrectUrl
+            return ErrorMessages.Default.incorrectUrl
         case .serverError:
-            return ErrorMessages.Default.ServerError
+            return ErrorMessages.Default.serverError
         case .networkError:
-            return ErrorMessages.Default.NetworkError
+            return ErrorMessages.Default.networkError
         case .parsingError:
-            return ErrorMessages.Default.ParsingError
+            return ErrorMessages.Default.parsingError
         default:
-            return ErrorMessages.Default.UnknownError
+            return ErrorMessages.Default.unknownError
         }
     }
 }
@@ -37,13 +37,13 @@ extension MWError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .serverError:
-            return ErrorMessages.Default.ServerError
+            return ErrorMessages.Default.serverError
         case .networkError:
-            return ErrorMessages.Default.NetworkError
+            return ErrorMessages.Default.networkError
         case .incorrectUrl, .unknown:
-            return ErrorMessages.Default.IncorrectUrl
+            return ErrorMessages.Default.incorrectUrl
         case .parsingError:
-            return ErrorMessages.Default.ParsingError
+            return ErrorMessages.Default.parsingError
     }
   }
 }
@@ -52,11 +52,11 @@ extension MWError {
     struct ErrorMessages {
         
         struct Default {
-            static let ServerError = "Server Error. Please, try again later."
-            static let ParsingError = "Failed to decode data, try again."
-            static let IncorrectUrl = "You have entered the wrong URL, try another one."
-            static let NetworkError = "Failed to connect. Please, try again later."
-            static let UnknownError = "Something went wrong, try again later."
+            static let serverError = "Server Error. Please, try again later."
+            static let parsingError = "Failed to decode data, try again."
+            static let incorrectUrl = "You have entered the wrong URL, try another one."
+            static let networkError = "Failed to connect. Please, try again later."
+            static let unknownError = "Something went wrong, try again later."
         }
         
     }

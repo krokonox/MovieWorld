@@ -11,83 +11,83 @@ import UIKit
 
 class MWTableViewCell: UITableViewCell {
     
-    var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    //--MARK: variables
     
-    var movies: [MWMovie] = []
-    var edgeInsects = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
-    var title: String = ""
-    var button: RedButton = RedButton()
+    private var movies: [MWMovie] = []
+    private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+    private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
+    private var buttonSize = CGSize(width: 62, height: 25)
     
-    lazy var Title: UILabel = {
-        let Title = UILabel()
-        Title.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        Title.textAlignment = .left
-        return Title
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 130, height: 180)
+        layout.minimumLineSpacing = 8.0
+        layout.minimumInteritemSpacing = 10.0
+        
+        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.backgroundColor = .white
+        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
     }()
     
-    lazy var Button: RedButton = {
-        let button = RedButton()
+    private lazy var titleLabel: UILabel = {
+        let title = UILabel()
+        title.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        title.textAlignment = .left
+        return title
+    }()
+    
+    private lazy var redButton: MWRedButton = {
+        let button = MWRedButton()
         return button
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: "cell")
-        configureCollectionView()
-        setupViews()
-    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureCollectionView() {
-       collectionView.dataSource = self
-       collectionView.delegate = self
-       collectionView.reloadData()
-      
-       layout.sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
-       layout.scrollDirection = .horizontal
-       layout.itemSize = CGSize(width: 130, height: 180)
-       layout.minimumLineSpacing = 8.0
-       layout.minimumInteritemSpacing = 10.0
-       
-       self.collectionView.collectionViewLayout = layout
-       self.collectionView.backgroundColor = .white
-       self.contentView.addSubview(collectionView)
-        
-       self.collectionView.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
-        
-       self.collectionView.snp.makeConstraints { (make) in
-           make.edges.equalToSuperview()
-       }
+    private func configureCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.reloadData()
     }
     
     private func setupViews() {
-        self.contentView.addSubview(Title)
-        self.contentView.addSubview(Button)
+        self.contentView.addSubview(collectionView)
+        self.contentView.addSubview(titleLabel)
+        self.contentView.addSubview(redButton)
         
-        self.Title.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(15)
-            make.top.equalTo(collectionView).offset(12)
-        }
-        self.Button.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().inset(10)
-            make.width.equalTo(62)
-            make.height.equalTo(25)
-            make.top.equalTo(collectionView).offset(12)
-        }
+        setupConstraints()
     }
     
     private func setupConstraints() {
         self.collectionView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        self.titleLabel.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(15)
+            make.right.equalToSuperview()
+            make.top.equalTo(collectionView).offset(12)
+        }
+        self.redButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().inset(10)
+            make.width.height.equalTo(buttonSize)
+            make.top.equalTo(collectionView).offset(12)
+        }
     }
     
     func set(movies: [MWMovie], title: String) {
         self.movies = movies
-        self.Title.text = title
+        self.titleLabel.text = title
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: "cell")
+        self.configureCollectionView()
+        self.setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -115,7 +115,7 @@ extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return edgeInsects
+        return edgeInsets
     }
     
 }

@@ -8,41 +8,7 @@
 
 import Foundation
 
-public struct MWConfiguration {
-    
-    public static let baseURL = "https://image.tmdb.org/t/p/w185"
-    public static let secureBaseURL = "https://image.tmdb.org/t/p/w500"
-    
-}
-
-
-// -----------Work on this later!!!---------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//public struct Configuration: Decodable {
+//public struct MWConfiguration: Decodable {
 //    var images: Image
 //}
 //
@@ -51,10 +17,41 @@ public struct MWConfiguration {
 //    var secure_base_url: String
 //    var logo_sizes: [ImageSizes]
 //
-//    enum ImageSizes: Decodable {
-//        init(from decoder: Decoder) throws {
-//            <#code#>
-//        }
+//    enum ImageSizes: String, Decodable {
 //        case w45, w92, w154, w185, w300, w500, original, unknown
+//        
+//        init(from decoder: Decoder) throws {
+//            let container = try decoder.singleValueContainer()
+//            self = try ImageSizes(rawValue: (container.decode(RawValue.self))) ?? .unknown
+//        }
+//        
 //    }
 //}
+//
+//
+
+
+
+
+
+
+
+
+//Do not forget this!!!------------------
+
+
+
+
+
+
+
+
+
+
+
+public struct MWConfiguration {
+
+    public static let baseURL = "https://image.tmdb.org/t/p/w185"
+    public static let secureBaseURL = "https://image.tmdb.org/t/p/w500"
+
+}

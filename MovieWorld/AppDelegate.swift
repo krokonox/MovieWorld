@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frame = UIScreen.main.bounds
         
         window = UIWindow(frame: frame)
-        MWI.sh.setup(window: window!)
+        MWI.sh.setup(window: window ?? UIWindow())
         
         return true
     }

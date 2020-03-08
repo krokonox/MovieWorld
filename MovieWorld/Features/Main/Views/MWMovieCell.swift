@@ -14,11 +14,11 @@ class MWMovieCell: UICollectionViewCell {
     var movie: MWMovie? {
         didSet {
             guard let movie = movie else { return }
-            set(movie: movie)
+            self.set(movie: movie)
         }
     }
     
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = false
@@ -26,14 +26,14 @@ class MWMovieCell: UICollectionViewCell {
         return imageView
     }()
     
-    lazy var Title: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let Title = UILabel()
         Title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         Title.textAlignment = .left
         return Title
     }()
     
-    lazy var genreAndYear: UILabel = {
+    private lazy var genreAndYear: UILabel = {
         let genreAndYear = UILabel()
         genreAndYear.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         genreAndYear.textAlignment = .left
@@ -42,7 +42,7 @@ class MWMovieCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        self.setupView()
     }
     
     required init?(coder: NSCoder) {
@@ -51,18 +51,19 @@ class MWMovieCell: UICollectionViewCell {
     
     private func setupView() {
         self.addSubview(imageView)
-        self.addSubview(Title)
+        self.addSubview(titleLabel)
         self.addSubview(genreAndYear)
         setUpConstrants()
     }
     
     func set(movie: MWMovie) {
-        if let posterPath = movie.poster_path, let imageURL = URL(string: MWConfiguration.baseURL + posterPath) {
+        if let posterPath = movie.poster_path,
+           let imageURL = URL(string: MWConfiguration.baseURL + posterPath) {
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = #imageLiteral(resourceName: "movieImage")
         }
-        self.Title.text = movie.title
+        self.titleLabel.text = movie.title
         self.genreAndYear.text = "\(movie.genre_ids), \(movie.release_date)"
     }
 
@@ -72,14 +73,14 @@ class MWMovieCell: UICollectionViewCell {
             make.left.right.equalToSuperview().offset(10)
         }
         
-        self.Title.snp.makeConstraints { (make) in
+        self.titleLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(15)
             make.top.equalTo(imageView).offset(190)
         }
         
         self.genreAndYear.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(15)
-            make.bottom.equalTo(Title).offset(15)
+            make.bottom.equalToSuperview().offset(50)
         }
     }
 }

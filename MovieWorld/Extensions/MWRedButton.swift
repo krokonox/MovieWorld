@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class RedButton: UIButton {
+class MWRedButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
