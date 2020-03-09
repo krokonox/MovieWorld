@@ -64,7 +64,7 @@ class MWMovieCell: UICollectionViewCell {
             self.imageView.image = #imageLiteral(resourceName: "movieImage")
         }
         self.titleLabel.text = movie.title
-        self.genreAndYear.text = "\(movie.genre_ids), \(movie.release_date)"
+        self.genreAndYear.text = " \(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "
     }
 
     private func setUpConstrants() {

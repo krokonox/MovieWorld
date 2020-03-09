@@ -22,13 +22,16 @@ class MWInterface {
     private init() {}
 
     func setup(window: UIWindow) {
-    
         self.window = window
-        
         self.setUpNavigationBarStyle()
         
-        window.rootViewController = tabBarController
+        window.rootViewController = initController
         window.makeKeyAndVisible()
+    }
+    
+    func setupTabBarController() {
+        self.window?.rootViewController = self.tabBarController
+        self.window?.makeKeyAndVisible()
     }
     
     private func setUpNavigationBarStyle() {

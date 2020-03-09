@@ -11,17 +11,15 @@ import UIKit
 
 class MWInitController: UIViewController {
     
-    var movieGenres = MWSystem.sh.genres
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
         loadGenres()
+        MWI.sh.setupTabBarController()
     }
     
     func loadGenres() { MWNet.sh.request(urlPath: "genre/movie/list",
                                          successHandler: { [weak self] (_ response: GenreResults) in
-                                            self?.movieGenres = response.genres
+                                            MWSys.sh.setGenres(response.genres)
         },
                                          errorHandler: { [weak self] ( MWError ) in
                                             print(MWError.localizedDescription)})

@@ -36,6 +36,7 @@ class MWMainViewController: UIViewController {
         self.title = "Main"
         self.view.backgroundColor = .white
         MWI.sh.push(vc: UIViewController())
+        
     }
     
     func setupTableView() {
@@ -56,6 +57,8 @@ class MWMainViewController: UIViewController {
     }
     
     @objc func refresh(sender:AnyObject) {
+        movies = [:]
+        activityIndicator.startAnimating()
         for path in paths {
             initRequest(path: path)
         }
