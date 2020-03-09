@@ -39,7 +39,6 @@ class MWNetwork {
             errorHandler(MWError.incorrectUrl)
             return
         }
-        
         let request = URLRequest(url: fullURL)
         
         session.dataTask(with: request) { [weak self] data, response, error in

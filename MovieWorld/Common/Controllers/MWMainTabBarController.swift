@@ -13,7 +13,6 @@ class MWMainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTabBar()
     }
     

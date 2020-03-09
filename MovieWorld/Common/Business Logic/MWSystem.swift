@@ -15,13 +15,16 @@ class MWSystem {
     static let sh = MWSystem()
     
     var genres: [Genre] = []
-    var configuration: MWConfiguration?
-    var movieGenres: MWCategories?
+    var image: Image?
     
     private init() {}
     
     func setGenres(_ genres: [Genre]) {
         self.genres = genres
+    }
+    
+    func setConfiguration(_ image: Image) {
+        self.image = image
     }
     
     func getGenreName(for genreId: Int) -> String? {

@@ -58,10 +58,10 @@ class MWMovieCell: UICollectionViewCell {
     
     func set(movie: MWMovie) {
         if let posterPath = movie.poster_path,
-           let imageURL = URL(string: MWConfiguration.baseURL + posterPath) {
+           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
             self.imageView.load(url: imageURL)
         } else {
-            self.imageView.image = #imageLiteral(resourceName: "movieImage")
+            self.imageView.image = UIImage(named: "movieImage")
         }
         self.titleLabel.text = movie.title
         self.genreAndYear.text = " \(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "

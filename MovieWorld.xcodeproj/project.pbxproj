@@ -386,9 +386,9 @@
 		84FBD7DC23FF014F00245B17 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				84FF85D3241294CB00A7E848 /* MWInitController.swift */,
 				84FBD7DD23FF016700245B17 /* MWViewController.swift */,
 				84060743240037640071C42A /* MWMainTabBarController.swift */,
-				84FF85D3241294CB00A7E848 /* MWInitController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

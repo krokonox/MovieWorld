@@ -14,6 +14,7 @@ class MWInitController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadGenres()
+        loadConfiguration()
         MWI.sh.setupTabBarController()
     }
     
@@ -23,5 +24,13 @@ class MWInitController: UIViewController {
         },
                                          errorHandler: { [weak self] ( MWError ) in
                                             print(MWError.localizedDescription)})
+    }
+    
+    func loadConfiguration() { MWNet.sh.request(urlPath: "configuration",
+                                                successHandler: { [weak self] (_ response: MWConfiguration) in
+                                                    MWSys.sh.setConfiguration(response.images)
+        },
+                                                errorHandler: { [weak self] ( MWError ) in
+                                                    print(MWError.localizedDescription)})
     }
 }
