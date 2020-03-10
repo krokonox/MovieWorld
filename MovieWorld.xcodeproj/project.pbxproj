@@ -10,6 +10,7 @@
 		2E766467A82F45B2EEB04405 /* Pods_MovieWorld_MovieWorldUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE27A0999FEBC42126A2D84D /* Pods_MovieWorld_MovieWorldUITests.framework */; };
 		53939C52370EA1FDA478A862 /* Pods_MovieWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D670443D9A78BF620656 /* Pods_MovieWorldTests.framework */; };
 		84060744240037640071C42A /* MWMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84060743240037640071C42A /* MWMainTabBarController.swift */; };
+		844F4254241782480030C74F /* MWReloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4253241782480030C74F /* MWReloadTableViewCell.swift */; };
 		84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4461123FA7F7500505A0B /* UIColor+Hex.swift */; };
 		84E4461423FAA35A00505A0B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4461323FAA35A00505A0B /* Constants.swift */; };
 		84F4F6A5240A38E800C01562 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F4F6A4240A38E800C01562 /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		370E8CE6E5B398860C02D862 /* Pods-MovieWorldTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorldTests.release.xcconfig"; path = "Target Support Files/Pods-MovieWorldTests/Pods-MovieWorldTests.release.xcconfig"; sourceTree = "<group>"; };
 		48B47F2D75002E9B6A8011E8 /* Pods-MovieWorld-MovieWorldUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld-MovieWorldUITests/Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		84060743240037640071C42A /* MWMainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainTabBarController.swift; sourceTree = "<group>"; };
+		844F4253241782480030C74F /* MWReloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWReloadTableViewCell.swift; sourceTree = "<group>"; };
 		84E4461123FA7F7500505A0B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		84E4461323FAA35A00505A0B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84F4F6A4240A38E800C01562 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				84FCE257240581B20070A11C /* MWMovieCell.swift */,
 				84FCE2592406D88E0070A11C /* MWTableViewCell.swift */,
+				844F4253241782480030C74F /* MWReloadTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 				84FBD7D923FF00C200245B17 /* MWMainViewController.swift in Sources */,
 				84FCE254240580850070A11C /* MWMovie.swift in Sources */,
 				84F4F6B4240AD5F600C01562 /* APIKey.swift in Sources */,
+				844F4254241782480030C74F /* MWReloadTableViewCell.swift in Sources */,
 				84FF85D4241294CB00A7E848 /* MWInitController.swift in Sources */,
 				84F4F6B2240AA53E00C01562 /* MWNetwork+ExUtility.swift in Sources */,
 				84F4F6AC240A3EC100C01562 /* MWApiResults.swift in Sources */,

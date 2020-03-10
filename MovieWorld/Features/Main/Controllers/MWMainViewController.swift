@@ -11,12 +11,13 @@ import SnapKit
 
 class MWMainViewController: UIViewController {
     
-    var cellId = "cellId"
-    var MWNetwork: MWNet = MWNet.sh
-    var paths = URLPaths.allCases
+    let cellId = "cellId"
+    let MWNetwork: MWNet = MWNet.sh
+    let paths = URLPaths.allCases
     let tableView = UITableView()
     let activityIndicator = UIActivityIndicatorView()
-    var refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
+    let dispatchGroup = DispatchGroup()
     
     var movies: [String: [MWMovie]] = [:] {
         didSet {
@@ -39,7 +40,7 @@ class MWMainViewController: UIViewController {
         
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 305
@@ -52,8 +53,20 @@ class MWMainViewController: UIViewController {
     
     private func setRefresh() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        refreshControl.addTarget(self, action: #selector(refresh),
+                                 for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
+    }
+    
+    private func initRequest(path: URLPaths) {
+        dispatchGroup.enter()
+        MWNetwork.request(urlPath: path.rawValue,
+                          successHandler: { [weak self] (_ response: MWApiResults) in
+                            self?.movies[path.description] = response.results
+        }) { [weak self] (error) in
+            self?.showError(error.localizedDescription)
+        }
+        dispatchGroup.leave()
     }
     
     @objc func refresh(sender:AnyObject) {
@@ -62,17 +75,11 @@ class MWMainViewController: UIViewController {
         for path in paths {
             initRequest(path: path)
         }
-    }
-    
-    private func initRequest(path: URLPaths) {
-        MWNetwork.request(urlPath: path.rawValue, successHandler: { [weak self] (_ response: MWApiResults) in
-            self?.movies[path.description] = response.results
-        }) { [weak self] (error) in
-            self?.showError(error.localizedDescription)
+        self.dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.tableView.reloadData()
+            self?.activityIndicator.stopAnimating()
+            self?.refreshControl.endRefreshing()
         }
-        self.tableView.reloadData()
-        self.activityIndicator.stopAnimating()
-        self.refreshControl.endRefreshing()
     }
     
     private func showError(_ error: String) {
@@ -93,8 +100,15 @@ extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.set(movies: movies[movieCategory]!, title: movieCategory)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+            initRequest(path: paths[indexPath.row])
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
+            cell.set(movies: movies[movieCategory]!, title: movieCategory)
             return cell
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "reloadCell", for: indexPath) as! MWReloadTableViewCell
+//            cell.button.addTarget(self,
+//                                  action: #selector(reloadMovieCategpry),
+//                                  for: .allTouchEvents)
+//            return cell
         }
     }
     

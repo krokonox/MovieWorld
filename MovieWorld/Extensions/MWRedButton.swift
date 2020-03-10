@@ -28,6 +28,5 @@ class MWRedButton: UIButton {
         self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.textColor = .white
-        self.setTitle(" All -> ", for: .normal)
     }
 }
