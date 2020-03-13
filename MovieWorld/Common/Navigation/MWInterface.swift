@@ -55,6 +55,7 @@ class MWInterface {
         guard let navigationController = self.tabBarController.selectedViewController as?
                                          UINavigationController else { return }
         navigationController.pushViewController(vc, animated: true)
+        print("i did a baaad thing...")
     }
     
     func popVC() {

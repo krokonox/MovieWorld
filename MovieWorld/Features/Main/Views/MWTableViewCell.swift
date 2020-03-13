@@ -46,6 +46,8 @@ class MWTableViewCell: UITableViewCell {
     lazy var redButton: MWRedButton = {
         let button = MWRedButton()
         button.setTitle("All -> ", for: .normal)
+        button.addTarget(self, action: #selector(pushVC), for: .touchUpInside)
+        
         return button
     }()
     
@@ -96,6 +98,11 @@ class MWTableViewCell: UITableViewCell {
     func set(movies: [MWMovie], title: String) {
         self.movies = movies
         self.titleLabel.text = NSLocalizedString(title, comment: "")
+    }
+    
+    @objc func pushVC() {
+        MWI.sh.push(vc: MWMoviesListViewController())
+        print("--------")
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

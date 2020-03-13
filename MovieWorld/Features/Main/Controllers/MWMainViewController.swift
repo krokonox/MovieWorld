@@ -12,8 +12,8 @@ import SnapKit
 class MWMainViewController: UIViewController {
     
     let cellId = "cellId"
-    let MWNetwork: MWNet = MWNet.sh
     let paths = URLPaths.allCases
+    let MWNetwork: MWNet = MWNet.sh
     let tableView = UITableView()
     let activityIndicator = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
@@ -31,7 +31,6 @@ class MWMainViewController: UIViewController {
         self.view.addSubview(tableView)
         self.setRefresh()
         self.setupTableView()
-        MWI.sh.push(vc: UIViewController())
     }
     
     private func setupTableView() {
