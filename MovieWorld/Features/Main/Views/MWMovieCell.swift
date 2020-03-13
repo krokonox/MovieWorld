@@ -11,6 +11,7 @@ import SnapKit
 
 class MWMovieCell: UICollectionViewCell {
     
+    let group = DispatchGroup()
     var movie: MWMovie? {
         didSet {
             guard let movie = movie else { return }
@@ -59,6 +60,7 @@ class MWMovieCell: UICollectionViewCell {
     func set(movie: MWMovie) {
         if let posterPath = movie.poster_path,
            let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
+            
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = UIImage(named: "movieImage")

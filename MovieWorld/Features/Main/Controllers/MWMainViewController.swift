@@ -17,27 +17,21 @@ class MWMainViewController: UIViewController {
     let tableView = UITableView()
     let activityIndicator = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
-    let dispatchGroup = DispatchGroup()
+    let dispatch = DispatchGroup()
     
     var movies: [String: [MWMovie]] = [:] {
-        didSet {
-            self.tableView.reloadData()
-        }
+        didSet {}
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setRefresh()
-        self.view.addSubview(tableView)
-        
-        self.setupTableView()
-        
         self.title = "Main"
         self.view.backgroundColor = .white
+        self.view.addSubview(tableView)
+        self.setRefresh()
+        self.setupTableView()
         MWI.sh.push(vc: UIViewController())
-        
     }
     
     private func setupTableView() {
@@ -58,27 +52,39 @@ class MWMainViewController: UIViewController {
         tableView.addSubview(refreshControl)
     }
     
+    
     private func initRequest(path: URLPaths) {
-        dispatchGroup.enter()
+        dispatch.enter()
         MWNetwork.request(urlPath: path.rawValue,
                           successHandler: { [weak self] (_ response: MWApiResults) in
                             self?.movies[path.description] = response.results
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
         }
-        dispatchGroup.leave()
+        dispatch.leave()
     }
     
     @objc func refresh(sender:AnyObject) {
-        movies = [:]
         activityIndicator.startAnimating()
+        
         for path in paths {
             initRequest(path: path)
         }
-        self.dispatchGroup.notify(queue: .main) { [weak self] in
+
+        self.dispatch.notify(queue: .main) { [weak self] in
             self?.tableView.reloadData()
             self?.activityIndicator.stopAnimating()
             self?.refreshControl.endRefreshing()
+        }
+    }
+    
+    @objc func reloadMovieCategory(_ sender: UIButton) {
+        let cellPosition = sender.convert(sender.bounds.origin, to: tableView)
+        
+        if let indexPath = tableView.indexPathForRow(at: cellPosition) {
+            let rowIndex = indexPath.row
+            initRequest(path: paths[rowIndex])
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
@@ -90,29 +96,25 @@ class MWMainViewController: UIViewController {
 extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return paths.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movieCategory = paths[indexPath.row].description
-        if movies[movieCategory] != nil {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
-            cell.set(movies: movies[movieCategory]!, title: movieCategory)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
+        
+        cell.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .allTouchEvents)
+        
+        if let movies = movies[movieCategory] {
+            cell.set(movies: movies, title: movieCategory)
             return cell
         } else {
-            initRequest(path: paths[indexPath.row])
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
-            cell.set(movies: movies[movieCategory]!, title: movieCategory)
+            cell.set(movies: [], title: "")
             return cell
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "reloadCell", for: indexPath) as! MWReloadTableViewCell
-//            cell.button.addTarget(self,
-//                                  action: #selector(reloadMovieCategpry),
-//                                  for: .allTouchEvents)
-//            return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 280
+        return 290
     }
 }

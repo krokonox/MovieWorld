@@ -30,7 +30,6 @@ class MWInitController: UIViewController {
         MWNet.sh.request(urlPath: "genre/movie/list",
                          successHandler: { [weak self] (_ response: GenreResults) in
                             MWSys.sh.setGenres(response.genres)
-                            print(response.genres)
             },
                          errorHandler: { [weak self] ( MWError ) in
                             print(MWError.localizedDescription)})
@@ -46,6 +45,5 @@ class MWInitController: UIViewController {
                          errorHandler: { [weak self] ( MWError ) in
                             print(MWError.localizedDescription)})
         dispatchGroup.leave()
-        
     }
 }

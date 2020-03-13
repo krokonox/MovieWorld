@@ -13,10 +13,14 @@ class MWTableViewCell: UITableViewCell {
     
     //--MARK: variables
     
-    private var movies: [MWMovie] = []
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var buttonSize = CGSize(width: 62, height: 25)
+    private var movies: [MWMovie] = [] {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,11 +43,18 @@ class MWTableViewCell: UITableViewCell {
         return title
     }()
     
-    private lazy var redButton: MWRedButton = {
+    lazy var redButton: MWRedButton = {
         let button = MWRedButton()
+        button.setTitle("All -> ", for: .normal)
         return button
     }()
     
+    lazy var reloadButton: MWRedButton = {
+        let button = MWRedButton()
+        button.setTitle("reload", for: .normal)
+        button.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
+        return button
+    }()
     
     private func configureCollectionView() {
         collectionView.dataSource = self
@@ -55,6 +66,7 @@ class MWTableViewCell: UITableViewCell {
         self.contentView.addSubview(collectionView)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(redButton)
+        self.contentView.addSubview(reloadButton)
         
         setupConstraints()
     }
@@ -71,13 +83,19 @@ class MWTableViewCell: UITableViewCell {
         self.redButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().inset(10)
             make.width.height.equalTo(buttonSize)
-            make.top.equalTo(collectionView).offset(12)
+            make.top.equalTo(collectionView).offset(14)
         }
+        self.reloadButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().inset(90)
+            make.width.height.equalTo(buttonSize)
+            make.top.equalTo(collectionView).offset(14)
+        }
+
     }
     
     func set(movies: [MWMovie], title: String) {
         self.movies = movies
-        self.titleLabel.text = title
+        self.titleLabel.text = NSLocalizedString(title, comment: "")
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -104,7 +122,6 @@ extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
             cell.movie = movies[indexPath.row]
-            
             return cell
         }
         return UICollectionViewCell()
