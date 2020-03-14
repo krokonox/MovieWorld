@@ -43,6 +43,7 @@ class MWMovieCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print("cell")
         self.setupView()
     }
     

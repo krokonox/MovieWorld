@@ -33,6 +33,7 @@
 		84FBD7E023FF017A00245B17 /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD7DF23FF017A00245B17 /* MWInterface.swift */; };
 		84FC451D241BAECC00E931D6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84FC451B241BAECC00E931D6 /* Localizable.strings */; };
 		84FC4522241BF19800E931D6 /* MWMoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC4521241BF19800E931D6 /* MWMoviesListViewController.swift */; };
+		84FC4524241D426000E931D6 /* MWMovieDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC4523241D426000E931D6 /* MWMovieDetailCell.swift */; };
 		84FCE254240580850070A11C /* MWMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FCE253240580850070A11C /* MWMovie.swift */; };
 		84FCE258240581B20070A11C /* MWMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FCE257240581B20070A11C /* MWMovieCell.swift */; };
 		84FCE25A2406D88E0070A11C /* MWTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FCE2592406D88E0070A11C /* MWTableViewCell.swift */; };
@@ -103,6 +104,7 @@
 		84FC451E241BAED900E931D6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84FC451F241BAEDA00E931D6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84FC4521241BF19800E931D6 /* MWMoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMoviesListViewController.swift; sourceTree = "<group>"; };
+		84FC4523241D426000E931D6 /* MWMovieDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieDetailCell.swift; sourceTree = "<group>"; };
 		84FCE253240580850070A11C /* MWMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovie.swift; sourceTree = "<group>"; };
 		84FCE257240581B20070A11C /* MWMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCell.swift; sourceTree = "<group>"; };
 		84FCE2592406D88E0070A11C /* MWTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTableViewCell.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				84FCE257240581B20070A11C /* MWMovieCell.swift */,
 				84FCE2592406D88E0070A11C /* MWTableViewCell.swift */,
 				844F4253241782480030C74F /* MWReloadTableViewCell.swift */,
+				84FC4523241D426000E931D6 /* MWMovieDetailCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				84F4F6B2240AA53E00C01562 /* MWNetwork+ExUtility.swift in Sources */,
 				84F4F6AC240A3EC100C01562 /* MWApiResults.swift in Sources */,
 				84F4F6AA240A3D5500C01562 /* MWError.swift in Sources */,
+				84FC4524241D426000E931D6 /* MWMovieDetailCell.swift in Sources */,
 				84FF85C924121E2600A7E848 /* MWSystem.swift in Sources */,
 				84F4F6AE240A79CA00C01562 /* URLPaths.swift in Sources */,
 				84FB6F742403C5D2004685C4 /* MWCategoryCell.swift in Sources */,

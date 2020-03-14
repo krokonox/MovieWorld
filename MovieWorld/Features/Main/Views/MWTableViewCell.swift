@@ -101,7 +101,9 @@ class MWTableViewCell: UITableViewCell {
     }
     
     @objc func pushVC() {
-        MWI.sh.push(vc: MWMoviesListViewController())
+        let vc = MWMoviesListViewController()
+        vc.set(movies: self.movies)
+        MWI.sh.push(vc: vc)
         print("--------")
     }
     
