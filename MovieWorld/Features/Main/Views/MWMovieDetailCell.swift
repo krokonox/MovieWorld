@@ -11,10 +11,13 @@ import SnapKit
 
 class MWMovieDetailCell: UITableViewCell {
     
+    // MARK: - Variables
+    
     private let ImageSize = CGSize(width: 70, height: 100)
-    private let edgeInsets = UIEdgeInsets(top: 20, left: 135, bottom: 20, right: 20)
-
-    // MARK: - Configurable properties
+    private let edgeInsets = UIEdgeInsets(top: 10, left: 135, bottom: 10, right: 20)
+    var movie: MWMovie? {
+        didSet{}
+    }
     
     private lazy var movieStackView: UIStackView = {
         let stackView = UIStackView()
@@ -24,7 +27,7 @@ class MWMovieDetailCell: UITableViewCell {
         stackView.alignment = .leading
         stackView.spacing = 5
         
-        stackView.addArrangedSubview(movieTitleView)
+        stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(movieYearView)
         stackView.addArrangedSubview(movieGenreView)
         stackView.addArrangedSubview(movieRatingView)
@@ -34,42 +37,40 @@ class MWMovieDetailCell: UITableViewCell {
     
     private lazy var movieImageView: UIImageView = {
         let image = UIImageView()
-        
         image.layer.cornerRadius = 8.0
         image.clipsToBounds = true
-        image.image = UIImage(named: "")
-        image.image = #imageLiteral(resourceName: "movieImage")
         return image
     }()
     
-    private lazy var movieTitleView: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Green Book"
-        label.font = .boldSystemFont(ofSize: 21)
-        
+        label.font = .boldSystemFont(ofSize: 17)
         return label
     }()
     
     private lazy var movieYearView: UILabel = {
         let label = UILabel()
-        label.text = "2018, USA"
-        label.font = .boldSystemFont(ofSize: 13)
+        label.font = label.font.withSize(13)
         return label
     }()
     
     private lazy var movieGenreView: UILabel = {
         let label = UILabel()
-        label.text = "Comedy, Drama, Foreign"
         label.textColor = UIColor(hexString: "#b9b9b9")
-        label.font = .boldSystemFont(ofSize: 13)
+        label.font = label.font.withSize(13)
         return label
     }()
     
     private lazy var movieRatingView: UILabel = {
         let label = UILabel()
-        label.text = "IMDB 8.2, KP 8.3"
-        label.font = .boldSystemFont(ofSize: 13)
+        label.font = label.font.withSize(13)
         return label
+    }()
+    
+    private lazy var seperator: UIView = {
+        let line = UIView()
+        line.backgroundColor = UIColor.init(named: "GreyColor")?.withAlphaComponent(0.05)
+        return line
     }()
 
     // MARK: - Lifecycle
@@ -88,13 +89,12 @@ class MWMovieDetailCell: UITableViewCell {
     // MARK: - Private functions
     
     private func setupView() {
-        self.backgroundColor = .white
-        
         movieImageView.translatesAutoresizingMaskIntoConstraints = false
         movieStackView.translatesAutoresizingMaskIntoConstraints = false
         
         self.contentView.addSubview(movieImageView)
         self.contentView.addSubview(movieStackView)
+        self.contentView.addSubview(seperator)
         
         makeConstraintsWithSnapKit()
     }
@@ -107,14 +107,39 @@ class MWMovieDetailCell: UITableViewCell {
         }
 
         self.movieRatingView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(movieGenreView).offset(20)
+            make.bottom.equalToSuperview()
+        }
+        
+        self.movieGenreView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(movieRatingView).inset(40)
+            
         }
         
         self.movieImageView.snp.makeConstraints { (make) in
             make.height.width.equalTo(ImageSize)
             make.left.equalToSuperview().offset(25)
-            make.top.bottom.equalToSuperview().inset(15)
+            make.top.bottom.equalToSuperview().inset(10)
+        }
+        
+        self.seperator.snp.makeConstraints { (make) in
+            make.height.equalTo(4)
+            make.left.right.bottom.equalToSuperview()
         }
               
+    }
+    // MARK: - Functions
+    
+    func set(movie: MWMovie) {
+        if let posterPath = movie.poster_path,
+           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
+            
+            self.movieImageView.load(url: imageURL)
+        } else {
+            self.movieImageView.image = UIImage(named: "movieImage")
+        }
+        self.titleLabel.text = movie.title
+        self.movieGenreView.text = "\(movie.genres.map { $0 }.joined(separator: ", ")) "
+        self.movieYearView.text = "\(movie.release_date)"
+        self.movieRatingView.text = "\(movie.vote_average) IMDB"
     }
 }

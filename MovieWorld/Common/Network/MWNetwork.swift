@@ -13,6 +13,8 @@ typealias MWNet = MWNetwork
 
 class MWNetwork {
     
+    // MARK: - Variables
+    
     static let sh = MWNetwork()
     
     private init() {}
@@ -27,6 +29,8 @@ class MWNetwork {
     private var dataTask: URLSessionDataTask?
     
     private lazy var session = URLSession(configuration: .default)
+    
+    // MARK: - Request function
     
     func request<T: Decodable>(urlPath: String,
                                successHandler: @escaping(_ response: T) -> Void,

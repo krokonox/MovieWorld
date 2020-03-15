@@ -14,6 +14,7 @@ struct MWMovie: Decodable, Equatable {
     var genre_ids: [Int]
     var release_date: String
     var poster_path: String?
+    var vote_average: Double
 }
 
 extension MWMovie {

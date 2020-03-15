@@ -11,10 +11,11 @@ import UIKit
 
 class MWTableViewCell: UITableViewCell {
     
-    //--MARK: variables
+    //--MARK: Variables
     
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
+    private var itemSize = CGSize(width: 130, height: 180)
     private var buttonSize = CGSize(width: 62, height: 25)
     private var movies: [MWMovie] = [] {
         didSet {
@@ -24,9 +25,9 @@ class MWTableViewCell: UITableViewCell {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
+        layout.sectionInset = self.sectionInset
+        layout.itemSize = self.itemSize
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 130, height: 180)
         layout.minimumLineSpacing = 8.0
         layout.minimumInteritemSpacing = 10.0
         
@@ -57,6 +58,20 @@ class MWTableViewCell: UITableViewCell {
         button.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
         return button
     }()
+    
+    // MARK: - Lifecycle
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: "cell")
+        self.configureCollectionView()
+        self.setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Private functions
     
     private func configureCollectionView() {
         collectionView.dataSource = self
@@ -95,6 +110,8 @@ class MWTableViewCell: UITableViewCell {
 
     }
     
+    // MARK: - Functions
+    
     func set(movies: [MWMovie], title: String) {
         self.movies = movies
         self.titleLabel.text = NSLocalizedString(title, comment: "")
@@ -104,19 +121,10 @@ class MWTableViewCell: UITableViewCell {
         let vc = MWMoviesListViewController()
         vc.set(movies: self.movies)
         MWI.sh.push(vc: vc)
-        print("--------")
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: "cell")
-        self.configureCollectionView()
-        self.setupViews()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
+
+// MARK: - CollectionView Extension
 
 extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     

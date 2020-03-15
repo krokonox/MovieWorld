@@ -11,6 +11,8 @@ import SnapKit
 
 class MWMovieCell: UICollectionViewCell {
     
+    // MARK: - Variables
+
     let group = DispatchGroup()
     var movie: MWMovie? {
         didSet {
@@ -41,9 +43,11 @@ class MWMovieCell: UICollectionViewCell {
         return genreAndYear
     }()
     
+    // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print("cell")
+        self.backgroundColor = .white
         self.setupView()
     }
     
@@ -51,6 +55,8 @@ class MWMovieCell: UICollectionViewCell {
         fatalError("fatal error ")
     }
     
+    // MARK: - Private functions
+
     private func setupView() {
         self.addSubview(imageView)
         self.addSubview(titleLabel)
@@ -58,18 +64,6 @@ class MWMovieCell: UICollectionViewCell {
         setUpConstrants()
     }
     
-    func set(movie: MWMovie) {
-        if let posterPath = movie.poster_path,
-           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
-            
-            self.imageView.load(url: imageURL)
-        } else {
-            self.imageView.image = UIImage(named: "movieImage")
-        }
-        self.titleLabel.text = movie.title
-        self.genreAndYear.text = " \(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "
-    }
-
     private func setUpConstrants() {
         self.imageView.snp.makeConstraints { (make) in
             make.height.equalTo(180)
@@ -85,5 +79,18 @@ class MWMovieCell: UICollectionViewCell {
             make.left.right.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(50)
         }
+    }
+    
+    // MARK: - Functions
+
+    func set(movie: MWMovie) {
+        if let posterPath = movie.poster_path,
+           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
+            self.imageView.load(url: imageURL)
+        } else {
+            self.imageView.image = UIImage(named: "movieImage")
+        }
+        self.titleLabel.text = movie.title
+        self.genreAndYear.text = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "
     }
 }

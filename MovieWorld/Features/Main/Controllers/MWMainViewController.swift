@@ -11,10 +11,11 @@ import SnapKit
 
 class MWMainViewController: UIViewController {
     
+    // MARK: - Variables
+
     let cellId = "cellId"
     let paths = URLPaths.allCases
     let MWNetwork: MWNet = MWNet.sh
-    let tableView = UITableView()
     let activityIndicator = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
     let dispatch = DispatchGroup()
@@ -22,27 +23,33 @@ class MWMainViewController: UIViewController {
     var movies: [String: [MWMovie]] = [:] {
         didSet {}
     }
+  
+    lazy var tableView: UITableView = {
+        let tv = UITableView(frame: self.view.bounds, style: .plain)
+        tv.delegate = self
+        tv.dataSource = self
+        tv.rowHeight = 305
+        tv.register(MWTableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.separatorStyle = .none
     
+        return tv
+    }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Main"
         self.view.backgroundColor = .white
+        
         self.view.addSubview(tableView)
-        self.setRefresh()
-        self.setupTableView()
-    }
-    
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.rowHeight = 305
-        tableView.register(MWTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = .none
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        self.setRefresh()
     }
+    
+    // MARK: - Private functions
     
     private func setRefresh() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -51,17 +58,18 @@ class MWMainViewController: UIViewController {
         tableView.addSubview(refreshControl)
     }
     
-    
     private func initRequest(path: URLPaths) {
         dispatch.enter()
         MWNetwork.request(urlPath: path.rawValue,
                           successHandler: { [weak self] (_ response: MWApiResults) in
                             self?.movies[path.description] = response.results
+                            self?.dispatch.leave()
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
         }
-        dispatch.leave()
     }
+    
+    // MARK: - Functions
     
     @objc func refresh(sender:AnyObject) {
         activityIndicator.startAnimating()
@@ -71,9 +79,9 @@ class MWMainViewController: UIViewController {
         }
 
         self.dispatch.notify(queue: .main) { [weak self] in
-            self?.tableView.reloadData()
             self?.activityIndicator.stopAnimating()
             self?.refreshControl.endRefreshing()
+            self?.tableView.reloadData()
         }
     }
     
@@ -92,6 +100,8 @@ class MWMainViewController: UIViewController {
     }
 }
 
+// MARK: - TableView Extension
+
 extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,7 +112,7 @@ extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
         let movieCategory = paths[indexPath.row].description
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
         
-        cell.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .allTouchEvents)
+        cell.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .touchUpInside)
         
         if let movies = movies[movieCategory] {
             cell.set(movies: movies, title: movieCategory)
