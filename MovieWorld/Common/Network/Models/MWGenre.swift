@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Genre: Decodable {
-    let id: Int
+    let id: Int16
     let name: String
 }
 

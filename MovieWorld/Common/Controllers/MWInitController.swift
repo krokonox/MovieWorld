@@ -8,13 +8,22 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class MWInitController: UIViewController {
     
     let dispatchGroup = DispatchGroup()
     
+    var container: NSPersistentContainer!
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard container != nil else {
+            fatalError("This view needs a persistent container")
+        }
+        
         self.view.backgroundColor = .white
     
         self.loadGenres()
@@ -25,25 +34,44 @@ class MWInitController: UIViewController {
         }
     }
     
+    // MARK: - Functions
+    
     func loadGenres() {
         dispatchGroup.enter()
         MWNet.sh.request(urlPath: "genre/movie/list",
-                         successHandler: { [weak self] (_ response: GenreResults) in
-                            MWSys.sh.setGenres(response.genres)
-            },
-                         errorHandler: { [weak self] ( MWError ) in
+                         successHandler: { (_ response: GenreResults) in
+                            response.genres.forEach { genre in
+                                MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
+                            }
+                            
+        },
+                         errorHandler: { ( MWError ) in
                             print(MWError.localizedDescription)})
-       dispatchGroup.leave()
+        dispatchGroup.leave()
     }
     
     func loadConfiguration() {
         dispatchGroup.enter()
         MWNet.sh.request(urlPath: "configuration",
-                         successHandler: { [weak self] (_ response: MWConfiguration) in
+                         successHandler: { (_ response: MWConfiguration) in
                             MWSys.sh.setConfiguration(response.images)
             },
-                         errorHandler: { [weak self] ( MWError ) in
+                         errorHandler: {  ( MWError ) in
                             print(MWError.localizedDescription)})
         dispatchGroup.leave()
     }
+    
+//    func save(name: String, id: Int16) {
+//        let managedContext = MWCoreData.sh.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: "Genres", in: managedContext)!
+//        let genre = NSManagedObject(entity: entity, insertInto: managedContext)
+//        genre.setValue(name, forKey: "name")
+//        genre.setValue(id, forKey: "id")
+//        
+//        do {
+//            try managedContext.save()
+//        } catch let error as NSError {
+//            fatalError("Could not save. \(error), \(error.userInfo)")
+//        }
+//    }
 }

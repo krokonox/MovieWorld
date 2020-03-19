@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 typealias MWI = MWInterface
 
@@ -20,11 +21,11 @@ class MWInterface {
     private lazy var tabBarController = MWMainTabBarController()
     private lazy var initController = MWInitController()
     private init() {}
-
+    
     func setup(window: UIWindow) {
         self.window = window
         self.setUpNavigationBarStyle()
-        
+        initController.container = persistentContainer
         window.rootViewController = initController
         window.makeKeyAndVisible()
     }

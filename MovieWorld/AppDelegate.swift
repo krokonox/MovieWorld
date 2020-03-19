@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MWI.sh.setup(window: window ?? UIWindow())
         
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        MWCoreDataManger.sh.saveContext()
     }
 }
 

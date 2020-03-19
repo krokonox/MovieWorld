@@ -23,6 +23,6 @@ extension MWMovie {
         return URL(string: poster_path )
     }
     public var genres: [String] {
-        return self.genre_ids.map{ (MWSys.sh.getGenreName(for: $0) ?? "-") }
+        return self.genre_ids.map { (MWSys.sh.getGenreName(for: $0) ?? "-") }
     }
 }
