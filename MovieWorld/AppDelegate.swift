@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        MWCoreDataManger.sh.saveContext()
+        MWCoreDataManager.sh.saveContext()
     }
 }
 

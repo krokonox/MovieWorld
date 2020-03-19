@@ -29,25 +29,10 @@ class MWSystem {
     }
     
     func getGenreName(for genreId: Int) -> String? {
-        let ids = genres.map({ return $0.id })
-        guard let genre = ids.filter({ $0 == genreId }).first else { return nil }
+        guard let genre = genres.filter({ $0.id == genreId }).first else { return nil }
         return genre.name
     }
 //    $0.id == genreId }).first
-    
-    func fetchAllGenres() {
-        func fetchGenres() {
-            let managedContext = MWCoreDataManager.sh.persistentContainer.viewContext
-            let fetchRequest: NSFetchRequest<GenreModel> = GenreModel.fetchRequest()
-            let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-            fetchRequest.sortDescriptors = [sortDescriptor]
-            do {
-                let genres = try managedContext.fetch(fetchRequest)
-                self.genres = genres
-            } catch let error as NSError {
-                fatalError("Could not fetch. \(error), \(error.userInfo)")
-            }
-        }
-    }
+
 }
 

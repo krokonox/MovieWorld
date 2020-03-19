@@ -30,6 +30,7 @@ class MWInitController: UIViewController {
         self.loadConfiguration()
         
         dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.fetchAllGenres()
             MWI.sh.setupTabBarController()
         }
     }
@@ -61,17 +62,16 @@ class MWInitController: UIViewController {
         dispatchGroup.leave()
     }
     
-//    func save(name: String, id: Int16) {
-//        let managedContext = MWCoreData.sh.persistentContainer.viewContext
-//        let entity = NSEntityDescription.entity(forEntityName: "Genres", in: managedContext)!
-//        let genre = NSManagedObject(entity: entity, insertInto: managedContext)
-//        genre.setValue(name, forKey: "name")
-//        genre.setValue(id, forKey: "id")
-//        
-//        do {
-//            try managedContext.save()
-//        } catch let error as NSError {
-//            fatalError("Could not save. \(error), \(error.userInfo)")
-//        }
-//    }
+    func fetchAllGenres() {
+        let managedContext = MWCoreDataManager.sh.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<GenreModel> = GenreModel.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        do {
+            let genres = try managedContext.fetch(fetchRequest)
+            MWSys.sh.setGenres(genres)
+        } catch let error as NSError {
+            fatalError("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
 }

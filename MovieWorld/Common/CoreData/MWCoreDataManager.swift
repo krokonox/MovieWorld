@@ -26,7 +26,7 @@ class MWCoreDataManager {
     }
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
+        let container = NSPersistentContainer(name: "Model")
         container.loadPersistentStores { description, error in
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")

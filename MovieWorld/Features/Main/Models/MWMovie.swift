@@ -11,7 +11,7 @@ import UIKit
 
 struct MWMovie: Decodable, Equatable {
     var title: String
-    var genre_ids: [Int]
+    var genre_ids: [Int16]
     var release_date: String
     var poster_path: String?
     var vote_average: Double
@@ -23,6 +23,6 @@ extension MWMovie {
         return URL(string: poster_path )
     }
     public var genres: [String] {
-        return self.genre_ids.map { (MWSys.sh.getGenreName(for: $0) ?? "-") }
+        return self.genre_ids.map { (MWSys.sh.getGenreName(for: Int($0)) ?? "-") }
     }
 }
