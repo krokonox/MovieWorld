@@ -5,13 +5,12 @@
 //  Created by Admin on 20/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import SnapKit
 
 class MWCategoryViewController: UIViewController, UITableViewDelegate,  UITableViewDataSource {
-   
+    
     let tableView = UITableView()
     let cellText = "Top 250 films"
     
@@ -21,7 +20,6 @@ class MWCategoryViewController: UIViewController, UITableViewDelegate,  UITableV
         super.viewDidLoad()
         
         setupTableView()
-        
         self.title = "Category"
         self.view.backgroundColor = .white
     }
@@ -34,7 +32,6 @@ class MWCategoryViewController: UIViewController, UITableViewDelegate,  UITableV
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = .none
         view.addSubview(tableView)
-        
         makeConstraints()
     }
     
@@ -54,6 +51,4 @@ class MWCategoryViewController: UIViewController, UITableViewDelegate,  UITableV
             make.edges.equalToSuperview()
         }
     }
-    
 }
-

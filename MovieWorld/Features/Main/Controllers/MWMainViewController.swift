@@ -34,7 +34,7 @@ class MWMainViewController: UIViewController {
     
         return tv
     }()
-    
+  
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -47,6 +47,7 @@ class MWMainViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         self.setRefresh()
+        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
     }
     
     // MARK: - Private functions
