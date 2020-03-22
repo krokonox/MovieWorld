@@ -17,13 +17,14 @@ class MWCollectionViewGenreCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
-        label.backgroundColor = .cyan
         return label
     }()
     
     // MARK: - Private functions
 
     private func setupView() {
+        self.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
+        self.layer.cornerRadius = 5.0
         self.addSubview(collectionViewCellTitle)
         setUpConstrants()
     }
@@ -44,7 +45,6 @@ class MWCollectionViewGenreCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
         self.setupView()
     }
     

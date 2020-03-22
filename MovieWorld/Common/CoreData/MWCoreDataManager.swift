@@ -84,21 +84,21 @@ class MWCoreDataManager {
         }
     }
     
-    func delete(genre: GenreModel) {
-        let managedContext = persistentContainer.viewContext
-        
-        do {
-            managedContext.delete(genre)
-        } catch {
-            print(error)
-        }
-        
-        do {
-            try managedContext.save()
-        } catch {
-            print(error)
-        }
-    }
+//    func delete(genre: GenreModel) {
+//        let managedContext = persistentContainer.viewContext
+//
+//        do {
+//            managedContext.delete(genre)
+//        } catch {
+//            print(error)
+//        }
+//
+//        do {
+//            try managedContext.save()
+//        } catch {
+//            print(error)
+//        }
+//    }
     
     func fetchAllGenres() -> [GenreModel]? {
       let managedContext = persistentContainer.viewContext
@@ -112,5 +112,21 @@ class MWCoreDataManager {
         print("Could not fetch. \(error), \(error.userInfo)")
         return nil
       }
+    }
+    
+    func deleteAllData(_ entity: String) {
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for object in results {
+                guard let objectData = object as? NSManagedObject else {continue}
+                managedContext.delete(objectData)
+            }
+            try managedContext.save()
+        } catch let error {
+            print("Detele all data in \(entity) error :", error)
+        }
     }
 }

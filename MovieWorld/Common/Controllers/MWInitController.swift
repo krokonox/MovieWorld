@@ -42,9 +42,10 @@ class MWInitController: UIViewController {
         MWNet.sh.request(urlPath: "genre/movie/list",
                          successHandler: { (_ response: GenreResults) in
                             response.genres.forEach { genre in
-                                MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
-                            }
-                            
+                                if (MWSys.sh.genres.count) == 0 {
+                                    MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
+                                }
+                        }
         },
                          errorHandler: { ( MWError ) in
                             print(MWError.localizedDescription)})

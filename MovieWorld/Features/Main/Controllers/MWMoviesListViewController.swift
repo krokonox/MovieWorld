@@ -17,7 +17,7 @@ class MWMoviesListViewController: UIViewController {
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
     private var sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 5, right: 15)
     private var itemSize = CGSize(width: 105, height: 26)
-    
+    let genres = MWSys.sh.genres
     var movies: [MWMovie] = [] {
         didSet {}
     }
@@ -59,6 +59,7 @@ class MWMoviesListViewController: UIViewController {
         self.view.addSubview(tableView)
         self.configureCollectionView()
         self.setConstraints()
+        
     }
     
     // MARK: - Functions
@@ -116,12 +117,16 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return genres.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWCollectionViewGenreCell {
-            cell.set(text: String(indexPath.row))
+            if let genre = genres[indexPath.row].name {
+                cell.set(text: genre)
+            } else {
+                cell.set(text: "...")
+            }
             return cell
         }
         return UICollectionViewCell()
