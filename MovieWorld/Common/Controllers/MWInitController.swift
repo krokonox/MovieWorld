@@ -20,7 +20,7 @@ class MWInitController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard container != nil else {
+        guard self.container != nil else {
             fatalError("This view needs a persistent container")
         }
         
@@ -29,7 +29,7 @@ class MWInitController: UIViewController {
         self.loadGenres()
         self.loadConfiguration()
         
-        dispatchGroup.notify(queue: .main) { [weak self] in
+        self.dispatchGroup.notify(queue: .main) { [weak self] in
             self?.fetchAllGenres()
             MWI.sh.setupTabBarController()
         }
@@ -38,7 +38,7 @@ class MWInitController: UIViewController {
     // MARK: - Functions
     
     func loadGenres() {
-        dispatchGroup.enter()
+        self.dispatchGroup.enter()
         MWNet.sh.request(urlPath: "genre/movie/list",
                          successHandler: { (_ response: GenreResults) in
                             response.genres.forEach { genre in
@@ -53,14 +53,14 @@ class MWInitController: UIViewController {
     }
     
     func loadConfiguration() {
-        dispatchGroup.enter()
+        self.dispatchGroup.enter()
         MWNet.sh.request(urlPath: "configuration",
                          successHandler: { (_ response: MWConfiguration) in
                             MWSys.sh.setConfiguration(response.images)
             },
                          errorHandler: {  ( MWError ) in
                             print(MWError.localizedDescription)})
-        dispatchGroup.leave()
+        self.dispatchGroup.leave()
     }
     
     func fetchAllGenres() {

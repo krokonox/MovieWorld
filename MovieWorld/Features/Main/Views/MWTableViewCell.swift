@@ -5,6 +5,7 @@
 //  Created by Admin on 26/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
+
 import Foundation
 import SnapKit
 import UIKit
@@ -17,6 +18,7 @@ class MWTableViewCell: UITableViewCell {
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 130, height: 180)
     private var buttonSize = CGSize(width: 62, height: 25)
+    private var category: String = ""
     private var movies: [MWMovie] = [] {
         didSet {
             self.collectionView.reloadData()
@@ -32,8 +34,11 @@ class MWTableViewCell: UITableViewCell {
         layout.minimumInteritemSpacing = 10.0
         
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
         cv.backgroundColor = .white
         cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
+        cv.reloadData()
         return cv
     }()
     
@@ -47,7 +52,7 @@ class MWTableViewCell: UITableViewCell {
     lazy var redButton: MWRedButton = {
         let button = MWRedButton()
         button.setTitle("All -> ", for: .normal)
-        button.addTarget(self, action: #selector(pushVC), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.pushVC), for: .touchUpInside)
         
         return button
     }()
@@ -63,7 +68,6 @@ class MWTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "cell")
-        self.configureCollectionView()
         self.setupViews()
     }
     
@@ -73,19 +77,13 @@ class MWTableViewCell: UITableViewCell {
     
     // MARK: - Private functions
     
-    private func configureCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.reloadData()
-    }
-    
     private func setupViews() {
         self.contentView.addSubview(collectionView)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(redButton)
         self.contentView.addSubview(reloadButton)
         
-        setupConstraints()
+        self.setupConstraints()
     }
     
     private func setupConstraints() {
@@ -112,14 +110,15 @@ class MWTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func set(movies: [MWMovie], title: String) {
+    func set(movies: [MWMovie], title: String, category: String) {
         self.movies = movies
         self.titleLabel.text = NSLocalizedString(title, comment: "")
+        self.category = category
     }
     
     @objc func pushVC() {
         let vc = MWMoviesListViewController()
-        vc.set(movies: self.movies)
+        vc.set(movies: self.movies, category: self.category)
         MWI.sh.push(vc: vc)
     }
 }
@@ -133,7 +132,7 @@ extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
+        return self.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

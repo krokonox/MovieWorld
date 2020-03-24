@@ -13,7 +13,7 @@ class MWCollectionViewGenreCell: UICollectionViewCell {
     
     // MARK: - Variables
     
-    private lazy var collectionViewCellTitle: UILabel = {
+    lazy var collectionViewCellTitle: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
@@ -23,10 +23,10 @@ class MWCollectionViewGenreCell: UICollectionViewCell {
     // MARK: - Private functions
 
     private func setupView() {
-        self.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
+        self.backgroundColor = UIColor(named: "RedColor")
         self.layer.cornerRadius = 5.0
-        self.addSubview(collectionViewCellTitle)
-        setUpConstrants()
+        self.addSubview(self.collectionViewCellTitle)
+        self.setUpConstrants()
     }
     
     private func setUpConstrants() {

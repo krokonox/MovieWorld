@@ -13,7 +13,7 @@ class MWMovieCell: UICollectionViewCell {
     
     // MARK: - Variables
 
-    let group = DispatchGroup()
+    private let group = DispatchGroup()
     var movie: MWMovie? {
         didSet {
             guard let movie = movie else { return }

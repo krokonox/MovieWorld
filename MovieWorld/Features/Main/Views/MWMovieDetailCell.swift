@@ -16,7 +16,7 @@ class MWMovieDetailCell: UITableViewCell {
     private let ImageSize = CGSize(width: 70, height: 100)
     private let edgeInsets = UIEdgeInsets(top: 10, left: 135, bottom: 10, right: 20)
     var movie: MWMovie? {
-        didSet{}
+        didSet {}
     }
     
     private lazy var movieStackView: UIStackView = {
@@ -27,10 +27,10 @@ class MWMovieDetailCell: UITableViewCell {
         stackView.alignment = .leading
         stackView.spacing = 5
         
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(movieYearView)
-        stackView.addArrangedSubview(movieGenreView)
-        stackView.addArrangedSubview(movieRatingView)
+        stackView.addArrangedSubview(self.titleLabel)
+        stackView.addArrangedSubview(self.movieYearView)
+        stackView.addArrangedSubview(self.movieGenreView)
+        stackView.addArrangedSubview(self.movieRatingView)
 
         return stackView
     }()
@@ -82,21 +82,21 @@ class MWMovieDetailCell: UITableViewCell {
     
     required init?(coder aCoder: NSCoder) {
         super.init(coder: aCoder)
-        setupView()
+        self.setupView()
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Private functions
     
     private func setupView() {
-        movieImageView.translatesAutoresizingMaskIntoConstraints = false
-        movieStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.movieImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.movieStackView.translatesAutoresizingMaskIntoConstraints = false
         
         self.contentView.addSubview(movieImageView)
         self.contentView.addSubview(movieStackView)
         self.contentView.addSubview(seperator)
         
-        makeConstraintsWithSnapKit()
+        self.makeConstraintsWithSnapKit()
     }
     
     private func makeConstraintsWithSnapKit() {

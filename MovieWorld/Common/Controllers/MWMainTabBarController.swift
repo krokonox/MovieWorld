@@ -13,7 +13,7 @@ class MWMainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+        self.setupTabBar()
     }
     
     func setupTabBar() {
@@ -22,9 +22,9 @@ class MWMainTabBarController: UITabBarController {
         self.tabBar.tintColor = UIColor(named: "RedColor")
         self.tabBar.barTintColor = .white
         
-        let mainController = createNavigationController(MWMainViewController(), title: "main")
-        let categoryController = createNavigationController(MWCategoryViewController(), title: "category")
-        let searchController = createNavigationController(MWSearchViewController(), title: "search")
+        let mainController = self.createNavigationController(MWMainViewController(), title: "main")
+        let categoryController = self.createNavigationController(MWCategoryViewController(), title: "category")
+        let searchController = self.createNavigationController(MWSearchViewController(), title: "search")
 
         viewControllers = [mainController, searchController, categoryController]
     }
