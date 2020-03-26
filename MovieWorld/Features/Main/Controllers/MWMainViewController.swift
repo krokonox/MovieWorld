@@ -53,6 +53,7 @@ class MWMainViewController: UIViewController {
         
         self.view.addSubview(tableView)
         self.makeConstraints()
+        self.fetchMovies()
     }
     
     // MARK: - Private functions
@@ -65,6 +66,20 @@ class MWMainViewController: UIViewController {
                             self?.dispatch.leave()
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
+        }
+    }
+    
+    private func fetchMovies() {
+        self.activityIndicator.startAnimating()
+        
+        for path in self.paths {
+            self.initRequest(path: path)
+        }
+        
+        self.dispatch.notify(queue: .main) { [weak self] in
+            self?.activityIndicator.stopAnimating()
+            self?.refreshControl.endRefreshing()
+            self?.tableView.reloadData()
         }
     }
     
@@ -81,17 +96,7 @@ class MWMainViewController: UIViewController {
     // MARK: - Functions
     
     @objc func refresh(sender: AnyObject) {
-        self.activityIndicator.startAnimating()
-        
-        for path in self.paths {
-            self.initRequest(path: path)
-        }
-
-        self.dispatch.notify(queue: .main) { [weak self] in
-            self?.activityIndicator.stopAnimating()
-            self?.refreshControl.endRefreshing()
-            self?.tableView.reloadData()
-        }
+        self.fetchMovies()
     }
     
     @objc func reloadMovieCategory(_ sender: UIButton) {

@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 
 struct MWMovie: Decodable, Equatable {
+//    var id: Int
     var title: String
     var genre_ids: [Int16]
     var release_date: String
     var poster_path: String?
     var vote_average: Double
+//    var overview: String
 }
 
 extension MWMovie {

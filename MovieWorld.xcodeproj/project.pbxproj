@@ -10,7 +10,8 @@
 		2E766467A82F45B2EEB04405 /* Pods_MovieWorld_MovieWorldUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE27A0999FEBC42126A2D84D /* Pods_MovieWorld_MovieWorldUITests.framework */; };
 		53939C52370EA1FDA478A862 /* Pods_MovieWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D670443D9A78BF620656 /* Pods_MovieWorldTests.framework */; };
 		84060744240037640071C42A /* MWMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84060743240037640071C42A /* MWMainTabBarController.swift */; };
-		84833E17242CB64700C8E67B /* MWTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E16242CB64700C8E67B /* MWTestVC.swift */; };
+		84833E19242CBFA600C8E67B /* MWMovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */; };
+		84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E1A242CDB8700C8E67B /* MWMovieCast.swift */; };
 		84A649B12423B55A00B809E8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84A649AF2423B55A00B809E8 /* Model.xcdatamodeld */; };
 		84A649B32426812B00B809E8 /* MWCollectionViewGenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A649B22426812B00B809E8 /* MWCollectionViewGenreCell.swift */; };
 		84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4461123FA7F7500505A0B /* UIColor+Hex.swift */; };
@@ -73,7 +74,8 @@
 		370E8CE6E5B398860C02D862 /* Pods-MovieWorldTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorldTests.release.xcconfig"; path = "Target Support Files/Pods-MovieWorldTests/Pods-MovieWorldTests.release.xcconfig"; sourceTree = "<group>"; };
 		48B47F2D75002E9B6A8011E8 /* Pods-MovieWorld-MovieWorldUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld-MovieWorldUITests/Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		84060743240037640071C42A /* MWMainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainTabBarController.swift; sourceTree = "<group>"; };
-		84833E16242CB64700C8E67B /* MWTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTestVC.swift; sourceTree = "<group>"; };
+		84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieDetailViewController.swift; sourceTree = "<group>"; };
+		84833E1A242CDB8700C8E67B /* MWMovieCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCast.swift; sourceTree = "<group>"; };
 		84A649B02423B55A00B809E8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		84A649B22426812B00B809E8 /* MWCollectionViewGenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCollectionViewGenreCell.swift; sourceTree = "<group>"; };
 		84E4461123FA7F7500505A0B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			children = (
 				84FBD7D823FF00C200245B17 /* MWMainViewController.swift */,
 				84FC4521241BF19800E931D6 /* MWMoviesListViewController.swift */,
+				84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			children = (
 				84FCE253240580850070A11C /* MWMovie.swift */,
 				84F4F6AB240A3EC100C01562 /* MWApiResults.swift */,
+				84833E1A242CDB8700C8E67B /* MWMovieCast.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -410,7 +414,6 @@
 				84FF85D3241294CB00A7E848 /* MWInitController.swift */,
 				84FBD7DD23FF016700245B17 /* MWViewController.swift */,
 				84060743240037640071C42A /* MWMainTabBarController.swift */,
-				84833E16242CB64700C8E67B /* MWTestVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -693,7 +696,6 @@
 			files = (
 				84FBD7D723FF00AF00245B17 /* MWSearchViewController.swift in Sources */,
 				84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */,
-				84833E17242CB64700C8E67B /* MWTestVC.swift in Sources */,
 				84060744240037640071C42A /* MWMainTabBarController.swift in Sources */,
 				84FC4522241BF19800E931D6 /* MWMoviesListViewController.swift in Sources */,
 				84FCE25A2406D88E0070A11C /* MWTableViewCell.swift in Sources */,
@@ -713,7 +715,9 @@
 				84FBD7D923FF00C200245B17 /* MWMainViewController.swift in Sources */,
 				84FCE254240580850070A11C /* MWMovie.swift in Sources */,
 				84A649B12423B55A00B809E8 /* Model.xcdatamodeld in Sources */,
+				84833E19242CBFA600C8E67B /* MWMovieDetailViewController.swift in Sources */,
 				84F4F6B4240AD5F600C01562 /* APIKey.swift in Sources */,
+				84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */,
 				84A649B32426812B00B809E8 /* MWCollectionViewGenreCell.swift in Sources */,
 				84FF85D4241294CB00A7E848 /* MWInitController.swift in Sources */,
 				84F4F6B2240AA53E00C01562 /* MWNetwork+ExUtility.swift in Sources */,
