@@ -39,7 +39,7 @@ class MWMoviesListViewController: UIViewController {
         tv.rowHeight = 120
         tv.separatorStyle = .none
         tv.tableHeaderView = header
-        tv.register(MWMovieDetailCell.self, forCellReuseIdentifier: "cell")
+        tv.register(TableViewCell<MovieDetailViewLayout>.self, forCellReuseIdentifier: "cell")
         
         return tv
     }()
@@ -159,17 +159,24 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? MWMovieDetailCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TableViewCell<MovieDetailViewLayout>
             else {
                 return UITableViewCell()
         }
- 
         if moviesToShow.count == 0 {
-            cell.set(movie: movies[indexPath.row])}
-        else {
-            cell.set(movie: moviesToShow[indexPath.row])
+            cell.layout.set(movie: movies[indexPath.row])
+
+        } else {
+              cell.layout.set(movie: moviesToShow[indexPath.row])
+ 
         }
+        cell.selectionStyle = .none
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        MWI.sh.push(vc: MWMovieDetailViewController(movie: movies[indexPath.row]) )
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

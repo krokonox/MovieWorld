@@ -1,17 +1,21 @@
 //
-//  MWMovieDetailCell.swift
+//  MWGenericMovieDetailView.swift
 //  MovieWorld
 //
-//  Created by Admin on 14/03/2020.
+//  Created by Admin on 28/03/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
+
 import Foundation
 import UIKit
 import SnapKit
 
-class MWMovieDetailCell: UITableViewCell {
-    
-    // MARK: - Variables
+protocol ViewLayout {
+    func layout(on view: UIView)
+    init()
+}
+
+final class MovieDetailViewLayout: ViewLayout {
     
     private let ImageSize = CGSize(width: 70, height: 100)
     private let edgeInsets = UIEdgeInsets(top: 10, left: 135, bottom: 10, right: 20)
@@ -24,7 +28,7 @@ class MWMovieDetailCell: UITableViewCell {
         
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.alignment = .leading
+        stackView.alignment = .fill
         stackView.spacing = 5
         
         stackView.addArrangedSubview(self.titleLabel)
@@ -44,6 +48,7 @@ class MWMovieDetailCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 17)
         return label
     }()
@@ -56,6 +61,7 @@ class MWMovieDetailCell: UITableViewCell {
     
     private lazy var movieGenreView: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.textColor = UIColor(hexString: "#b9b9b9")
         label.font = label.font.withSize(13)
         return label
@@ -73,46 +79,23 @@ class MWMovieDetailCell: UITableViewCell {
         return line
     }()
 
-    // MARK: - Lifecycle
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: "cell")
-        self.setupView()
-    }
-    
-    required init?(coder aCoder: NSCoder) {
-        super.init(coder: aCoder)
-        self.setupView()
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Private functions
-    
-    private func setupView() {
-        self.movieImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.movieStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.contentView.addSubview(movieImageView)
-        self.contentView.addSubview(movieStackView)
-        self.contentView.addSubview(seperator)
-        
-        self.makeConstraintsWithSnapKit()
-    }
-    
+
     private func makeConstraintsWithSnapKit() {
         
         self.movieStackView.snp.makeConstraints { (make) in
             make.left.equalTo(movieImageView).offset(135)
+            make.right.equalToSuperview()
             make.bottom.top.equalToSuperview().inset(edgeInsets)
         }
 
         self.movieRatingView.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
+            make.top.equalTo(movieGenreView.snp.bottom).offset(40)
         }
         
         self.movieGenreView.snp.makeConstraints { (make) in
             make.bottom.equalTo(movieRatingView).inset(40)
-            
         }
         
         self.movieImageView.snp.makeConstraints { (make) in
@@ -125,7 +108,7 @@ class MWMovieDetailCell: UITableViewCell {
             make.height.equalTo(4)
             make.left.right.bottom.equalToSuperview()
         }
-              
+
     }
     // MARK: - Functions
     
@@ -141,5 +124,48 @@ class MWMovieDetailCell: UITableViewCell {
         self.movieGenreView.text = "\(movie.genres.map { $0 }.joined(separator: ", ")) "
         self.movieYearView.text = "\(movie.release_date)"
         self.movieRatingView.text = "\(movie.vote_average) IMDB"
+    }
+    
+    init() {}
+    
+    func layout(on view: UIView) {
+        self.movieImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.movieStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(movieImageView)
+        view.addSubview(movieStackView)
+        view.addSubview(seperator)
+        
+        makeConstraintsWithSnapKit()
+    }
+}
+
+class View<Layout: ViewLayout> : UIView {
+    
+    public let layout: Layout
+    
+    override init(frame: CGRect) {
+        self.layout = Layout()
+        super.init(frame: frame)
+        layout.layout(on: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class TableViewCell<Layout: ViewLayout> : UITableViewCell {
+    
+    public let layout: Layout
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        self.layout = Layout()
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        layout.layout(on: contentView)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
