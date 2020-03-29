@@ -20,7 +20,7 @@ class MWNetwork {
     private init() {}
  
     private let baseURL = "https://api.themoviedb.org/3/"
-    private let api_key = "79d5894567be5b76ab7434fc12879584"
+    let api_key = "79d5894567be5b76ab7434fc12879584"
     
     private var URLParameters: [String: String] {
         return ["api_key" : api_key]
@@ -33,18 +33,36 @@ class MWNetwork {
     // MARK: - Request function
     
     func request<T: Decodable>(urlPath: String,
+                               parameters: [String: String]? = nil,
                                successHandler: @escaping(_ response: T) -> Void,
                                errorHandler: @escaping(Error) -> Void) {
         
         let url = "\(baseURL)\(urlPath)"
-        let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
         
-        guard let fullURL = URL(string: fullPath) else {
-            errorHandler(MWError.incorrectUrl)
-            return
+        
+        var urlComponents: URLComponents {
+            var components = URLComponents(string: url)!
+            
+            var queryItems = [URLQueryItem(name: "api_key", value: api_key)]
+            
+            
+            if let params = parameters {
+                queryItems.append(contentsOf: params.map {
+                    return URLQueryItem(name: "\($0)", value: "\($1)")
+                })
+            }
+            components.queryItems = queryItems
+            return components
         }
-        let request = URLRequest(url: fullURL)
         
+//        let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
+        
+//        guard let fullURL = URL(string: fullPath) else {
+//            errorHandler(MWError.incorrectUrl)
+//            return
+//        }
+        let request = URLRequest(url: urlComponents.url!)
+        print(urlComponents.url!)
         session.dataTask(with: request) { [weak self] data, response, error in
             
             if error != nil {
@@ -56,7 +74,7 @@ class MWNetwork {
                     self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
                     return
             }
-            
+
             switch (httpResponse.statusCode) {
             case 200...300:
                 do {

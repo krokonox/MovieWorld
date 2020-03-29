@@ -1,20 +1,24 @@
 PODS:
   - Reveal-SDK (24)
   - SnapKit (5.0.1)
+  - XCDYouTubeKit (2.12.0)
 
 DEPENDENCIES:
   - Reveal-SDK
   - SnapKit (~> 5.0.0)
+  - XCDYouTubeKit (~> 2.12)
 
 SPEC REPOS:
   trunk:
     - Reveal-SDK
     - SnapKit
+    - XCDYouTubeKit
 
 SPEC CHECKSUMS:
   Reveal-SDK: 5d7e56b8f018c0a88b3a2c10bf68d598bbd3b071
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  XCDYouTubeKit: cdad9e696f991aac2739c5b25586c81f1301ba30
 
-PODFILE CHECKSUM: a0958a32c48191def77211f4f118f1261101dfe7
+PODFILE CHECKSUM: 70880affad50a05973f9995590583983cada2607
 
 COCOAPODS: 1.8.4
