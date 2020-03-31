@@ -62,7 +62,7 @@ class MWNetwork {
 //            return
 //        }
         let request = URLRequest(url: urlComponents.url!)
-        print(urlComponents.url!)
+        
         session.dataTask(with: request) { [weak self] data, response, error in
             
             if error != nil {

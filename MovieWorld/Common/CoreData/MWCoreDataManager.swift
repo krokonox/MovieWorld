@@ -84,22 +84,6 @@ class MWCoreDataManager {
         }
     }
     
-//    func delete(genre: GenreModel) {
-//        let managedContext = persistentContainer.viewContext
-//
-//        do {
-//            managedContext.delete(genre)
-//        } catch {
-//            print(error)
-//        }
-//
-//        do {
-//            try managedContext.save()
-//        } catch {
-//            print(error)
-//        }
-//    }
-    
     func fetchAllGenres() -> [GenreModel]? {
       let managedContext = persistentContainer.viewContext
 
@@ -112,6 +96,15 @@ class MWCoreDataManager {
         print("Could not fetch. \(error), \(error.userInfo)")
         return nil
       }
+    }
+    
+    func isEntityAttributeExist(id: Int, entityName: String) -> Bool {
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        
+        let res = try! managedContext.fetch(fetchRequest)
+        return res.count > 0 ? true : false
     }
     
     func deleteAllData(_ entity: String) {
@@ -128,5 +121,18 @@ class MWCoreDataManager {
         } catch let error {
             print("Detele all data in \(entity) error :", error)
         }
+    }
+    
+    func entityIsEmpty(entity: String) -> Bool {
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+        var results: [NSManagedObject] = []
+        fetchRequest.returnsObjectsAsFaults = false
+        do {
+            results = try managedContext.fetch(fetchRequest)
+        } catch {
+            print("error executing fetch request \(error.localizedDescription)")
+        }
+        return results.count == 0
     }
 }

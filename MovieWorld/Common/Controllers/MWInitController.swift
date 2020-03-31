@@ -25,8 +25,10 @@ class MWInitController: UIViewController {
         }
         
         self.view.backgroundColor = .white
-    
-        self.loadGenres()
+        
+        if (MWCoreDataManager.sh.entityIsEmpty(entity: "GenreModel")) == true {
+            self.loadGenres()
+        }
         self.loadConfiguration()
         
         self.dispatchGroup.notify(queue: .main) { [weak self] in
@@ -42,10 +44,8 @@ class MWInitController: UIViewController {
         MWNet.sh.request(urlPath: "genre/movie/list",
                          successHandler: { (_ response: GenreResults) in
                             response.genres.forEach { genre in
-                                if (MWSys.sh.genres.count) == 0 {
-                                    MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
-                                }
-                        }
+                                MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
+                            }
         },
                          errorHandler: { ( MWError ) in
                             print(MWError.localizedDescription)})

@@ -16,7 +16,7 @@ struct MWMovieDetailResult: Decodable {
     let release_date = "release_date"
     let vote_average: Double
     let overview: String
-
+    var videos: MWMovieVideoResponse?
     
     
     func returnAsMovie() -> MWMovie {
