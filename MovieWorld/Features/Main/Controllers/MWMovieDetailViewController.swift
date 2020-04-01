@@ -20,7 +20,9 @@ class MWMovieDetailViewController: UIViewController {
     private var activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
     private var avPlayer: AVPlayer!
-    
+    private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+    private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
+    private var itemSize = CGSize(width: 130, height: 180)
     var movieId: Int? {
         return movieCell?.id
     }
@@ -30,10 +32,45 @@ class MWMovieDetailViewController: UIViewController {
         }
     }
     var movie: MWMovieDetailResult? {
-        didSet {}
+        didSet {
+            self.setupViews()
+        }
     }
     
     // MARK: - Lazy variables
+    
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView(frame: UIScreen.main.bounds)
+        view.addSubview(self.contentView)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.addSubview(self.cell)
+        view.addSubview(self.videoView)
+        view.addSubview(self.descriptionView)
+//        view.addSubview(self.collectionView)
+        return view
+    }()
+    
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = self.sectionInset
+        layout.itemSize = self.itemSize
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8.0
+        layout.minimumInteritemSpacing = 10.0
+        
+        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.backgroundColor = .white
+        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
+        cv.reloadData()
+        return cv
+    }()
     
     lazy var cell: View<MovieDetailViewLayout> = {
         var movieCell = View<MovieDetailViewLayout>(frame: .zero)
@@ -83,11 +120,10 @@ class MWMovieDetailViewController: UIViewController {
         guard let movieId = movieCell?.id else {
             return
         }
-        
         activityIndicator.startAnimating()
         self.dispatch.enter()
         MWNet.sh.request(urlPath: "movie/" + String(movieId),
-                         parameters: ["append_to_response" : "videos"],
+                         parameters: ["append_to_response" : "videos,credits"],
                          successHandler: { [weak self] (_ response: MWMovieDetailResult) in
                             
                             self?.activityIndicator.stopAnimating()
@@ -144,17 +180,27 @@ class MWMovieDetailViewController: UIViewController {
             playerVC?.player?.play()
         }
     }
-
+    
+    // MARK: - UI Functions
+    
     private func setupViews() {
+        self.view.addSubview(scrollView)
         self.cell.layout.set(movie: movieCell!)
-        
-        self.view.addSubview(cell)
-        self.view.addSubview(videoView)
-        self.view.addSubview(descriptionView)
         self.descriptionText.text = self.movie?.overview
+        self.setConstraints()
     }
     
     private func setConstraints() {
+        self.scrollView.snp.makeConstraints{ (make) in
+            make.edges.equalToSuperview()
+        }
+        
+        self.contentView.snp.makeConstraints{ (make) in
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalTo(self.view)
+            make.width.height.equalToSuperview()
+        }
+        
         self.cell.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview().offset(140)
@@ -175,7 +221,6 @@ class MWMovieDetailViewController: UIViewController {
         self.descriptionView.snp.makeConstraints{ (make) in
             make.left.right.equalToSuperview().offset(16)
             make.top.equalTo(videoView.snp.bottom).offset(60)
-            make.height.equalTo(300)
         }
         
         self.descriptionTitleLabel.snp.makeConstraints{ (make) in
@@ -183,9 +228,15 @@ class MWMovieDetailViewController: UIViewController {
         }
         
         self.descriptionText.snp.makeConstraints{ (make) in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(self.descriptionTitleLabel).offset(8)
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.descriptionTitleLabel.snp.bottom).offset(8)
         }
+        
+//        self.collectionView.snp.makeConstraints { (make) in
+//            make.left.right.equalToSuperview()
+//            make.top.equalTo(self.descriptionView.snp.bottom).offset(20)
+//            make.height.equalTo(142)
+//        }
     }
     
     
@@ -206,9 +257,9 @@ class MWMovieDetailViewController: UIViewController {
         super.viewDidLoad()
       
         self.setupViews()
-        self.setConstraints()
+//        self.setConstraints()
         self.fetchMovieDetail()
-        self.playVideo()
+//        self.playVideo()
     }
     
     init(movie: MWMovie) {
@@ -223,6 +274,36 @@ class MWMovieDetailViewController: UIViewController {
     
     // MARK: - CollectionView Extension
     
+}
+extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    func updateCellWith(row: [MWMovieCell]) {
+        self.collectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
+            if let movie = movie {
+            let i = MWGenericCollectionViewCellModel(movie: ((self.movie?.returnAsMovie())!))
+                cell.item = i
+                return cell
+            } else {return UICollectionViewCell()}
+            
+        }
+        return UICollectionViewCell()
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return edgeInsets
+    }
     
 }
+

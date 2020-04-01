@@ -14,10 +14,10 @@ class MWMovieCell: UICollectionViewCell {
     // MARK: - Variables
 
     private let group = DispatchGroup()
-    var movie: MWMovie? {
+    var item: MWGenericCollectionViewCellModel? {
         didSet {
-            guard let movie = movie else { return }
-            self.set(movie: movie)
+            guard let item = item else { return }
+            self.configure(item: item)
         }
     }
     
@@ -83,14 +83,17 @@ class MWMovieCell: UICollectionViewCell {
     
     // MARK: - Functions
 
-    func set(movie: MWMovie) {
-        if let posterPath = movie.poster_path,
+    func configure(item: MWGenericCollectionViewCellModel) {
+        if let posterPath = item.image,
            let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = UIImage(named: "movieImage")
         }
-        self.titleLabel.text = movie.title
-        self.genreAndYear.text = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "
+        self.titleLabel.text = item.firstTitle
+        self.genreAndYear.text = item.secondTitle
+//        self.genreAndYear.text = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "
     }
+    
+    func set(){}
 }

@@ -17,7 +17,7 @@ struct MWMovieDetailResult: Decodable {
     let vote_average: Double
     let overview: String
     var videos: MWMovieVideoResponse?
-    
+    var credits: MWCreditsResponse?
     
     func returnAsMovie() -> MWMovie {
         let genreIds = genres?.compactMap { $0.id } ?? []
@@ -30,4 +30,16 @@ struct MWMovieDetailResult: Decodable {
                        overview: overview
                        )
     }
+}
+
+struct MWCreditsResponse: Decodable {
+    let cast: [Cast]
+}
+
+struct Cast: Decodable {
+    let cast_id: Int
+    let character: String
+    let id: Int
+    let name: String
+    let profile_path: String?
 }

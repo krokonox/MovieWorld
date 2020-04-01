@@ -74,7 +74,6 @@ class MWNetwork {
                     self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
                     return
             }
-
             switch (httpResponse.statusCode) {
             case 200...300:
                 do {

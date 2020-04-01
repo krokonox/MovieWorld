@@ -137,7 +137,8 @@ extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
-            cell.movie = movies[indexPath.row]
+            let i = MWGenericCollectionViewCellModel(movie: movies[indexPath.row])
+            cell.item = i
             return cell
         }
         return UICollectionViewCell()
