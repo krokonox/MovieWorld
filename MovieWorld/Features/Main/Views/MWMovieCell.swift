@@ -18,6 +18,7 @@ class MWMovieCell: UICollectionViewCell {
         didSet {
             guard let item = item else { return }
             self.configure(item: item)
+            self.setupView()
         }
     }
     
@@ -65,19 +66,20 @@ class MWMovieCell: UICollectionViewCell {
     }
     
     private func setUpConstrants() {
+        let imageSize = self.item?.imageSize ?? 185
         self.imageView.snp.makeConstraints { (make) in
-            make.height.equalTo(180)
+            make.height.equalTo(imageSize)
             make.left.right.equalToSuperview().offset(10)
         }
         
         self.titleLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(15)
-            make.top.equalTo(imageView).offset(190)
+            make.top.equalTo(imageView).offset(imageSize)
         }
         
         self.genreAndYear.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(15)
-            make.bottom.equalToSuperview().offset(50)
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
     }
     
@@ -85,14 +87,13 @@ class MWMovieCell: UICollectionViewCell {
 
     func configure(item: MWGenericCollectionViewCellModel) {
         if let posterPath = item.image,
-           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
+            let imageURL = URL(string: "https://image.tmdb.org/t/p/w\(item.imageSize)" + posterPath) {
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = UIImage(named: "movieImage")
         }
         self.titleLabel.text = item.firstTitle
         self.genreAndYear.text = item.secondTitle
-//        self.genreAndYear.text = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date) "
     }
     
     func set(){}

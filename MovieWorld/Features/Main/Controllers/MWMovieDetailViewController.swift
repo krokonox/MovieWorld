@@ -22,7 +22,8 @@ class MWMovieDetailViewController: UIViewController {
     private var avPlayer: AVPlayer!
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
-    private var itemSize = CGSize(width: 130, height: 180)
+    private var itemSize = CGSize(width: 90, height: 180)
+    
     var movieId: Int? {
         return movieCell?.id
     }
@@ -34,24 +35,34 @@ class MWMovieDetailViewController: UIViewController {
     var movie: MWMovieDetailResult? {
         didSet {
             self.setupViews()
+            self.collectionView.reloadData()
         }
     }
     
     // MARK: - Lazy variables
     
+    private lazy var refreshControl: UIRefreshControl = { // Is it possible to reuse it from MWMainViewController?
+        let refreshCntrl = UIRefreshControl()
+        refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshCntrl.addTarget(self, action: #selector(refresh),
+                               for: UIControl.Event.valueChanged)
+        return refreshCntrl
+    }()
+    
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView(frame: UIScreen.main.bounds)
+        view.addSubview(self.refreshControl)
         view.addSubview(self.contentView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    lazy var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.addSubview(self.cell)
         view.addSubview(self.videoView)
         view.addSubview(self.descriptionView)
-//        view.addSubview(self.collectionView)
+        view.addSubview(self.collectionView)
         return view
     }()
     
@@ -62,11 +73,10 @@ class MWMovieDetailViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 8.0
         layout.minimumInteritemSpacing = 10.0
-        
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.backgroundColor = .white
         cv.delegate = self
         cv.dataSource = self
-        cv.backgroundColor = .white
         cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
         cv.reloadData()
         return cv
@@ -84,14 +94,14 @@ class MWMovieDetailViewController: UIViewController {
         return view
     }()
     
-    lazy var descriptionView: UIView = {
+    private lazy var descriptionView: UIView = {
         let view = UIView()
         view.addSubview(self.descriptionTitleLabel)
         view.addSubview(self.descriptionText)
         return view
     }()
     
-    lazy var descriptionTitleLabel: UILabel = {
+    private lazy var descriptionTitleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "Description"
         titleLabel.font = .boldSystemFont(ofSize: 17)
@@ -99,13 +109,13 @@ class MWMovieDetailViewController: UIViewController {
         return titleLabel
     }()
     
-    lazy var descriptionText: UILabel = {
+    private lazy var descriptionText: UILabel = {
         let description = UILabel()
         description.numberOfLines = 0
         return description
     }()
     
-    lazy var playButton: UIButton = {
+    private lazy var playButton: UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
@@ -136,6 +146,7 @@ class MWMovieDetailViewController: UIViewController {
         }
         
         self.dispatch.notify(queue: .main) { [weak self] in
+            self?.refreshControl.endRefreshing()
             self?.activityIndicator.stopAnimating()
         }
     }
@@ -203,7 +214,7 @@ class MWMovieDetailViewController: UIViewController {
         
         self.cell.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(140)
+            make.top.equalToSuperview()
             make.height.equalTo(142)
         }
         
@@ -232,11 +243,11 @@ class MWMovieDetailViewController: UIViewController {
             make.top.equalTo(self.descriptionTitleLabel.snp.bottom).offset(8)
         }
         
-//        self.collectionView.snp.makeConstraints { (make) in
-//            make.left.right.equalToSuperview()
-//            make.top.equalTo(self.descriptionView.snp.bottom).offset(20)
-//            make.height.equalTo(142)
-//        }
+        self.collectionView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
+            make.height.equalTo(280)
+        }
     }
     
     
@@ -251,20 +262,22 @@ class MWMovieDetailViewController: UIViewController {
         self.playVideo()
     }
     
+    @objc func refresh() {
+        self.fetchMovieDetail()
+    }
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
       
         self.setupViews()
-//        self.setConstraints()
+
         self.fetchMovieDetail()
-//        self.playVideo()
+
     }
     
     init(movie: MWMovie) {
         self.movieCell = movie
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -282,20 +295,19 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return self.movie?.credits?.cast.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
-            if let movie = movie {
-            let i = MWGenericCollectionViewCellModel(movie: ((self.movie?.returnAsMovie())!))
-                cell.item = i
-                return cell
-            } else {return UICollectionViewCell()}
-            
+            let cast = MWGenericCollectionViewCellModel(cast: (self.movie?.credits?.cast[indexPath.row])!)
+            cell.item = cast
+            return cell
         }
         return UICollectionViewCell()
     }
+    
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
