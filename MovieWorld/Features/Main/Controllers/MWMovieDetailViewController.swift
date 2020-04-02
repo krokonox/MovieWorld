@@ -22,11 +22,8 @@ class MWMovieDetailViewController: UIViewController {
     private var avPlayer: AVPlayer!
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
-    private var itemSize = CGSize(width: 90, height: 180)
-    
-    var movieId: Int? {
-        return movieCell?.id
-    }
+    private var itemSize = CGSize(width: 90, height: 150)
+   
     var movieCell: MWMovie? {
         didSet {
             self.updateMovieDetail()
@@ -246,17 +243,12 @@ class MWMovieDetailViewController: UIViewController {
         self.collectionView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
-            make.height.equalTo(280)
+            make.height.equalTo(self.itemSize.height)
         }
     }
     
     
     // MARK: - Functions
-    
-    func set(movie: MWMovie) {
-        self.movieCell = movie
-        self.cell.layout.set(movie: movieCell!)
-    }
     
     @objc func playVideoButtonTapped() {
         self.playVideo()
@@ -265,15 +257,13 @@ class MWMovieDetailViewController: UIViewController {
     @objc func refresh() {
         self.fetchMovieDetail()
     }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         self.setupViews()
-
         self.fetchMovieDetail()
-
     }
     
     init(movie: MWMovie) {
@@ -285,7 +275,7 @@ class MWMovieDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - CollectionView Extension
+// MARK: - CollectionView Extension
     
 }
 extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -307,8 +297,6 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
         return UICollectionViewCell()
     }
     
-    
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -318,4 +306,5 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
 }
+
 

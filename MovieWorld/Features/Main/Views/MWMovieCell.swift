@@ -95,6 +95,4 @@ class MWMovieCell: UICollectionViewCell {
         self.titleLabel.text = item.firstTitle
         self.genreAndYear.text = item.secondTitle
     }
-    
-    func set(){}
 }

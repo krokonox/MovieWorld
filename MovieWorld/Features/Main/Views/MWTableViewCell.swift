@@ -105,7 +105,6 @@ class MWTableViewCell: UITableViewCell {
             make.width.height.equalTo(buttonSize)
             make.top.equalTo(collectionView).offset(14)
         }
-
     }
     
     // MARK: - Functions
@@ -137,11 +136,15 @@ extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
-            let i = MWGenericCollectionViewCellModel(movie: movies[indexPath.row])
-            cell.item = i
+            let movie = MWGenericCollectionViewCellModel(movie: movies[indexPath.row])
+            cell.item = movie
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        MWI.sh.push(vc: MWMovieDetailViewController(movie: self.movies[indexPath.row]))
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
