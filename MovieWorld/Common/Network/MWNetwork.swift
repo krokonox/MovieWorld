@@ -62,7 +62,6 @@ class MWNetwork {
 //            return
 //        }
         let request = URLRequest(url: urlComponents.url!)
-        
         session.dataTask(with: request) { [weak self] data, response, error in
             
             if error != nil {
@@ -94,6 +93,19 @@ class MWNetwork {
         }.resume()
     }
     
+//    func initRequest(path: URLPaths) {
+//        self.dispatch.enter()
+//        self.request(urlPath: path.rawValue,
+//                          successHandler: { [weak self] (_ response: MWApiResults) in
+//                            self?.movies[path.description] = response.results
+//                            self?.dispatch.leave()
+//        }) { [weak self] (error) in
+//            self?.showError(error.localizedDescription)
+//        }
+//    }
+//    func getMovieDetail(with movieId: Int) {
+//        request(urlPath: <#T##String#>, parameters: <#T##[String : String]?#>, successHandler: <#T##(Decodable) -> Void#>, errorHandler: <#T##(Error) -> Void#>)
+//    }
     private func handleErrors(errorHandler: @escaping(_ error: Error) -> Void, error: Error) {
         DispatchQueue.main.async {
             errorHandler(error)

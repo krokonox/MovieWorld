@@ -11,8 +11,11 @@
 		53939C52370EA1FDA478A862 /* Pods_MovieWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D670443D9A78BF620656 /* Pods_MovieWorldTests.framework */; };
 		8403046E242FB43500924C97 /* MWGenericMovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403046D242FB43500924C97 /* MWGenericMovieDetailView.swift */; };
 		840304702434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */; };
-		840304722434F3B500924C97 /* MWGenericCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840304712434F3B500924C97 /* MWGenericCollectionView.swift */; };
 		84060744240037640071C42A /* MWMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84060743240037640071C42A /* MWMainTabBarController.swift */; };
+		8414D60D243B3CED0087D00F /* MWMovieCastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414D60C243B3CED0087D00F /* MWMovieCastViewController.swift */; };
+		8414D610243B3D5E0087D00F /* MWCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414D60F243B3D5E0087D00F /* MWCollectionViewDataSource.swift */; };
+		8414D613243B3F180087D00F /* MWCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414D612243B3F180087D00F /* MWCollectionViewLayout.swift */; };
+		8414D615243E3A6B0087D00F /* MWCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414D614243E3A6B0087D00F /* MWCollectionView.swift */; };
 		84833E19242CBFA600C8E67B /* MWMovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */; };
 		84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E1A242CDB8700C8E67B /* MWMovieCast.swift */; };
 		84A649B12423B55A00B809E8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84A649AF2423B55A00B809E8 /* Model.xcdatamodeld */; };
@@ -76,8 +79,11 @@
 		48B47F2D75002E9B6A8011E8 /* Pods-MovieWorld-MovieWorldUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld-MovieWorldUITests/Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8403046D242FB43500924C97 /* MWGenericMovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenericMovieDetailView.swift; sourceTree = "<group>"; };
 		8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenericCollectionViewCellModel.swift; sourceTree = "<group>"; };
-		840304712434F3B500924C97 /* MWGenericCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MWGenericCollectionView.swift; path = MovieWorld/Features/Main/Models/MWGenericCollectionView.swift; sourceTree = SOURCE_ROOT; };
 		84060743240037640071C42A /* MWMainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainTabBarController.swift; sourceTree = "<group>"; };
+		8414D60C243B3CED0087D00F /* MWMovieCastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCastViewController.swift; sourceTree = "<group>"; };
+		8414D60F243B3D5E0087D00F /* MWCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		8414D612243B3F180087D00F /* MWCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCollectionViewLayout.swift; sourceTree = "<group>"; };
+		8414D614243E3A6B0087D00F /* MWCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCollectionView.swift; sourceTree = "<group>"; };
 		84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieDetailViewController.swift; sourceTree = "<group>"; };
 		84833E1A242CDB8700C8E67B /* MWMovieCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCast.swift; sourceTree = "<group>"; };
 		84A649B02423B55A00B809E8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -200,21 +206,10 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		8406073E23FFE5950071C42A /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				84FBD7D823FF00C200245B17 /* MWMainViewController.swift */,
-				84FC4521241BF19800E931D6 /* MWMoviesListViewController.swift */,
-				84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		8406073F23FFE59D0071C42A /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				84FCE253240580850070A11C /* MWMovie.swift */,
-				84F4F6AB240A3EC100C01562 /* MWApiResults.swift */,
 				84833E1A242CDB8700C8E67B /* MWMovieCast.swift */,
 				8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */,
 			);
@@ -224,10 +219,9 @@
 		8406074023FFE5AC0071C42A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				84FCE257240581B20070A11C /* MWMovieCell.swift */,
-				84FCE2592406D88E0070A11C /* MWTableViewCell.swift */,
-				84A649B22426812B00B809E8 /* MWCollectionViewGenreCell.swift */,
 				8403046D242FB43500924C97 /* MWGenericMovieDetailView.swift */,
+				84FCE257240581B20070A11C /* MWMovieCell.swift */,
+				8414D614243E3A6B0087D00F /* MWCollectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +240,56 @@
 				84FB6F732403C5D2004685C4 /* MWCategoryCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		8414D608243B3BDF0087D00F /* UpcomingMovies */ = {
+			isa = PBXGroup;
+			children = (
+				84FBD7D823FF00C200245B17 /* MWMainViewController.swift */,
+				84FCE2592406D88E0070A11C /* MWTableViewCell.swift */,
+			);
+			path = UpcomingMovies;
+			sourceTree = "<group>";
+		};
+		8414D609243B3BF30087D00F /* MovieDetail */ = {
+			isa = PBXGroup;
+			children = (
+				84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */,
+			);
+			path = MovieDetail;
+			sourceTree = "<group>";
+		};
+		8414D60A243B3C080087D00F /* MovieList */ = {
+			isa = PBXGroup;
+			children = (
+				84FC4521241BF19800E931D6 /* MWMoviesListViewController.swift */,
+				84A649B22426812B00B809E8 /* MWCollectionViewGenreCell.swift */,
+			);
+			path = MovieList;
+			sourceTree = "<group>";
+		};
+		8414D60B243B3C1C0087D00F /* MovieCast */ = {
+			isa = PBXGroup;
+			children = (
+				8414D60C243B3CED0087D00F /* MWMovieCastViewController.swift */,
+			);
+			path = MovieCast;
+			sourceTree = "<group>";
+		};
+		8414D60E243B3D310087D00F /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				8414D60F243B3D5E0087D00F /* MWCollectionViewDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		8414D611243B3F050087D00F /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				8414D612243B3F180087D00F /* MWCollectionViewLayout.swift */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		849EC94F240A36F60057DFF9 /* Resources */ = {
@@ -346,8 +390,9 @@
 		84FBD7CB23FEFFE400245B17 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8414D611243B3F050087D00F /* Layout */,
+				8414D60E243B3D310087D00F /* DataSource */,
 				84FC452A24234C5700E931D6 /* CoreData */,
-				84FF85D52413771F00A7E848 /* Helpers */,
 				84FF85C524121E0200A7E848 /* Business Logic */,
 				84F4F6A6240A3C2200C01562 /* Network */,
 				84FBD7DA23FF00CC00245B17 /* Navigation */,
@@ -370,9 +415,12 @@
 		84FBD7D123FF006300245B17 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				8414D60B243B3C1C0087D00F /* MovieCast */,
+				8414D60A243B3C080087D00F /* MovieList */,
+				8414D609243B3BF30087D00F /* MovieDetail */,
+				8414D608243B3BDF0087D00F /* UpcomingMovies */,
 				8406074023FFE5AC0071C42A /* Views */,
 				8406073F23FFE59D0071C42A /* Models */,
-				8406073E23FFE5950071C42A /* Controllers */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -406,7 +454,6 @@
 			isa = PBXGroup;
 			children = (
 				84FF85C124110E1400A7E848 /* MWRedButton.swift */,
-				840304712434F3B500924C97 /* MWGenericCollectionView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -442,17 +489,11 @@
 		84FF85CA2412276300A7E848 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				84F4F6AB240A3EC100C01562 /* MWApiResults.swift */,
 				84FF85CB2412278300A7E848 /* MWGenre.swift */,
 				84FF85CD2412283D00A7E848 /* MWMovieDetailResult.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		84FF85D52413771F00A7E848 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -703,16 +744,17 @@
 				84FCE25A2406D88E0070A11C /* MWTableViewCell.swift in Sources */,
 				84FC452C24234C6F00E931D6 /* MWCoreDataManager.swift in Sources */,
 				84FBD7E023FF017A00245B17 /* MWInterface.swift in Sources */,
+				8414D60D243B3CED0087D00F /* MWMovieCastViewController.swift in Sources */,
 				84FF85C02410DE1F00A7E848 /* UIImageView+Ex.swift in Sources */,
 				84FCE258240581B20070A11C /* MWMovieCell.swift in Sources */,
 				84FF85CE2412283D00A7E848 /* MWMovieDetailResult.swift in Sources */,
+				8414D613243B3F180087D00F /* MWCollectionViewLayout.swift in Sources */,
 				8403046E242FB43500924C97 /* MWGenericMovieDetailView.swift in Sources */,
 				84F9335623F835F00046F243 /* AppDelegate.swift in Sources */,
 				84FF85C224110E1400A7E848 /* MWRedButton.swift in Sources */,
 				84FF85CC2412278300A7E848 /* MWGenre.swift in Sources */,
 				84E4461423FAA35A00505A0B /* Constants.swift in Sources */,
 				84FF85C724121E1B00A7E848 /* MWConfiguration.swift in Sources */,
-				840304722434F3B500924C97 /* MWGenericCollectionView.swift in Sources */,
 				84FBD7D523FF009F00245B17 /* MWCategoryViewController.swift in Sources */,
 				84FBD7DE23FF016700245B17 /* MWViewController.swift in Sources */,
 				84F4F6A8240A3C4C00C01562 /* MWNetwork.swift in Sources */,
@@ -721,6 +763,8 @@
 				84A649B12423B55A00B809E8 /* Model.xcdatamodeld in Sources */,
 				84833E19242CBFA600C8E67B /* MWMovieDetailViewController.swift in Sources */,
 				840304702434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift in Sources */,
+				8414D610243B3D5E0087D00F /* MWCollectionViewDataSource.swift in Sources */,
+				8414D615243E3A6B0087D00F /* MWCollectionView.swift in Sources */,
 				84F4F6B4240AD5F600C01562 /* APIKey.swift in Sources */,
 				84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */,
 				84A649B32426812B00B809E8 /* MWCollectionViewGenreCell.swift in Sources */,

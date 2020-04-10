@@ -107,6 +107,7 @@ class MWMainViewController: UIViewController {
             self.initRequest(path: self.paths[rowIndex])
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        
     }
 }
 
@@ -122,7 +123,7 @@ extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
         let movieCategory = self.paths[indexPath.row].description
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
         
-        cell.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .touchUpInside)
+        cell.collection.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .touchUpInside)
         
         if let movies = movies[movieCategory] {
             cell.set(movies: movies, title: movieCategory, category: paths[indexPath.row].rawValue)

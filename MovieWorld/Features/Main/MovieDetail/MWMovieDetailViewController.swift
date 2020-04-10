@@ -21,7 +21,6 @@ class MWMovieDetailViewController: UIViewController {
     private let dispatch = DispatchGroup()
     private var avPlayer: AVPlayer!
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
-    private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 90, height: 150)
    
     var movieCell: MWMovie? {
@@ -32,7 +31,8 @@ class MWMovieDetailViewController: UIViewController {
     var movie: MWMovieDetailResult? {
         didSet {
             self.setupViews()
-            self.collectionView.reloadData()
+            self.collectionView.collectionView.reloadData()
+            print(movie?.credits?.crew)
         }
     }
     
@@ -62,23 +62,7 @@ class MWMovieDetailViewController: UIViewController {
         view.addSubview(self.collectionView)
         return view
     }()
-    
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = self.sectionInset
-        layout.itemSize = self.itemSize
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 8.0
-        layout.minimumInteritemSpacing = 10.0
-        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.delegate = self
-        cv.dataSource = self
-        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
-        cv.reloadData()
-        return cv
-    }()
-    
+
     lazy var cell: View<MovieDetailViewLayout> = {
         var movieCell = View<MovieDetailViewLayout>(frame: .zero)
         return movieCell
@@ -120,16 +104,23 @@ class MWMovieDetailViewController: UIViewController {
         button.addTarget(self, action: #selector(playVideoButtonTapped), for: .allTouchEvents)
         return button
     }()
+    private lazy var collectionView: MWCollectionView = {
+        let collection = MWCollectionView(frame: .zero, itemSize: self.itemSize)
+        collection.collectionView.delegate = self
+        collection.collectionView.dataSource = self
+        collection.reloadButton.addTarget(self, action: #selector(reloadCast), for: .allTouchEvents)
+        return collection
+    }()
     
     // MARK: - Private Functions
-    
+    //"movie/" + String(movieId)
     private func fetchMovieDetail() {
         guard let movieId = movieCell?.id else {
             return
         }
         activityIndicator.startAnimating()
         self.dispatch.enter()
-        MWNet.sh.request(urlPath: "movie/" + String(movieId),
+        MWNet.sh.request(urlPath: Endpoints.getDetail(id: movieId).path,
                          parameters: ["append_to_response" : "videos,credits"],
                          successHandler: { [weak self] (_ response: MWMovieDetailResult) in
                             
@@ -146,6 +137,11 @@ class MWMovieDetailViewController: UIViewController {
             self?.refreshControl.endRefreshing()
             self?.activityIndicator.stopAnimating()
         }
+    }
+    
+    @objc func reloadCast() {
+        self.fetchMovieDetail()
+        self.collectionView.collectionView.reloadData()
     }
     
     private func updateMovieDetail() {}
@@ -243,7 +239,7 @@ class MWMovieDetailViewController: UIViewController {
         self.collectionView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
-            make.height.equalTo(self.itemSize.height)
+            make.height.equalTo(280)
         }
     }
     
@@ -281,7 +277,7 @@ class MWMovieDetailViewController: UIViewController {
 extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func updateCellWith(row: [MWMovieCell]) {
-        self.collectionView.reloadData()
+        self.collectionView.collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
