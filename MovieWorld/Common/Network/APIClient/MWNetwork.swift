@@ -67,7 +67,7 @@ class MWNetwork {
             if error != nil {
                 self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
             }
-
+            print(urlComponents.url!)
             guard let httpResponse = response as? HTTPURLResponse,
                 let receivedData = data else {
                     self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)

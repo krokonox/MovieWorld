@@ -114,7 +114,7 @@ final class MovieDetailViewLayout: ViewLayout {
     
     func set(movie: MWMovie) {
         if let posterPath = movie.poster_path,
-           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
+           let imageURL = URL(string: Endpoints.getImage(size: 92, profilePath: posterPath).path) {
             
             self.movieImageView.load(url: imageURL)
         } else {

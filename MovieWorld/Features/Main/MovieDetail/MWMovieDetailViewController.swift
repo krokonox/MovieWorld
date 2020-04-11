@@ -32,7 +32,6 @@ class MWMovieDetailViewController: UIViewController {
         didSet {
             self.setupViews()
             self.collectionView.collectionView.reloadData()
-            print(movie?.credits?.crew)
         }
     }
     
@@ -101,7 +100,7 @@ class MWMovieDetailViewController: UIViewController {
         button.clipsToBounds = true
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.setImage(UIImage(named: "PlayButton"), for: .normal)
-        button.addTarget(self, action: #selector(playVideoButtonTapped), for: .allTouchEvents)
+        button.addTarget(self, action: #selector(playVideoButtonTapped), for: .touchUpInside)
         return button
     }()
     private lazy var collectionView: MWCollectionView = {
@@ -109,6 +108,7 @@ class MWMovieDetailViewController: UIViewController {
         collection.collectionView.delegate = self
         collection.collectionView.dataSource = self
         collection.reloadButton.addTarget(self, action: #selector(reloadCast), for: .allTouchEvents)
+        collection.redButton.addTarget(self, action: #selector(pushVC), for: .touchUpInside)
         return collection
     }()
     
@@ -254,6 +254,11 @@ class MWMovieDetailViewController: UIViewController {
         self.fetchMovieDetail()
     }
     
+    @objc func pushVC() {
+        let vc = MWMovieCreditListViewController()
+        vc.set(credits: (self.movie?.credits?.cast) ?? [])
+        MWI.sh.push(vc: vc)
+    }
     // MARK: - Lifecycle
     
     override func viewDidLoad() {

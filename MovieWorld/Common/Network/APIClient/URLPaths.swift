@@ -42,24 +42,26 @@ enum Endpoints {
     case getVideos(id: Int)
     case getCredits(id: Int)
     case getPersonDetail(id: Int)
+    case getImage(size: Int, profilePath: String)
 }
 
 extension Endpoints {
     var path : String {
         switch self {
         case .getByGenreId:
-            return "/3/discover/movie"
+            return "discover/movie"
         case .search:
-            return "/3/search/movie"
+            return "search/movie"
         case .getDetail(let id):
             return "movie/\(id)"
         case .getVideos(let id):
-            return "/3/movie/\(id)/videos"
+            return "movie/\(id)/videos"
         case .getCredits(let id):
-            return "/3/movie/\(id)/credits"
+            return "movie/\(id)/credits"
         case .getPersonDetail(let id):
-            return "/3/person/\(id)"
-
+            return "person/\(id)"
+        case .getImage(let id, let path):
+            return "https://image.tmdb.org/t/p/w\(id)\(path)"
         }
     }
 }

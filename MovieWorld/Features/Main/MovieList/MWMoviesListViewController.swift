@@ -40,7 +40,6 @@ class MWMoviesListViewController: UIViewController {
         tv.separatorStyle = .none
         tv.tableHeaderView = header
         tv.register(TableViewCell<MovieDetailViewLayout>.self, forCellReuseIdentifier: "cell")
-        
         return tv
     }()
  

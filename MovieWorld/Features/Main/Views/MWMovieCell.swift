@@ -87,7 +87,7 @@ class MWMovieCell: UICollectionViewCell {
 
     func configure(item: MWGenericCollectionViewCellModel) {
         if let posterPath = item.image,
-            let imageURL = URL(string: "https://image.tmdb.org/t/p/w\(item.imageSize)" + posterPath) {
+            let imageURL = URL(string: Endpoints.getImage(size: item.imageSize, profilePath: posterPath).path) {
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = UIImage(named: "movieImage")
