@@ -14,6 +14,8 @@ typealias MWI = MWInterface
 
 class MWInterface {
     
+    // MARK: - Variables
+    
     static let sh = MWInterface()
     
     weak var window: UIWindow?
@@ -21,6 +23,8 @@ class MWInterface {
     private lazy var tabBarController = MWMainTabBarController()
     private lazy var initController = MWInitController()
     private init() {}
+    
+    // MARK: - Functions
     
     func setup(window: UIWindow) {
         self.window = window
@@ -47,9 +51,7 @@ class MWInterface {
             newVavBar.configureWithDefaultBackground()
             newVavBar.configureWithDefaultBackground()
             standartNavBar.scrollEdgeAppearance = newVavBar
-        } else {
-            // Fallback on earlier versions
-        }
+        } 
     }
     
     func push(vc: UIViewController) {
