@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum MWError: Error {
+enum MWError: Error {
     case incorrectUrl
     case networkError
     case serverError
@@ -58,7 +58,5 @@ extension MWError {
             static let networkError = "Failed to connect. Please, try again later."
             static let unknownError = "Something went wrong, try again later."
         }
-        
-    }
-    
+    }  
 }
