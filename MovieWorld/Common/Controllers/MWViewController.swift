@@ -14,8 +14,7 @@ class MWViewController: UIViewController {
     var backgroundColor: UIColor
     var nextVC: UIViewController
 
-    init(_ name: String, _ backgroundColor: UIColor, _ nextVC: UIViewController) {
-        
+    init(_ name: String, _ backgroundColor: UIColor, _ nextVC: UIViewController) {    
         self.name = name
         self.backgroundColor = backgroundColor
         self.nextVC = nextVC
