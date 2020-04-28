@@ -5,15 +5,15 @@
 //  Created by Admin on 25/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
-import Foundation
+
 import UIKit
 import SnapKit
 
 class MWMovieCell: UICollectionViewCell {
     
     // MARK: - Variables
-
-    private let group = DispatchGroup()
+    
+    private let imageBaseUrl = "https://image.tmdb.org/t/p/w\"
     var item: MWGenericCollectionViewCellModel? {
         didSet {
             guard let item = item else { return }
@@ -21,6 +21,11 @@ class MWMovieCell: UICollectionViewCell {
             self.setupView()
         }
     }
+    var imageSize: Int {
+        return self.item?.imageSize ?? 185
+    }
+    
+    // MARK: - Gui Variables 
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -62,11 +67,10 @@ class MWMovieCell: UICollectionViewCell {
         self.addSubview(imageView)
         self.addSubview(titleLabel)
         self.addSubview(genreAndYear)
-        setUpConstrants()
+        self.setUpConstrants()
     }
     
     private func setUpConstrants() {
-        let imageSize = self.item?.imageSize ?? 185
         self.imageView.snp.makeConstraints { (make) in
             make.height.equalTo(imageSize)
             make.left.right.equalToSuperview().offset(10)
@@ -87,7 +91,7 @@ class MWMovieCell: UICollectionViewCell {
 
     func configure(item: MWGenericCollectionViewCellModel) {
         if let posterPath = item.image,
-            let imageURL = URL(string: "https://image.tmdb.org/t/p/w\(item.imageSize)" + posterPath) {
+            let imageURL = URL(string: imageBaseUrl + item.imageSize + posterPath) {
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = UIImage(named: "movieImage")
