@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import CoreData
 
@@ -26,7 +25,7 @@ class MWInitController: UIViewController {
         
         self.view.backgroundColor = .white
         
-        if (MWCoreDataManager.sh.entityIsEmpty(entity: "GenreModel")) == true {
+        if (MWCoreDataManager.sh.entityIsEmpty(entity: "GenreModel")) {
             self.loadGenres()
         }
         self.loadConfiguration()
@@ -49,7 +48,7 @@ class MWInitController: UIViewController {
         },
                          errorHandler: { ( MWError ) in
                             print(MWError.localizedDescription)})
-        dispatchGroup.leave()
+        self.dispatchGroup.leave()
     }
     
     func loadConfiguration() {
