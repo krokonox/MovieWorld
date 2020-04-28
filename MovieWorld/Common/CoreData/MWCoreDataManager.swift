@@ -12,18 +12,11 @@ import UIKit
 
 class MWCoreDataManager {
     
+    // MARK: - Variables
+    
     static let sh: MWCoreDataManager = MWCoreDataManager()
     
     let documentsDirectory: URL
-    
-    private init() {
-        let docUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        if docUrls.count > 0 {
-            self.documentsDirectory = docUrls[0]
-        } else {
-            fatalError("documentDirectory not found")
-        }
-    }
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Model")
@@ -34,6 +27,17 @@ class MWCoreDataManager {
         }
         return container
     }()
+    
+    // MARK: - Initialization
+    
+    private init() {
+        let docUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        if docUrls.count > 0 {
+            self.documentsDirectory = docUrls[0]
+        } else {
+            fatalError("documentDirectory not found")
+        }
+    }
     
     // MARK: - Core Data Saving support
     
