@@ -27,8 +27,7 @@ struct MWMovieDetailResult: Decodable {
                        release_date: release_date,
                        poster_path: poster_path,
                        vote_average: vote_average,
-                       overview: overview
-                       )
+                       overview: overview)
     }
 }
 
