@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import  UIKit
 
 typealias MWNet = MWNetwork
@@ -38,13 +37,11 @@ class MWNetwork {
                                errorHandler: @escaping(Error) -> Void) {
         
         let url = "\(baseURL)\(urlPath)"
-        
-        
+ 
         var urlComponents: URLComponents {
             var components = URLComponents(string: url)!
             
             var queryItems = [URLQueryItem(name: "api_key", value: api_key)]
-            
             
             if let params = parameters {
                 queryItems.append(contentsOf: params.map {
@@ -55,12 +52,6 @@ class MWNetwork {
             return components
         }
         
-//        let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
-        
-//        guard let fullURL = URL(string: fullPath) else {
-//            errorHandler(MWError.incorrectUrl)
-//            return
-//        }
         let request = URLRequest(url: urlComponents.url!)
         
         session.dataTask(with: request) { [weak self] data, response, error in
