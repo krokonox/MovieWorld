@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
@@ -17,11 +16,16 @@ protocol ViewLayout {
 
 final class MovieDetailViewLayout: ViewLayout {
     
+    // MARK: - Variables
+    
     private let ImageSize = CGSize(width: 70, height: 100)
     private let edgeInsets = UIEdgeInsets(top: 10, left: 135, bottom: 10, right: 20)
+    private let imageBaseUrl = "https://image.tmdb.org/t/p/w185"
     var movie: MWMovie? {
         didSet {}
     }
+    
+    // MARK: - Gui Variables
     
     private lazy var movieStackView: UIStackView = {
         let stackView = UIStackView()
@@ -114,7 +118,7 @@ final class MovieDetailViewLayout: ViewLayout {
     
     func set(movie: MWMovie) {
         if let posterPath = movie.poster_path,
-           let imageURL = URL(string: "https://image.tmdb.org/t/p/w185" + posterPath) {
+           let imageURL = URL(string: imageBaseUrl + posterPath) {
             
             self.movieImageView.load(url: imageURL)
         } else {
@@ -132,11 +136,11 @@ final class MovieDetailViewLayout: ViewLayout {
         self.movieImageView.translatesAutoresizingMaskIntoConstraints = false
         self.movieStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(movieImageView)
-        view.addSubview(movieStackView)
-        view.addSubview(seperator)
+        self.view.addSubview(movieImageView)
+        self.view.addSubview(movieStackView)
+        self.view.addSubview(seperator)
         
-        makeConstraintsWithSnapKit()
+        self.makeConstraintsWithSnapKit()
     }
 }
 
