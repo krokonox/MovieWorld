@@ -5,7 +5,7 @@
 //  Created by Admin on 20/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
-import Foundation
+
 import UIKit
 import SnapKit
 
@@ -13,17 +13,16 @@ class MWMainViewController: UIViewController {
     
     // MARK: - Variables
     
+    private let cellId = "cellId"
+    private let paths = URLPaths.allCases
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
-    
-    private let paths = URLPaths.allCases
     private let MWNetwork: MWNet = MWNet.sh
-    private let cellId = "cellId"
-    
     var movies: [String: [MWMovie]] = [:] {
         didSet {}
     }
-  
+    // MARK: - Gui Variables
+    
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: self.view.bounds, style: .plain)
         tv.delegate = self
