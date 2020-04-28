@@ -16,14 +16,13 @@ import AVKit
 class MWMovieDetailViewController: UIViewController {
     
     // MARK: - Variables
-    
-    private var activityIndicator = UIActivityIndicatorView()
-    private let dispatch = DispatchGroup()
-    private var avPlayer: AVPlayer!
+ 
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 90, height: 150)
-   
+    private var activityIndicator = UIActivityIndicatorView()
+    private let dispatch = DispatchGroup()
+    private var avPlayer: AVPlayer!
     var movieCell: MWMovie? {
         didSet {
             self.updateMovieDetail()
@@ -127,16 +126,16 @@ class MWMovieDetailViewController: UIViewController {
         guard let movieId = movieCell?.id else {
             return
         }
-        activityIndicator.startAnimating()
+        self.activityIndicator.startAnimating()
         self.dispatch.enter()
         MWNet.sh.request(urlPath: "movie/" + String(movieId),
                          parameters: ["append_to_response" : "videos,credits"],
-                         successHandler: { [weak self] (_ response: MWMovieDetailResult) in
-                            
-                            self?.activityIndicator.stopAnimating()
-                            self?.movie = response
-                            self?.setupViews()
-                            self?.dispatch.leave()
+                         successHandler: { [weak self] (_ response: MWMovieDetailResult) in  
+                            guard let self = self else { return }
+                            self.activityIndicator.stopAnimating()
+                            self.movie = response
+                            self.setupViews()
+                            self.dispatch.leave()
                             
         }) { [weak self] (error) in
             self?.activityIndicator.stopAnimating()
@@ -151,11 +150,8 @@ class MWMovieDetailViewController: UIViewController {
     private func updateMovieDetail() {}
 
     private func playVideo() {
-        guard let movie = movie else { return }
+        guard let movie = movie, let video = movie.videos?.results.first else { return }
 
-        guard let video = movie.videos?.results.first else { return }
-
-        
         let playerVC = AVPlayerViewController()
         present(playerVC, animated: true, completion: nil)
         XCDYouTubeClient.default().getVideoWithIdentifier(video.key) {[weak self, weak playerVC] (video, error) in
@@ -306,5 +302,3 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
 }
-
-
