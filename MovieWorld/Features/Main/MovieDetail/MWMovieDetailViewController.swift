@@ -103,8 +103,15 @@ class MWMovieDetailViewController: UIViewController {
         button.addTarget(self, action: #selector(playVideoButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    
+    
     private lazy var collectionView: MWCollectionView = {
         let collection = MWCollectionView(frame: .zero, itemSize: self.itemSize)
+        
+            
+        
+    
         collection.collectionView.delegate = self
         collection.collectionView.dataSource = self
         collection.reloadButton.addTarget(self, action: #selector(reloadCast), for: .allTouchEvents)
