@@ -8,13 +8,13 @@
 
 import UIKit
 
-class MWSearchViewController: UIViewController {
+class MWSearchViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Search"
-        self.view.backgroundColor = .white
+        self.title = NSLocalizedString("Search",
+                                       comment: "")
         MWI.sh.push(vc: UIViewController())
     }
 }

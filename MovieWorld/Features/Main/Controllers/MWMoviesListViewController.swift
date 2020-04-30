@@ -16,20 +16,18 @@ class MWMoviesListViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
     
-    private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)  // Not sure about the best variable order here
+    private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5) 
     private var sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 5, right: 15)
     private var itemSize = CGSize(width: 105, height: 26)
     private var category: String = ""
 
     var moviesToShow: [MWMovie] = []
-    var movies: [MWMovie] = [] {
-        didSet {}
-    }
-    
+    var movies: [MWMovie] = [] 
+        
     let genres = MWSys.sh.genres
     
     private lazy var tableView: UITableView = {
-        let tv = UITableView(frame: self.view.bounds, style: .plain)
+        let tv = UITableView(frame: .zero, style: .plain)
         let header = UIView(frame: CGRect(x: 0, y: 0, width: tv.frame.width, height: 80))
         header.addSubview(self.collectionView)
         tv.addSubview(self.refreshControl)
@@ -38,11 +36,12 @@ class MWMoviesListViewController: UIViewController {
         tv.rowHeight = 120
         tv.separatorStyle = .none
         tv.tableHeaderView = header
-        tv.register(TableViewCell<MovieDetailViewLayout>.self, forCellReuseIdentifier: "cell")
+        tv.register(TableViewCell<MovieDetailViewLayout>.self,
+                    forCellReuseIdentifier: TableViewCell<MovieDetailViewLayout>.reuseIdentifier)
         
         return tv
     }()
- 
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = self.sectionInset
@@ -53,7 +52,8 @@ class MWMoviesListViewController: UIViewController {
         
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         cv.backgroundColor = .white
-        cv.register(MWCollectionViewGenreCell.self, forCellWithReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier)
+        cv.register(MWCollectionViewGenreCell.self,
+                    forCellWithReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier)
         cv.dataSource = self
         cv.delegate = self
         cv.allowsMultipleSelection = true
@@ -133,11 +133,9 @@ class MWMoviesListViewController: UIViewController {
     @objc func refresh(sender: AnyObject) {
         self.activityIndicator.startAnimating()
         self.initRequest(path: self.category)
-        self.dispatch.notify(queue: .main) { [weak self] in
-                   self?.activityIndicator.stopAnimating()
-                   self?.refreshControl.endRefreshing()
-                   self?.tableView.reloadData()
-               }
+        self.activityIndicator.stopAnimating()
+        self.refreshControl.endRefreshing()
+        self.tableView.reloadData()
     }
     
     private func showError(_ error: String) {
@@ -157,7 +155,7 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TableViewCell<MovieDetailViewLayout>
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell<MovieDetailViewLayout>.reuseIdentifier) as? TableViewCell<MovieDetailViewLayout>
             else {
                 return UITableViewCell()
         }
@@ -195,7 +193,7 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWCollectionViewGenreCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier, for: indexPath) as? MWCollectionViewGenreCell {
             if let genre = self.genres[indexPath.row].name {
                 cell.set(text: genre)
             } else {

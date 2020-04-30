@@ -14,7 +14,6 @@ class MWTableViewCell: UITableViewCell {
     
     //--MARK: Variables
     
-    let cellID = "MWTableViewCell"
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 130, height: 180)
@@ -38,7 +37,7 @@ class MWTableViewCell: UITableViewCell {
         cv.delegate = self
         cv.dataSource = self
         cv.backgroundColor = .white
-        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: MWMovieCell.reuseIdentifier)
         cv.reloadData()
         return cv
     }()
@@ -68,7 +67,7 @@ class MWTableViewCell: UITableViewCell {
     // MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: "cell")
+        super.init(style: .default, reuseIdentifier: MWMovieCell.reuseIdentifier)
         self.setupViews()
     }
     
@@ -136,7 +135,7 @@ extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWMovieCell.reuseIdentifier, for: indexPath) as? MWMovieCell {
             let movie = MWGenericCollectionViewCellModel(movie: movies[indexPath.row])
             cell.item = movie
             return cell

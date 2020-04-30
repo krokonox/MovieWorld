@@ -46,7 +46,7 @@ struct MovieVideo: Codable {
 extension MWMovie {
     var posterURL: URL? {
         guard let poster_path = poster_path else { return nil }
-        return URL(string: poster_path )
+        return URL(string: poster_path)
     }
     var genres: [String] {
         return self.genre_ids.map { (MWSys.sh.getGenreName(for: Int($0)) ?? "-") }

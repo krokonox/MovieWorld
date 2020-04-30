@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class MWCategoryViewController: UIViewController {
+class MWCategoryViewController: MWViewController {
     
     // MARK: - Variables
     
@@ -23,7 +23,7 @@ class MWCategoryViewController: UIViewController {
         tv.delegate = self
         tv.dataSource = self
         tv.rowHeight = 305
-        tv.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
         
         return tv
@@ -33,9 +33,10 @@ class MWCategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Category"
-        self.view.backgroundColor = .white
+        
         self.makeConstraints()
+        self.title = NSLocalizedString("Category",
+                                       comment: "")
     }
     
     // MARK: - Constraints
@@ -56,9 +57,9 @@ extension MWCategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseIdentifier, for: indexPath)
         cell.backgroundColor = UIColor.white
-        cell.textLabel?.text = cellText
+        cell.textLabel?.text = self.cellText
         return cell
     }
 }

@@ -13,36 +13,25 @@ enum MWError: Error, LocalizedError {
     case networkError
     case serverError
     case parsingError
-    
     case unknown
-    // Return localized error message
+    
     var description: String {
         switch self {
         case .incorrectUrl:
-            return ErrorMessages.Default.incorrectUrl
+            return NSLocalizedString("You have entered the wrong URL, try another one.",
+                                     comment: "")
         case .serverError:
-            return ErrorMessages.Default.serverError
+            return NSLocalizedString("Server Error. Please, try again later.",
+                                     comment: "")
         case .networkError:
-            return ErrorMessages.Default.networkError
+            return NSLocalizedString("Failed to connect. Please, try again later.",
+                                     comment: "")
         case .parsingError:
-            return ErrorMessages.Default.parsingError
+            return NSLocalizedString("Failed to decode data, try again.",
+                                     comment: "")
         default:
-            return ErrorMessages.Default.unknownError
+            return NSLocalizedString("Something went wrong, try again later.",
+                                     comment: "")
         }
     }
-}
-
- // delete this
-extension MWError {
-    
-    struct ErrorMessages {
-        
-        struct Default {
-            static let serverError = "Server Error. Please, try again later."
-            static let parsingError = "Failed to decode data, try again."
-            static let incorrectUrl = "You have entered the wrong URL, try another one."
-            static let networkError = "Failed to connect. Please, try again later."
-            static let unknownError = "Something went wrong, try again later."
-        }
-    }  
 }

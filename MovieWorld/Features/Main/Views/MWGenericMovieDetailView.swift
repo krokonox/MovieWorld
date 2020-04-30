@@ -21,9 +21,7 @@ final class MovieDetailViewLayout: ViewLayout {
     private let imageSize = CGSize(width: 70, height: 100)
     private let edgeInsets = UIEdgeInsets(top: 10, left: 135, bottom: 10, right: 20)
     private let imageBaseUrl = "https://image.tmdb.org/t/p/w185"
-    var movie: MWMovie? {
-        didSet {}
-    }
+    var movie: MWMovie? 
     
     // MARK: - Gui Variables
     
@@ -144,7 +142,7 @@ final class MovieDetailViewLayout: ViewLayout {
     }
 }
 
-class View<Layout: ViewLayout> : UIView {
+class View<Layout: ViewLayout>: UIView {
     
     public let layout: Layout
     
@@ -159,7 +157,7 @@ class View<Layout: ViewLayout> : UIView {
     }
 }
 
-class TableViewCell<Layout: ViewLayout> : UITableViewCell {
+class TableViewCell<Layout: ViewLayout>: UITableViewCell {
     
     public let layout: Layout
     

@@ -9,17 +9,15 @@
 import UIKit
 import SnapKit
 
-class MWMainViewController: UIViewController {
+class MWMainViewController: MWViewController {
     
     // MARK: - Variables
     
-    private let cellI = "cell"
     private let paths = URLPaths.allCases
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
-    var movies: [String: [MWMovie]] = [:] {
-        didSet {}
-    }
+    var movies: [String: [MWMovie]] = [:]
+    
     // MARK: - Gui Variables
     
     private lazy var tableView: UITableView = {
@@ -46,8 +44,8 @@ class MWMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Main"
-        self.view.backgroundColor = .white
+        self.title = NSLocalizedString("Main",
+                                       comment: "")
         
         self.view.addSubview(tableView)
         self.makeConstraints()
@@ -58,7 +56,7 @@ class MWMainViewController: UIViewController {
 
     private func initRequest(path: URLPaths) {
         self.dispatch.enter()
-        MWNetwork.sh.request(urlPath: path.rawValue,
+        MWNet.sh.request(urlPath: path.rawValue,
                              successHandler: { [weak self] (_ response: MWApiResults) in
                                 self?.movies[path.description] = response.results
                                 self?.dispatch.leave()

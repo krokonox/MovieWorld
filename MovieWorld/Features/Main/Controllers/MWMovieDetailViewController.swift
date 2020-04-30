@@ -37,7 +37,7 @@ class MWMovieDetailViewController: UIViewController {
     
     // MARK: - Lazy variables
     
-    private lazy var refreshControl: UIRefreshControl = { // Is it possible to reuse it from MWMainViewController?
+    private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
         refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshCntrl.addTarget(self, action: #selector(refresh),
@@ -73,7 +73,7 @@ class MWMovieDetailViewController: UIViewController {
         cv.backgroundColor = .white
         cv.delegate = self
         cv.dataSource = self
-        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: MWMovieCell.reuseIdentifier)
         cv.reloadData()
         return cv
     }()
@@ -216,9 +216,8 @@ class MWMovieDetailViewController: UIViewController {
         }
         
         self.contentView.snp.makeConstraints{ (make) in
-            make.top.bottom.equalToSuperview()
             make.left.right.equalTo(self.view)
-            make.width.height.equalToSuperview()
+            make.height.width.top.bottom.equalToSuperview()
         }
         
         self.cell.snp.makeConstraints { (make) in
@@ -292,7 +291,7 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell,
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWMovieCell.reuseIdentifier, for: indexPath) as? MWMovieCell,
             let movieCast = self.movie?.credits?.cast[indexPath.row] {
             let cast = MWGenericCollectionViewCellModel(cast: movieCast)
             cell.item = cast
