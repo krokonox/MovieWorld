@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
@@ -54,7 +53,7 @@ class MWMoviesListViewController: UIViewController {
         
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         cv.backgroundColor = .white
-        cv.register(MWCollectionViewGenreCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(MWCollectionViewGenreCell.self, forCellWithReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier)
         cv.dataSource = self
         cv.delegate = self
         cv.allowsMultipleSelection = true
@@ -152,8 +151,7 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.moviesToShow.count == 0 {
             return movies.count
-        }
-        else {
+        } else {
             return self.moviesToShow.count
         }
     }
@@ -211,7 +209,7 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
-            self.showMoviesByGenre(genre: cell.collectionViewCellTitle.text!)
+            self.showMoviesByGenre(genre: cell.collectionViewCellTitle.text ?? "")
             self.tableView.reloadData()
         }
     }

@@ -55,7 +55,7 @@ class MWCoreDataManager {
     
     func saveGenre(name: String, id: Int16) -> GenreModel? {
         let managedContext = persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "GenreModel", in: managedContext)!
+        guard let entity = NSEntityDescription.entity(forEntityName: "GenreModel", in: managedContext) else { return nil }
         let genre = NSManagedObject(entity: entity, insertInto: managedContext)
         genre.setValue(name, forKey: "name")
         genre.setValue(id, forKey: "id")
@@ -71,20 +71,13 @@ class MWCoreDataManager {
     
     func update(name: String, id: Int16, genre: GenreModel) {
         let context = persistentContainer.viewContext
-        
+        genre.setValue(name, forKey: "name")
+        genre.setValue(id, forKey: "id")
         do {
-            genre.setValue(name, forKey: "name")
-            genre.setValue(id, forKey: "id")
-            do {
-                try context.save()
-                print("saved!")
-            } catch let error as NSError  {
-                print("Could not save \(error), \(error.userInfo)")
-            } catch {
-                
-            }
-        } catch {
-            print("Error with request: \(error)")
+            try context.save()
+            print("saved!")
+        } catch let error as NSError {
+            print("Could not save \(error), \(error.userInfo)")
         }
     }
     
@@ -107,8 +100,8 @@ class MWCoreDataManager {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
-        let res = try! managedContext.fetch(fetchRequest)
-        return res.count > 0 ? true : false
+        let res = try? managedContext.fetch(fetchRequest)
+        return (res?.count ?? 0) > 0 ? true : false
     }
     
     func deleteAllData(_ entity: String) {

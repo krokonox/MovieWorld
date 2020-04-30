@@ -13,23 +13,22 @@ class MWMainViewController: UIViewController {
     
     // MARK: - Variables
     
-    private let cellId = "cellId"
+    private let cellI = "cell"
     private let paths = URLPaths.allCases
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
-    private let MWNetwork: MWNet = MWNet.sh
     var movies: [String: [MWMovie]] = [:] {
         didSet {}
     }
     // MARK: - Gui Variables
     
     private lazy var tableView: UITableView = {
-        let tv = UITableView(frame: self.view.bounds, style: .plain)
+        let tv = UITableView(frame: .zero, style: .plain)
         tv.delegate = self
         tv.dataSource = self
         tv.addSubview(self.refreshControl)
         tv.rowHeight = 305
-        tv.register(MWTableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.register(MWTableViewCell.self, forCellReuseIdentifier: MWTableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
     
         return tv
@@ -59,12 +58,18 @@ class MWMainViewController: UIViewController {
 
     private func initRequest(path: URLPaths) {
         self.dispatch.enter()
-        self.MWNetwork.request(urlPath: path.rawValue,
-                          successHandler: { [weak self] (_ response: MWApiResults) in
-                            self?.movies[path.description] = response.results
-                            self?.dispatch.leave()
+        MWNetwork.sh.request(urlPath: path.rawValue,
+                             successHandler: { [weak self] (_ response: MWApiResults) in
+                                self?.movies[path.description] = response.results
+                                self?.dispatch.leave()
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
+        }
+    }
+    
+    private func makeConstraints() {
+        self.tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
     }
     
@@ -79,12 +84,6 @@ class MWMainViewController: UIViewController {
             self?.activityIndicator.stopAnimating()
             self?.refreshControl.endRefreshing()
             self?.tableView.reloadData()
-        }
-    }
-    
-    private func makeConstraints() {
-        self.tableView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
         }
     }
     
@@ -119,8 +118,9 @@ extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movieCategory = self.paths[indexPath.row].description
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWTableViewCell.reuseIdentifier, for: indexPath) as! MWTableViewCell
         
+        // in MWTableViewCell
         cell.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .touchUpInside)
         
         if let movies = movies[movieCategory] {

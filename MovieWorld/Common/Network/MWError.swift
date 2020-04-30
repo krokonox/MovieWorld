@@ -8,14 +8,14 @@
 
 import Foundation
 
-enum MWError: Error {
+enum MWError: Error, LocalizedError {
     case incorrectUrl
     case networkError
     case serverError
     case parsingError
     
     case unknown
-    
+    // Return localized error message
     var description: String {
         switch self {
         case .incorrectUrl:
@@ -32,21 +32,7 @@ enum MWError: Error {
     }
 }
 
-extension MWError: LocalizedError {
-    
-    public var errorDescription: String? {
-        switch self {
-        case .serverError:
-            return ErrorMessages.Default.serverError
-        case .networkError:
-            return ErrorMessages.Default.networkError
-        case .incorrectUrl, .unknown:
-            return ErrorMessages.Default.incorrectUrl
-        case .parsingError:
-            return ErrorMessages.Default.parsingError
-    }
-  }
-}
+ // delete this
 extension MWError {
     
     struct ErrorMessages {

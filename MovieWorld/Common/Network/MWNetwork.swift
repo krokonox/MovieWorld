@@ -6,7 +6,7 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import  UIKit
+import UIKit
 
 typealias MWNet = MWNetwork
 
@@ -38,8 +38,8 @@ class MWNetwork {
         
         let url = "\(baseURL)\(urlPath)"
  
-        var urlComponents: URLComponents {
-            var components = URLComponents(string: url)!
+        var urlComponents: URLComponents? {
+            var components = URLComponents(string: url)
             
             var queryItems = [URLQueryItem(name: "api_key", value: api_key)]
             
@@ -48,11 +48,12 @@ class MWNetwork {
                     return URLQueryItem(name: "\($0)", value: "\($1)")
                 })
             }
-            components.queryItems = queryItems
+            components?.queryItems = queryItems
             return components
         }
         
-        let request = URLRequest(url: urlComponents.url!)
+        guard let URLComponents = urlComponents?.url else { return }
+        let request = URLRequest(url: URLComponents)
         
         session.dataTask(with: request) { [weak self] data, response, error in
             

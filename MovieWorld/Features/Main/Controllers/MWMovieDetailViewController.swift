@@ -16,14 +16,14 @@ import AVKit
 class MWMovieDetailViewController: UIViewController {
     
     // MARK: - Variables
- 
+    
+    private let dispatch = DispatchGroup()
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 90, height: 150)
     private var activityIndicator = UIActivityIndicatorView()
-    private let dispatch = DispatchGroup()
     private var avPlayer: AVPlayer!
-    var movieCell: MWMovie? {
+    var movieModel: MWMovie? {
         didSet {
             self.updateMovieDetail()
         }
@@ -120,10 +120,21 @@ class MWMovieDetailViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Initialization
+    
+    init(movie: MWMovie) {
+        self.movieModel = movie
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Private Functions
     
     private func fetchMovieDetail() {
-        guard let movieId = movieCell?.id else {
+        guard let movieId = movieModel?.id else {
             return
         }
         self.activityIndicator.startAnimating()
@@ -139,6 +150,7 @@ class MWMovieDetailViewController: UIViewController {
                             
         }) { [weak self] (error) in
             self?.activityIndicator.stopAnimating()
+            self?.dispatch.leave()
         }
         
         self.dispatch.notify(queue: .main) { [weak self] in
@@ -152,9 +164,7 @@ class MWMovieDetailViewController: UIViewController {
     private func playVideo() {
         guard let movie = movie, let video = movie.videos?.results.first else { return }
 
-        let playerVC = AVPlayerViewController()
-        present(playerVC, animated: true, completion: nil)
-        XCDYouTubeClient.default().getVideoWithIdentifier(video.key) {[weak self, weak playerVC] (video, error) in
+        XCDYouTubeClient.default().getVideoWithIdentifier(video.key) {[weak self] (video, error) in
             if let _ = error {
                 self?.dismiss(animated: true, completion: nil)
                 return
@@ -179,9 +189,12 @@ class MWMovieDetailViewController: UIViewController {
 
                 return
             }
-
-            playerVC?.player = AVPlayer(url: streamURL)
-            playerVC?.player?.play()
+            
+            let playerVC = AVPlayerViewController()
+            self?.present(playerVC, animated: true, completion: nil)
+       
+            playerVC.player = AVPlayer(url: streamURL)
+            playerVC.player?.play()
         }
     }
     
@@ -189,9 +202,12 @@ class MWMovieDetailViewController: UIViewController {
     
     private func setupViews() {
         self.view.addSubview(scrollView)
-        self.cell.layout.set(movie: movieCell!)
-        self.descriptionText.text = self.movie?.overview
         self.setConstraints()
+        self.descriptionText.text = self.movie?.overview
+        
+        if let cell = movieModel {
+            self.cell.layout.set(movie: cell)
+        }
     }
     
     private func setConstraints() {
@@ -262,15 +278,6 @@ class MWMovieDetailViewController: UIViewController {
         self.fetchMovieDetail()
     }
     
-    init(movie: MWMovie) {
-        self.movieCell = movie
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 // MARK: - CollectionView Extension
     
 }
@@ -285,8 +292,9 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
-            let cast = MWGenericCollectionViewCellModel(cast: (self.movie?.credits?.cast[indexPath.row])!)
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell,
+            let movieCast = self.movie?.credits?.cast[indexPath.row] {
+            let cast = MWGenericCollectionViewCellModel(cast: movieCast)
             cell.item = cast
             return cell
         }

@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
@@ -17,18 +16,11 @@ class MWGenericCollectionView: UICollectionViewFlowLayout {
     internal var itemSizeVar = CGSize(width: 130, height: 180)
     private var firstSetupDone = false
 
-//    override func prepare() {
-//        super.prepare()
-//        if !firstSetupDone {
-//            setup()
-//            firstSetupDone = true
-//        }
-//    }
-//
     override init() {
         super.init()
         setup()
     }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()

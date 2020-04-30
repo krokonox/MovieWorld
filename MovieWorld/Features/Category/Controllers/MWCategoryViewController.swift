@@ -9,46 +9,56 @@
 import UIKit
 import SnapKit
 
-class MWCategoryViewController: UIViewController, UITableViewDelegate,  UITableViewDataSource {
+class MWCategoryViewController: UIViewController {
     
-    let tableView = UITableView()
+    // MARK: - Variables
+    
     let cellText = "Top 250 films"
+    let cellID = "cell"
     
-    //MARK: -App lifecycle
+    // MARK: - Gui Variables
+    
+    private lazy var tableView: UITableView = {
+        let tv = UITableView(frame: .zero, style: .plain)
+        tv.delegate = self
+        tv.dataSource = self
+        tv.rowHeight = 305
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tv.separatorStyle = .none
+        
+        return tv
+    }()
+    
+    // MARK: - App lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setupTableView()
         self.title = "Category"
         self.view.backgroundColor = .white
+        self.makeConstraints()
     }
     
-    //MARK: -UITableView functions
+    // MARK: - Constraints
     
-    func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = .none
-        view.addSubview(tableView)
-        makeConstraints()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 25
-    }
-      
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-          cell.backgroundColor = UIColor.white
-          cell.textLabel?.text = cellText
-          return cell
-       }
-       
     func makeConstraints() {
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+    }
+}
+
+// MARK: - TableView Extension
+
+extension MWCategoryViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 25
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        cell.backgroundColor = UIColor.white
+        cell.textLabel?.text = cellText
+        return cell
     }
 }

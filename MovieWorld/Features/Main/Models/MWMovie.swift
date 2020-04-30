@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 struct MWMovie: Decodable, Equatable {
@@ -45,11 +44,11 @@ struct MovieVideo: Codable {
 }
 
 extension MWMovie {
-    public var posterURL: URL? {
+    var posterURL: URL? {
         guard let poster_path = poster_path else { return nil }
         return URL(string: poster_path )
     }
-    public var genres: [String] {
+    var genres: [String] {
         return self.genre_ids.map { (MWSys.sh.getGenreName(for: Int($0)) ?? "-") }
     }
 }

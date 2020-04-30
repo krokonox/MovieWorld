@@ -14,6 +14,7 @@ class MWTableViewCell: UITableViewCell {
     
     //--MARK: Variables
     
+    let cellID = "MWTableViewCell"
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 130, height: 180)

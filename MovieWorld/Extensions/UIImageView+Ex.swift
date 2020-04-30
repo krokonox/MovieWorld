@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension UIImageView {
@@ -20,3 +19,4 @@ extension UIImageView {
             }
         }
     }
+}
