@@ -144,7 +144,7 @@ class MWMoviesListViewController: UIViewController {
     }
     
     private func showError(_ error: String) {
-        print(error)
+        self.alert(message: error.description, title: "")
     }
 }
 

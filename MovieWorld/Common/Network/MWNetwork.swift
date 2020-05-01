@@ -77,7 +77,7 @@ class MWNetwork {
                     self?.handleErrors(errorHandler: errorHandler, error: MWError.parsingError)
                 }
             case 401:
-                return errorHandler(MWError.serverError)
+                errorHandler(MWError.serverError)
             case 404:
                 errorHandler(MWError.serverError)
             default:

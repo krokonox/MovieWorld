@@ -8,16 +8,17 @@
 
 import UIKit
 
-extension UITableViewCell { // How can i not duplicate these extensions?
-    
-    static var reuseIdentifier: String {
-        return NSStringFromClass(self)
-    }
+typealias ReuseIdentifier = String
+
+protocol Reusable {
+    static var reuseIdentifier: ReuseIdentifier { get }
 }
 
-extension UICollectionViewCell {
-    
-    static var reuseIdentifier: String {
-        return NSStringFromClass(self)
+extension Reusable {
+    static var reuseIdentifier: ReuseIdentifier {
+        return String(describing: self)
     }
 }
+extension UITableViewCell: Reusable { }
+extension UICollectionViewCell: Reusable {}
+

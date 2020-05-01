@@ -134,8 +134,7 @@ class MWMovieDetailViewController: UIViewController {
                             self.dispatch.leave()
                             
         }) { [weak self] (error) in
-            self?.activityIndicator.stopAnimating()
-            self?.dispatch.leave()
+            self?.showError(error.description)
         }
         
         self.dispatch.notify(queue: .main) { [weak self] in
@@ -276,9 +275,13 @@ class MWMovieDetailViewController: UIViewController {
         self.fetchMovieDetail()
     }
     
-// MARK: - CollectionView Extension
-    
+    private func showError(_ error: String) {
+        self.alert(message: error.description, title: "")
+    }
 }
+
+// MARK: - CollectionView Extension
+
 extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func updateCellWith(row: [MWMovieCell]) {
