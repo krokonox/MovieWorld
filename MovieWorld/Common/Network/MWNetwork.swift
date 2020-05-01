@@ -34,7 +34,7 @@ class MWNetwork {
     func request<T: Decodable>(urlPath: String,
                                parameters: [String: String]? = nil,
                                successHandler: @escaping(_ response: T) -> Void,
-                               errorHandler: @escaping(Error) -> Void) {
+                               errorHandler: @escaping(MWError) -> Void) {
         
         let url = "\(baseURL)\(urlPath)"
  
@@ -77,7 +77,7 @@ class MWNetwork {
                     self?.handleErrors(errorHandler: errorHandler, error: MWError.parsingError)
                 }
             case 401:
-                errorHandler(MWError.serverError)
+                return errorHandler(MWError.serverError)
             case 404:
                 errorHandler(MWError.serverError)
             default:
@@ -86,7 +86,7 @@ class MWNetwork {
         }.resume()
     }
     
-    private func handleErrors(errorHandler: @escaping(_ error: Error) -> Void, error: Error) {
+    private func handleErrors(errorHandler: @escaping(_ error: MWError) -> Void, error: MWError) {
         DispatchQueue.main.async {
             errorHandler(error)
         }

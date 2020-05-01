@@ -28,19 +28,19 @@ class MWMoviesListViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: tv.frame.width, height: 80))
-        header.addSubview(self.collectionView)
-        tv.addSubview(self.refreshControl)
         tv.delegate = self
         tv.dataSource = self
         tv.rowHeight = 120
         tv.separatorStyle = .none
-        tv.tableHeaderView = header
         tv.register(TableViewCell<MovieDetailViewLayout>.self,
                     forCellReuseIdentifier: TableViewCell<MovieDetailViewLayout>.reuseIdentifier)
         
         return tv
     }()
+    
+    private lazy var header = UIView(frame: CGRect(x: 0, y: 0,
+                                                   width: tableView.frame.width,
+                                                   height: 80))
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -74,9 +74,7 @@ class MWMoviesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
-        self.view.addSubview(tableView)
-        self.tableView.addSubview(refreshControl)
+        self.setupViews()
         self.setConstraints()
     }
     
@@ -101,6 +99,13 @@ class MWMoviesListViewController: UIViewController {
         self.collectionView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func setupViews() {
+        self.view.addSubview(tableView)
+        self.tableView.addSubview(refreshControl)
+        self.tableView.tableHeaderView = header
+        self.header.addSubview(collectionView)
     }
     
     // MARK: - Functions

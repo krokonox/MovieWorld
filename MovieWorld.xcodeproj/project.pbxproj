@@ -13,6 +13,7 @@
 		840304702434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */; };
 		84060744240037640071C42A /* MWMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84060743240037640071C42A /* MWMainTabBarController.swift */; };
 		84068914245A8B7F00A96E7E /* UITableViewCell+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84068913245A8B7F00A96E7E /* UITableViewCell+Ex.swift */; };
+		84068918245BDFD000A96E7E /* UIViewController+ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84068917245BDFD000A96E7E /* UIViewController+ex.swift */; };
 		84833E19242CBFA600C8E67B /* MWMovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */; };
 		84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E1A242CDB8700C8E67B /* MWMovieCast.swift */; };
 		84A649B12423B55A00B809E8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84A649AF2423B55A00B809E8 /* Model.xcdatamodeld */; };
@@ -76,6 +77,7 @@
 		8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenericCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		84060743240037640071C42A /* MWMainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainTabBarController.swift; sourceTree = "<group>"; };
 		84068913245A8B7F00A96E7E /* UITableViewCell+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Ex.swift"; sourceTree = "<group>"; };
+		84068917245BDFD000A96E7E /* UIViewController+ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ex.swift"; sourceTree = "<group>"; };
 		84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieDetailViewController.swift; sourceTree = "<group>"; };
 		84833E1A242CDB8700C8E67B /* MWMovieCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCast.swift; sourceTree = "<group>"; };
 		84A649B02423B55A00B809E8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				84FF85BF2410DE1F00A7E848 /* UIImageView+Ex.swift */,
 				84FC4525241E901400E931D6 /* String+Ex.swift */,
 				84068913245A8B7F00A96E7E /* UITableViewCell+Ex.swift */,
+				84068917245BDFD000A96E7E /* UIViewController+ex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */,
 				84060744240037640071C42A /* MWMainTabBarController.swift in Sources */,
 				84FC4522241BF19800E931D6 /* MWMoviesListViewController.swift in Sources */,
+				84068918245BDFD000A96E7E /* UIViewController+ex.swift in Sources */,
 				84068914245A8B7F00A96E7E /* UITableViewCell+Ex.swift in Sources */,
 				84FCE25A2406D88E0070A11C /* MWTableViewCell.swift in Sources */,
 				84FC452C24234C6F00E931D6 /* MWCoreDataManager.swift in Sources */,

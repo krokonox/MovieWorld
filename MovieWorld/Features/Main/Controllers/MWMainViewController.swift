@@ -24,7 +24,7 @@ class MWMainViewController: MWViewController {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.delegate = self
         tv.dataSource = self
-        tv.addSubview(self.refreshControl)
+        
         tv.rowHeight = 305
         tv.register(MWTableViewCell.self, forCellReuseIdentifier: MWTableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
@@ -44,10 +44,11 @@ class MWMainViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = NSLocalizedString("Main",
                                        comment: "")
         
-        self.view.addSubview(tableView)
+        self.setupViews()
         self.makeConstraints()
         self.fetchMovies()
     }
@@ -61,7 +62,7 @@ class MWMainViewController: MWViewController {
                                 self?.movies[path.description] = response.results
                                 self?.dispatch.leave()
         }) { [weak self] (error) in
-            self?.showError(error.localizedDescription)
+            self?.showError(error.description)
         }
     }
     
@@ -86,7 +87,13 @@ class MWMainViewController: MWViewController {
     }
     
     private func showError(_ error: String) {
-        print(error)
+        self.alert(message: error.description, title: "")
+        print()
+    }
+    
+    private func setupViews() {
+        self.view.addSubview(tableView)
+        self.tableView.addSubview(self.refreshControl)
     }
     
     // MARK: - Functions

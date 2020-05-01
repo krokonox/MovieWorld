@@ -47,20 +47,11 @@ class MWMovieDetailViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView(frame: UIScreen.main.bounds)
-        view.addSubview(self.refreshControl)
-        view.addSubview(self.contentView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.addSubview(self.cell)
-        view.addSubview(self.videoView)
-        view.addSubview(self.descriptionView)
-        view.addSubview(self.collectionView)
-        return view
-    }()
+    private lazy var contentView: UIView = UIView()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -78,7 +69,7 @@ class MWMovieDetailViewController: UIViewController {
         return cv
     }()
     
-    lazy var cell: View<MovieDetailViewLayout> = {
+    lazy var movieCellView: View<MovieDetailViewLayout> = {
         var movieCell = View<MovieDetailViewLayout>(frame: .zero)
         return movieCell
     }()
@@ -86,16 +77,10 @@ class MWMovieDetailViewController: UIViewController {
     lazy var videoView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(named: "GreyColor")?.withAlphaComponent(0.15)
-        view.addSubview(self.playButton)
         return view
     }()
     
-    private lazy var descriptionView: UIView = {
-        let view = UIView()
-        view.addSubview(self.descriptionTitleLabel)
-        view.addSubview(self.descriptionText)
-        return view
-    }()
+    private lazy var descriptionView: UIView = UIView()
     
     private lazy var descriptionTitleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -202,11 +187,25 @@ class MWMovieDetailViewController: UIViewController {
     
     private func setupViews() {
         self.view.addSubview(scrollView)
-        self.setConstraints()
-        self.descriptionText.text = self.movie?.overview
         
-        if let cell = movieModel {
-            self.cell.layout.set(movie: cell)
+        self.scrollView.addSubview(refreshControl)
+        self.scrollView.addSubview(contentView)
+        
+        self.contentView.addSubview(movieCellView)
+        self.contentView.addSubview(videoView)
+        self.contentView.addSubview(descriptionView)
+        self.contentView.addSubview(collectionView)
+        
+        self.descriptionText.text = self.movie?.overview
+        self.descriptionView.addSubview(descriptionTitleLabel)
+        self.descriptionView.addSubview(descriptionText)
+        
+        self.videoView.addSubview(playButton)
+        
+        self.setConstraints()
+        
+        if let movieCellView = movieModel {
+            self.movieCellView.layout.set(movie: movieCellView)
         }
     }
     
@@ -220,7 +219,7 @@ class MWMovieDetailViewController: UIViewController {
             make.height.width.top.bottom.equalToSuperview()
         }
         
-        self.cell.snp.makeConstraints { (make) in
+        self.movieCellView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview()
             make.height.equalTo(142)
@@ -229,7 +228,7 @@ class MWMovieDetailViewController: UIViewController {
         self.videoView.snp.makeConstraints{ (make) in
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().inset(16)
-            make.top.equalTo(cell.snp.bottom).offset(20)
+            make.top.equalTo(movieCellView.snp.bottom).offset(20)
             make.height.equalTo(166)
         }
         

@@ -32,11 +32,6 @@ final class MovieDetailViewLayout: ViewLayout {
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.spacing = 5
-        
-        stackView.addArrangedSubview(self.titleLabel)
-        stackView.addArrangedSubview(self.movieYearView)
-        stackView.addArrangedSubview(self.movieGenreView)
-        stackView.addArrangedSubview(self.movieRatingView)
 
         return stackView
     }()
@@ -138,7 +133,15 @@ final class MovieDetailViewLayout: ViewLayout {
         view.addSubview(movieStackView)
         view.addSubview(seperator)
         
+        self.setupViews()
         self.makeConstraintsWithSnapKit()
+    }
+    
+    func setupViews() {
+        movieStackView.addArrangedSubview(self.titleLabel)
+        movieStackView.addArrangedSubview(self.movieYearView)
+        movieStackView.addArrangedSubview(self.movieGenreView)
+        movieStackView.addArrangedSubview(self.movieRatingView)
     }
 }
 
