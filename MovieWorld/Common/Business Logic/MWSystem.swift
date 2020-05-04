@@ -29,7 +29,9 @@ class MWSystem {
     }
     
     func getGenreName(for genreId: Int) -> String? {
-        guard let genre = genres.filter({ $0.id == genreId }).first else { return nil }
+        guard let genre = genres
+                           .filter({ $0.id == genreId })
+                           .first else { return nil }
         return genre.name
     }
 }
