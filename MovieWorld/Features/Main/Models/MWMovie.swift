@@ -19,7 +19,7 @@ struct MWMovie: Decodable, Equatable {
     var videos: MWMovieVideoResponse?
     
     static func == (lhs: MWMovie, rhs: MWMovie) -> Bool {
-        return false
+        return lhs.id == rhs.id
     }
 }
 

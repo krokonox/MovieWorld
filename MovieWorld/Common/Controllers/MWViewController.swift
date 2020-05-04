@@ -15,8 +15,4 @@ class MWViewController: UIViewController {
         
         self.view.backgroundColor = .white
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 }

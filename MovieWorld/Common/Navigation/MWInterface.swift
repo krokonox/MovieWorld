@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 typealias MWI = MWInterface
 
@@ -17,10 +16,13 @@ class MWInterface {
     
     static let sh = MWInterface()
     
-    weak var window: UIWindow?
+    private weak var window: UIWindow?
     
     private lazy var tabBarController = MWMainTabBarController()
     private lazy var initController = MWInitController()
+    
+    // MARK: - Initialization
+    
     private init() {}
     
     // MARK: - Functions
@@ -28,14 +30,12 @@ class MWInterface {
     func setup(window: UIWindow) {
         self.window = window
         self.setUpNavigationBarStyle()
-        initController.container = MWCoreDataManager.sh.persistentContainer
         window.rootViewController = initController
         window.makeKeyAndVisible()
     }
     
     func setupTabBarController() {
         self.window?.rootViewController = self.tabBarController
-        self.window?.makeKeyAndVisible()
     }
     
     private func setUpNavigationBarStyle() {

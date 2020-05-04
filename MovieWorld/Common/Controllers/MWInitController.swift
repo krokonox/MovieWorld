@@ -9,29 +9,22 @@
 import UIKit
 import CoreData
 
-class MWInitController: UIViewController {
+class MWInitController: MWViewController {
     
     let dispatchGroup = DispatchGroup()
-    
-    var container: NSPersistentContainer!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard self.container != nil else {
-            fatalError("This view needs a persistent container")
-        }
         
-        self.view.backgroundColor = .white
-        
-        if (MWCoreDataManager.sh.entityIsEmpty(entity: "GenreModel")) {
+        if (MWCoreDataManager.sh.entityIsEmpty(entity: .GenreModel)) {
             self.loadGenres()
         }
         self.loadConfiguration()
         
         self.dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.fetchAllGenres()
+            MWCoreDataManager.sh.fetchAllGenres()
             MWI.sh.setupTabBarController()
         }
     }
@@ -43,7 +36,7 @@ class MWInitController: UIViewController {
         MWNet.sh.request(urlPath: "genre/movie/list",
                          successHandler: { (_ response: GenreResults) in
                             response.genres.forEach { genre in
-                                MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
+                                MWCoreDataManager.sh.saveGenre(genre: genre)
                             }
         },
                          errorHandler: { ( MWError ) in
@@ -56,22 +49,9 @@ class MWInitController: UIViewController {
         MWNet.sh.request(urlPath: "configuration",
                          successHandler: { (_ response: MWConfiguration) in
                             MWSys.sh.setConfiguration(response.images)
-            },
+        },
                          errorHandler: {  ( MWError ) in
                             print(MWError.localizedDescription)})
         self.dispatchGroup.leave()
-    }
-    
-    func fetchAllGenres() {
-        let managedContext = MWCoreDataManager.sh.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<GenreModel> = GenreModel.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        do {
-            let genres = try managedContext.fetch(fetchRequest)
-            MWSys.sh.setGenres(genres)
-        } catch let error as NSError {
-            fatalError("Could not fetch. \(error), \(error.userInfo)")
-        }
     }
 }

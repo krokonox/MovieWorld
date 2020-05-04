@@ -15,26 +15,28 @@ class MWNetwork {
     // MARK: - Variables
     
     static let sh = MWNetwork()
-    
-    private init() {}
  
     private let baseURL = "https://api.themoviedb.org/3/"
-    let api_key = "79d5894567be5b76ab7434fc12879584"
+    private(set) public var api_key = "79d5894567be5b76ab7434fc12879584"
     
-    private var URLParameters: [String: String] {
-        return ["api_key" : api_key]
+    private var urlParameters: [String: String] {
+        return ["api_key": api_key]
     }
    
     private var dataTask: URLSessionDataTask?
     
     private lazy var session = URLSession(configuration: .default)
     
+    // MARK: - Initialization
+    
+    private init() {}
+    
     // MARK: - Request function
     
     func request<T: Decodable>(urlPath: String,
                                parameters: [String: String]? = nil,
-                               successHandler: @escaping(_ response: T) -> Void,
-                               errorHandler: @escaping(MWError) -> Void) {
+                               successHandler: @escaping (_ response: T) -> Void,
+                               errorHandler: @escaping (MWError) -> Void) {
         
         let url = "\(baseURL)\(urlPath)"
  
@@ -52,8 +54,8 @@ class MWNetwork {
             return components
         }
         
-        guard let URLComponents = urlComponents?.url else { return }
-        let request = URLRequest(url: URLComponents)
+        guard let components = urlComponents?.url else { return }
+        let request = URLRequest(url: components)
         
         session.dataTask(with: request) { [weak self] data, response, error in
             
@@ -86,7 +88,7 @@ class MWNetwork {
         }.resume()
     }
     
-    private func handleErrors(errorHandler: @escaping(_ error: MWError) -> Void, error: MWError) {
+    private func handleErrors(errorHandler: @escaping (_ error: MWError) -> Void, error: MWError) {
         DispatchQueue.main.async {
             errorHandler(error)
         }
