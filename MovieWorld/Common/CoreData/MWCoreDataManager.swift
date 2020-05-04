@@ -101,7 +101,7 @@ class MWCoreDataManager {
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
         let res = try? managedContext.fetch(fetchRequest)
-        return (res?.count ?? 0) > 0 ? true : false
+        return (res?.count ?? 0) > 0
     }
     
     func deleteAllData(_ entity: String) {
