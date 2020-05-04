@@ -58,7 +58,7 @@ class MWMovieCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("fatal error ")
+        print("fatal error ")
     }
     
     // MARK: - Private functions

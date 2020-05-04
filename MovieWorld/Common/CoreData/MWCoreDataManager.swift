@@ -73,7 +73,7 @@ class MWCoreDataManager {
             let genres = try managedContext.fetch(fetchRequest)
             MWSys.sh.setGenres(genres)
         } catch let error as NSError {
-            fatalError("Could not fetch. \(error), \(error.userInfo)")
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
