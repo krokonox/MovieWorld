@@ -58,7 +58,7 @@ class MWTableViewCell: UITableViewCell {
         return button
     }()
     
-    lazy var reloadButton: MWRedButton = {
+    private lazy var reloadButton: MWRedButton = {
         let button = MWRedButton()
         button.setTitle("reload", for: .normal)
         button.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)

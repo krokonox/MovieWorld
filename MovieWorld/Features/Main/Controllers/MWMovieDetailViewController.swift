@@ -67,9 +67,9 @@ class MWMovieDetailViewController: UIViewController {
         return cv
     }()
     
-    lazy var movieCellView: View<MovieDetailViewLayout> = View<MovieDetailViewLayout>(frame: .zero)
+    private lazy var movieCellView: View<MovieDetailViewLayout> = View<MovieDetailViewLayout>(frame: .zero)
 
-    lazy var videoView: UIView = {
+    private lazy var videoView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(named: "GreyColor")?.withAlphaComponent(0.15)
         return view

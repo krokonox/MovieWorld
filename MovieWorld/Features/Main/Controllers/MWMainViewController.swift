@@ -54,6 +54,11 @@ class MWMainViewController: MWViewController {
     
     // MARK: - Private functions
     
+    private func setupViews() {
+        self.view.addSubview(tableView)
+        self.tableView.addSubview(self.refreshControl)
+    }
+    
     private func makeConstraints() {
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -88,11 +93,6 @@ class MWMainViewController: MWViewController {
     
     private func showError(_ error: String) {
         self.alert(message: error.description, title: "")
-    }
-    
-    private func setupViews() {
-        self.view.addSubview(tableView)
-        self.tableView.addSubview(self.refreshControl)
     }
     
     // MARK: - Functions

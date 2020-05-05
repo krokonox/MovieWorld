@@ -26,6 +26,8 @@ class MWMoviesListViewController: UIViewController {
         
     let genres = MWSys.sh.genres
     
+    // MARK: - Gui Variables
+    
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.delegate = self
@@ -116,7 +118,7 @@ class MWMoviesListViewController: UIViewController {
         self.category = category
     }
     
-    func showMoviesByGenre(genre: String) {
+    private func showMoviesByGenre(genre: String) {
         for movie in self.movies {
             let genres = movie.genres.map{ $0 }
             if genres.contains(genre) {
@@ -125,7 +127,7 @@ class MWMoviesListViewController: UIViewController {
         }
     }
     
-    func deleteMoviesByGenre(genre: String) {
+    private func hideMoviesByGenre(genre: String) {
         for movie in self.moviesToShow {
             let genres = movie.genres.map{ $0 }
             if genres.contains(genre) {
@@ -144,6 +146,10 @@ class MWMoviesListViewController: UIViewController {
         self.tableView.reloadData()
     }
     
+    private func updateCellWith(row: [MWMovieCell]) {
+        self.collectionView.reloadData()
+    }
+    
     private func showError(_ error: String) {
         self.alert(message: error.description, title: "")
     }
@@ -154,7 +160,7 @@ class MWMoviesListViewController: UIViewController {
 extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.moviesToShow.isEmpty {
-            return movies.count
+            return self.movies.count
         } else {
             return self.moviesToShow.count
         }
@@ -190,10 +196,6 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
 
 extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func updateCellWith(row: [MWMovieCell]) {
-        self.collectionView.reloadData()
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.genres.count
     }
@@ -221,7 +223,7 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor(named: "RedColor")
-            self.deleteMoviesByGenre(genre: cell.collectionViewCellTitle.text!)
+            self.hideMoviesByGenre(genre: cell.collectionViewCellTitle.text!)
             self.tableView.reloadData()
         }
     }
@@ -233,6 +235,5 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return edgeInsets
     }
-    
 }
 

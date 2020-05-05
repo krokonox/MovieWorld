@@ -27,7 +27,7 @@ class MWMainTabBarController: UITabBarController {
         self.viewControllers = [mainController, searchController, categoryController]
     }
     
-    func createNavigationController(_ viewController: UIViewController, title: String) -> UINavigationController {
+    private func createNavigationController(_ viewController: UIViewController, title: String) -> UINavigationController {
           let navController = UINavigationController(rootViewController: viewController)
           navController.tabBarItem.title = title
           navController.tabBarItem.image = UIImage(named: title)
