@@ -16,6 +16,7 @@ class MWMainViewController: MWViewController {
     private let paths = URLPaths.allCases
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
+    
     var movies: [String: [MWMovie]] = [:]
     
     // MARK: - Gui Variables
@@ -24,8 +25,7 @@ class MWMainViewController: MWViewController {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.delegate = self
         tv.dataSource = self
-        
-        tv.rowHeight = 305
+        tv.rowHeight = 290
         tv.register(MWTableViewCell.self, forCellReuseIdentifier: MWTableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
     
@@ -34,7 +34,7 @@ class MWMainViewController: MWViewController {
     
     private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
-        refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshCntrl.attributedTitle =  NSAttributedString(string: "Pull to refresh".localized)
         refreshCntrl.addTarget(self, action: #selector(refresh),
                                for: UIControl.Event.valueChanged)
         return refreshCntrl
@@ -53,6 +53,12 @@ class MWMainViewController: MWViewController {
     }
     
     // MARK: - Private functions
+    
+    private func makeConstraints() {
+        self.tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
 
     private func initRequest(path: URLPaths) {
         self.dispatch.enter()
@@ -62,12 +68,7 @@ class MWMainViewController: MWViewController {
                                 self?.dispatch.leave()
         }) { [weak self] (error) in
             self?.showError(error.description)
-        }
-    }
-    
-    private func makeConstraints() {
-        self.tableView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            self?.dispatch.leave()
         }
     }
     
@@ -87,7 +88,6 @@ class MWMainViewController: MWViewController {
     
     private func showError(_ error: String) {
         self.alert(message: error.description, title: "")
-        print()
     }
     
     private func setupViews() {

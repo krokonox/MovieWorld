@@ -16,7 +16,6 @@ class MWMainTabBarController: UITabBarController {
     }
     
     func setupTabBar() {
-        
         self.view.backgroundColor = .white
         self.tabBar.tintColor = UIColor(named: "RedColor")
         self.tabBar.barTintColor = .white

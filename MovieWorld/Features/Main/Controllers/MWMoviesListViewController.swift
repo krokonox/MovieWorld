@@ -79,17 +79,6 @@ class MWMoviesListViewController: UIViewController {
     }
     
     // MARK: - Private Functions
-
-    private func initRequest(path: String) {
-        self.dispatch.enter()
-        MWNetwork.sh.request(urlPath: path,
-                          successHandler: { [weak self] (_ response: MWApiResults) in
-                            self?.movies = response.results
-                            self?.dispatch.leave()
-        }) { [weak self] (error) in
-            self?.showError(error.localizedDescription)
-        }
-    }
     
     private func setConstraints() {
         self.tableView.snp.makeConstraints { (make) in
@@ -100,7 +89,19 @@ class MWMoviesListViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    
+
+    private func initRequest(path: String) {
+        self.dispatch.enter()
+        MWNetwork.sh.request(urlPath: path,
+                          successHandler: { [weak self] (_ response: MWApiResults) in
+                            self?.movies = response.results
+                            self?.dispatch.leave()
+        }) { [weak self] (error) in
+            self?.showError(error.localizedDescription)
+            self?.dispatch.leave()
+        }
+    }
+ 
     private func setupViews() {
         self.view.addSubview(tableView)
         self.tableView.addSubview(refreshControl)
