@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum URLPaths: String, CaseIterable {
+enum URLPaths: String, CaseIterable {
     case popular = "movie/popular"
     case latest = "movie/now_playing"
     case topRated = "movie/top_rated"
@@ -31,12 +31,5 @@ public enum URLPaths: String, CaseIterable {
         case 3: self = .upcoming
         default: return nil
         }
-    }
-}
-
-extension CaseIterable where Self: Equatable {
-
-    var index: Self.AllCases.Index? {
-        return Self.allCases.firstIndex { self == $0 }
     }
 }

@@ -45,8 +45,7 @@ class MWMainViewController: MWViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = NSLocalizedString("Main",
-                                       comment: "")
+        self.title = "Main".localized
         
         self.setupViews()
         self.makeConstraints()
@@ -101,16 +100,6 @@ class MWMainViewController: MWViewController {
     @objc func refresh(sender: AnyObject) {
         self.fetchMovies()
     }
-    
-    @objc func reloadMovieCategory(_ sender: UIButton) {
-        let cellPosition = sender.convert(sender.bounds.origin, to: tableView)
-        
-        if let indexPath = self.tableView.indexPathForRow(at: cellPosition) {
-            let rowIndex = indexPath.row
-            self.initRequest(path: self.paths[rowIndex])
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    }
 }
 
 // MARK: - TableView Extension
@@ -123,18 +112,23 @@ extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movieCategory = self.paths[indexPath.row].description
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWTableViewCell.reuseIdentifier, for: indexPath) as! MWTableViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWTableViewCell.reuseIdentifier, for: indexPath)
         
-        // in MWTableViewCell
-        cell.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .touchUpInside)
-        
-        if let movies = movies[movieCategory] {
-            cell.set(movies: movies, title: movieCategory, category: paths[indexPath.row].rawValue)
-            return cell
-        } else {
-            cell.set(movies: [], title: "", category: paths[indexPath.row].rawValue)
-            return cell
+        if let cell = cell as? MWTableViewCell {
+            cell.reloadButtonAction = { [weak self] in
+                self?.initRequest(path: (self?.paths[indexPath.row])!)
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            
+            if let movies = movies[movieCategory] {
+                cell.set(movies: movies, title: movieCategory, category: paths[indexPath.row].rawValue)
+                return cell
+            } else {
+                cell.set(movies: [], title: "", category: paths[indexPath.row].rawValue)
+                return cell
+            }
         }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

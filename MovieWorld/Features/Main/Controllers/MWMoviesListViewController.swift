@@ -152,7 +152,7 @@ class MWMoviesListViewController: UIViewController {
 
 extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.moviesToShow.count == 0 {
+        if self.moviesToShow.isEmpty {
             return movies.count
         } else {
             return self.moviesToShow.count
@@ -164,7 +164,7 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
             else {
                 return UITableViewCell()
         }
-        if moviesToShow.count == 0 {
+        if moviesToShow.isEmpty {
             cell.layout.set(movie: movies[indexPath.row])
 
         } else {

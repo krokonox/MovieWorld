@@ -114,7 +114,7 @@ class MWCoreDataManager {
         } catch {
             print("error executing fetch request \(error.localizedDescription)")
         }
-        return results.count == 0
+        return results.isEmpty
     }
     
     func saveContext() {

@@ -12,12 +12,12 @@ class MWRedButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        self.setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        self.setup()
     }
     
     private func setup() {

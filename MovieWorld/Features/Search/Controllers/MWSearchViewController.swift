@@ -12,8 +12,8 @@ class MWSearchViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = NSLocalizedString("Search",
-                                       comment: "")
+        
+        self.title = "Search".localized
         MWI.sh.push(vc: UIViewController())
     }
 }

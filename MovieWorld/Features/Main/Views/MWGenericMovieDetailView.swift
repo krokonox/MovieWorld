@@ -75,7 +75,11 @@ final class MovieDetailViewLayout: ViewLayout {
         line.backgroundColor = UIColor.init(named: "GreyColor")?.withAlphaComponent(0.05)
         return line
     }()
+    
+    // MARK: - Initialization
 
+    init() {}
+    
     // MARK: - Private functions
 
     private func makeConstraintsWithSnapKit() {
@@ -110,7 +114,7 @@ final class MovieDetailViewLayout: ViewLayout {
     // MARK: - Functions
     
     func set(movie: MWMovie) {
-        if let posterPath = movie.poster_path,
+        if let posterPath = movie.posterPath,
            let imageURL = URL(string: imageBaseUrl + posterPath) {
             
             self.movieImageView.load(url: imageURL)
@@ -119,29 +123,27 @@ final class MovieDetailViewLayout: ViewLayout {
         }
         self.titleLabel.text = movie.title
         self.movieGenreView.text = "\(movie.genres.map { $0 }.joined(separator: ", ")) "
-        self.movieYearView.text = "\(movie.release_date)"
-        self.movieRatingView.text = "\(movie.vote_average) IMDB"
+        self.movieYearView.text = "\(movie.releaseDate)"
+        self.movieRatingView.text = "\(movie.voteAverage) IMDB"
     }
-    
-    init() {}
     
     func layout(on view: UIView) {
         self.movieImageView.translatesAutoresizingMaskIntoConstraints = false
         self.movieStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(movieImageView)
-        view.addSubview(movieStackView)
-        view.addSubview(seperator)
+        view.addSubview(self.movieImageView)
+        view.addSubview(self.movieStackView)
+        view.addSubview(self.seperator)
         
         self.setupViews()
         self.makeConstraintsWithSnapKit()
     }
     
     func setupViews() {
-        movieStackView.addArrangedSubview(self.titleLabel)
-        movieStackView.addArrangedSubview(self.movieYearView)
-        movieStackView.addArrangedSubview(self.movieGenreView)
-        movieStackView.addArrangedSubview(self.movieRatingView)
+        self.movieStackView.addArrangedSubview(self.titleLabel)
+        self.movieStackView.addArrangedSubview(self.movieYearView)
+        self.movieStackView.addArrangedSubview(self.movieGenreView)
+        self.movieStackView.addArrangedSubview(self.movieRatingView)
     }
 }
 

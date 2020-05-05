@@ -17,12 +17,11 @@ class MWNetwork {
     static let sh = MWNetwork()
  
     private let baseURL = "https://api.themoviedb.org/3/"
-    private(set) public var api_key = "79d5894567be5b76ab7434fc12879584"
     
+    private(set) public var apiKey = "79d5894567be5b76ab7434fc12879584"
     private var urlParameters: [String: String] {
-        return ["api_key": api_key]
+        return ["api_key": apiKey]
     }
-   
     private var dataTask: URLSessionDataTask?
     
     private lazy var session = URLSession(configuration: .default)
@@ -43,7 +42,7 @@ class MWNetwork {
         var urlComponents: URLComponents? {
             var components = URLComponents(string: url)
             
-            var queryItems = [URLQueryItem(name: "api_key", value: api_key)]
+            var queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
             
             if let params = parameters {
                 queryItems.append(contentsOf: params.map {

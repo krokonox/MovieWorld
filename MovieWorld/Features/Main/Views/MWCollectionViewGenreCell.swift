@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MWCollectionViewGenreCell: UICollectionViewCell {
@@ -50,6 +49,6 @@ class MWCollectionViewGenreCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        print("fatal error ")
+        fatalError("fatal error ")
     }
 }

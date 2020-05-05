@@ -25,7 +25,7 @@ class MWMainTabBarController: UITabBarController {
         let categoryController = self.createNavigationController(MWCategoryViewController(), title: "category")
         let searchController = self.createNavigationController(MWSearchViewController(), title: "search")
 
-        viewControllers = [mainController, searchController, categoryController]
+        self.viewControllers = [mainController, searchController, categoryController]
     }
     
     func createNavigationController(_ viewController: UIViewController, title: String) -> UINavigationController {

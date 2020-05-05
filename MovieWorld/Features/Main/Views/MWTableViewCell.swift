@@ -6,13 +6,12 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import SnapKit
 import UIKit
 
 class MWTableViewCell: UITableViewCell {
     
-    //--MARK: Variables
+    // MARK: Variables
     
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
@@ -24,6 +23,8 @@ class MWTableViewCell: UITableViewCell {
             self.collectionView.reloadData()
         }
     }
+    
+    var reloadButtonAction: (() -> Void)?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -61,6 +62,7 @@ class MWTableViewCell: UITableViewCell {
         let button = MWRedButton()
         button.setTitle("reload", for: .normal)
         button.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
+        button.addTarget(self, action: #selector(self.reload), for: .touchUpInside)
         return button
     }()
     
@@ -72,7 +74,7 @@ class MWTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        print("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Private functions
@@ -91,19 +93,19 @@ class MWTableViewCell: UITableViewCell {
             make.edges.equalToSuperview()
         }
         self.titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(collectionView).offset(12)
             make.left.equalToSuperview().offset(15)
             make.right.equalToSuperview()
-            make.top.equalTo(collectionView).offset(12)
         }
         self.redButton.snp.makeConstraints { (make) in
+            make.top.equalTo(collectionView).offset(14)
             make.right.equalToSuperview().inset(10)
             make.width.height.equalTo(buttonSize)
-            make.top.equalTo(collectionView).offset(14)
         }
         self.reloadButton.snp.makeConstraints { (make) in
+            make.top.equalTo(collectionView).offset(14)
             make.right.equalToSuperview().inset(90)
             make.width.height.equalTo(buttonSize)
-            make.top.equalTo(collectionView).offset(14)
         }
     }
     
@@ -113,12 +115,17 @@ class MWTableViewCell: UITableViewCell {
         self.movies = movies
         self.titleLabel.text = NSLocalizedString(title, comment: "")
         self.category = category
+        self.needsUpdateConstraints()
     }
     
     @objc func pushVC() {
         let vc = MWMoviesListViewController()
         vc.set(movies: self.movies, category: self.category)
         MWI.sh.push(vc: vc)
+    }
+    
+    @objc func reload() {
+        self.reloadButtonAction?()
     }
 }
 

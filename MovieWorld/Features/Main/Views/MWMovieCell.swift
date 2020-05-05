@@ -36,10 +36,10 @@ class MWMovieCell: UICollectionViewCell {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let Title = UILabel()
-        Title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        Title.textAlignment = .left
-        return Title
+        let title = UILabel()
+        title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        title.textAlignment = .left
+        return title
     }()
     
     private lazy var genreAndYear: UILabel = {
@@ -58,7 +58,7 @@ class MWMovieCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        print("fatal error ")
+        fatalError("fatal error ")
     }
     
     // MARK: - Private functions
@@ -74,16 +74,17 @@ class MWMovieCell: UICollectionViewCell {
         self.imageView.snp.makeConstraints { (make) in
             make.height.equalTo(imageSize)
             make.left.right.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview()
         }
         
         self.titleLabel.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().offset(15)
             make.top.equalTo(imageView).offset(imageSize)
+            make.left.right.equalToSuperview().offset(15)
         }
         
         self.genreAndYear.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().offset(15)
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.left.right.equalToSuperview().offset(15)
         }
     }
     

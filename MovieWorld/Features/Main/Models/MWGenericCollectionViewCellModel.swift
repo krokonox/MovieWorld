@@ -8,16 +8,16 @@
 
 import UIKit
 
-struct MWGenericCollectionViewCellModel: Equatable {
+struct MWGenericCollectionViewCellModel {
     let image: String?
     let firstTitle: String
     let secondTitle: String
     let imageSize: Int
     
     init(movie: MWMovie) {
-        self.image = movie.poster_path
+        self.image = movie.posterPath
         self.firstTitle = movie.title
-        self.secondTitle = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date)"
+        self.secondTitle = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.releaseDate)"
         self.imageSize = 185
     }
     

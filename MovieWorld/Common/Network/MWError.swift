@@ -18,20 +18,17 @@ enum MWError: Error, LocalizedError {
     var description: String {
         switch self {
         case .incorrectUrl:
-            return NSLocalizedString("You have entered the wrong URL, try another one.",
-                                     comment: "")
+            return ("You have entered the wrong URL, try another one.").localized
         case .serverError:
-            return NSLocalizedString("Server Error. Please, try again later.",
-                                     comment: "")
+            return ("Server Error. Please, try again later.").localized
+                                     
         case .networkError:
-            return NSLocalizedString("Failed to connect. Please, try again later.",
-                                     comment: "")
+            return ("Failed to connect. Please, try again later.").localized
+                                     
         case .parsingError:
-            return NSLocalizedString("Failed to decode data, try again.",
-                                     comment: "")
+            return ("Failed to decode data, try again.").localized
         default:
-            return NSLocalizedString("Something went wrong, try again later.",
-                                     comment: "")
+            return ("Something went wrong, try again later.").localized
         }
     }
 }
