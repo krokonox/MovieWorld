@@ -8,9 +8,6 @@
       location = "group:MovieWorld/Common/CoreData/GenreModel+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/63CA1266-59AD-4CA8-A09A-B5A3A06D7088/g.gitignore">
-   </FileRef>
-   <FileRef
       location = "group:MovieWorld.xcodeproj">
    </FileRef>
    <FileRef
