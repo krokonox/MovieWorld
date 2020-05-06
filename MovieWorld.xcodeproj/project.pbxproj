@@ -14,6 +14,7 @@
 		8403B3022461317200641677 /* CaseIterable+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403B3012461317200641677 /* CaseIterable+Ex.swift */; };
 		8403B3042461D2DB00641677 /* MovieDetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403B3032461D2DB00641677 /* MovieDetailViewLayout.swift */; };
 		8403B3062462801100641677 /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403B3052462801100641677 /* URLParameters.swift */; };
+		8403B308246283A000641677 /* g.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8403B307246283A000641677 /* g.gitignore */; };
 		84060744240037640071C42A /* MWMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84060743240037640071C42A /* MWMainTabBarController.swift */; };
 		84068914245A8B7F00A96E7E /* UITableViewCell+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84068913245A8B7F00A96E7E /* UITableViewCell+Ex.swift */; };
 		84068918245BDFD000A96E7E /* UIViewController+ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84068917245BDFD000A96E7E /* UIViewController+ex.swift */; };
@@ -81,6 +82,7 @@
 		8403B3012461317200641677 /* CaseIterable+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Ex.swift"; sourceTree = "<group>"; };
 		8403B3032461D2DB00641677 /* MovieDetailViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewLayout.swift; sourceTree = "<group>"; };
 		8403B3052462801100641677 /* URLParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
+		8403B307246283A000641677 /* g.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = g.gitignore; path = "../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/109744AA-1728-415C-A54B-B4EB5645918B/g.gitignore"; sourceTree = "<group>"; };
 		84060743240037640071C42A /* MWMainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainTabBarController.swift; sourceTree = "<group>"; };
 		84068913245A8B7F00A96E7E /* UITableViewCell+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Ex.swift"; sourceTree = "<group>"; };
 		84068917245BDFD000A96E7E /* UIViewController+ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ex.swift"; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 		84F9334923F835F00046F243 = {
 			isa = PBXGroup;
 			children = (
+				8403B307246283A000641677 /* g.gitignore */,
 				84F9335423F835F00046F243 /* MovieWorld */,
 				84F9336B23F835F00046F243 /* MovieWorldTests */,
 				84F9337623F835F10046F243 /* MovieWorldUITests */,
@@ -573,6 +576,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8403B308246283A000641677 /* g.gitignore in Resources */,
 				84F9336223F835F00046F243 /* LaunchScreen.storyboard in Resources */,
 				84FC451D241BAECC00E931D6 /* Localizable.strings in Resources */,
 				84F4F6A5240A38E800C01562 /* Assets.xcassets in Resources */,
