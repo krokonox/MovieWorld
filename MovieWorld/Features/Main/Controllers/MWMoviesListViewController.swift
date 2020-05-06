@@ -66,10 +66,29 @@ class MWMoviesListViewController: UIViewController {
     private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
         refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshCntrl.addTarget(self, action: #selector(refresh),
+        refreshCntrl.addTarget(self, action: #selector(self.refresh),
                                  for: UIControl.Event.valueChanged)
         return refreshCntrl
     }()
+
+    // MARK: - UI Functions
+    
+    private func setupViews() {
+        self.view.addSubview(tableView)
+        self.tableView.addSubview(refreshControl)
+        self.tableView.tableHeaderView = header
+        self.header.addSubview(collectionView)
+    }
+    
+    private func setConstraints() {
+        self.tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        
+        self.collectionView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
     
     // MARK: - Lifecycle
     
@@ -82,45 +101,24 @@ class MWMoviesListViewController: UIViewController {
     
     // MARK: - Private Functions
     
-    private func setConstraints() {
-        self.tableView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-        
-        self.collectionView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-    }
-
     private func initRequest(path: String) {
         self.dispatch.enter()
         MWNetwork.sh.request(urlPath: path,
                           successHandler: { [weak self] (_ response: MWApiResults) in
                             self?.movies = response.results
+                            self?.activityIndicator.stopAnimating()
+                            self?.refreshControl.endRefreshing()
+                            self?.tableView.reloadData()
                             self?.dispatch.leave()
         }) { [weak self] (error) in
             self?.showError(error.localizedDescription)
             self?.dispatch.leave()
         }
     }
- 
-    private func setupViews() {
-        self.view.addSubview(tableView)
-        self.tableView.addSubview(refreshControl)
-        self.tableView.tableHeaderView = header
-        self.header.addSubview(collectionView)
-    }
-    
-    // MARK: - Functions
-
-    func set(movies: [MWMovie], category: String) {
-        self.movies = movies
-        self.category = category
-    }
     
     private func showMoviesByGenre(genre: String) {
         for movie in self.movies {
-            let genres = movie.genres.map{ $0 }
+            let genres = movie.genres.map { $0 }
             if genres.contains(genre) {
                 self.moviesToShow.append(movie)
             }
@@ -129,7 +127,7 @@ class MWMoviesListViewController: UIViewController {
     
     private func hideMoviesByGenre(genre: String) {
         for movie in self.moviesToShow {
-            let genres = movie.genres.map{ $0 }
+            let genres = movie.genres.map { $0 }
             if genres.contains(genre) {
                 if let movieToDeleteIndex =  moviesToShow.firstIndex(of: movie) {
                     self.moviesToShow.remove(at: movieToDeleteIndex)
@@ -137,21 +135,25 @@ class MWMoviesListViewController: UIViewController {
             }
         }
     }
-    
-    @objc func refresh(sender: AnyObject) {
-        self.activityIndicator.startAnimating()
-        self.initRequest(path: self.category)
-        self.activityIndicator.stopAnimating()
-        self.refreshControl.endRefreshing()
-        self.tableView.reloadData()
-    }
-    
+
     private func updateCellWith(row: [MWMovieCell]) {
         self.collectionView.reloadData()
     }
     
     private func showError(_ error: String) {
         self.alert(message: error.description, title: "")
+    }
+    
+    // MARK: - Functions
+    
+    func set(movies: [MWMovie], category: String) {
+        self.movies = movies
+        self.category = category
+    }
+    
+    @objc func refresh(sender: AnyObject) {
+        self.activityIndicator.startAnimating()
+        self.initRequest(path: self.category)
     }
 }
 
@@ -167,20 +169,20 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell<MovieDetailViewLayout>.reuseIdentifier) as? TableViewCell<MovieDetailViewLayout>
-            else {
-                return UITableViewCell()
-        }
-        if moviesToShow.isEmpty {
-            cell.layout.set(movie: movies[indexPath.row])
-
-        } else {
-              cell.layout.set(movie: moviesToShow[indexPath.row])
- 
-        }
-        cell.selectionStyle = .none
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell<MovieDetailViewLayout>.reuseIdentifier)
         
-        return cell
+        if let cell = cell as? TableViewCell<MovieDetailViewLayout> {
+            if moviesToShow.isEmpty {
+                cell.layout.set(movie: movies[indexPath.row])
+                
+            } else {
+                cell.layout.set(movie: moviesToShow[indexPath.row])
+            }
+            cell.selectionStyle = .none
+            
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -201,7 +203,9 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier, for: indexPath) as? MWCollectionViewGenreCell {
+         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier, for: indexPath)
+        
+         if let cell = cell as? MWCollectionViewGenreCell {
             if let genre = self.genres[indexPath.row].name {
                 cell.set(text: genre)
             } else {
@@ -213,7 +217,9 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? MWCollectionViewGenreCell {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        if let cell = cell as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
             self.showMoviesByGenre(genre: cell.collectionViewCellTitle.text ?? "")
             self.tableView.reloadData()
@@ -221,7 +227,9 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? MWCollectionViewGenreCell {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        if let cell = cell as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor(named: "RedColor")
             self.hideMoviesByGenre(genre: cell.collectionViewCellTitle.text!)
             self.tableView.reloadData()
@@ -236,4 +244,3 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
         return edgeInsets
     }
 }
-

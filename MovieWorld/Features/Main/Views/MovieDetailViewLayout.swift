@@ -79,14 +79,14 @@ final class MovieDetailViewLayout: ViewLayout {
     private func makeConstraints() {
         
         self.movieStackView.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview().inset(edgeInsets)
             make.left.equalTo(movieImageView).offset(135)
             make.right.equalToSuperview()
-            make.bottom.top.equalToSuperview().inset(edgeInsets)
         }
 
         self.movieRatingView.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview()
             make.top.equalTo(movieGenreView.snp.bottom).offset(40)
+            make.bottom.equalToSuperview()
         }
         
         self.movieGenreView.snp.makeConstraints { (make) in
@@ -95,8 +95,8 @@ final class MovieDetailViewLayout: ViewLayout {
         
         self.movieImageView.snp.makeConstraints { (make) in
             make.height.width.equalTo(imageSize)
-            make.left.equalToSuperview().offset(25)
             make.top.bottom.equalToSuperview().inset(10)
+            make.left.equalToSuperview().offset(25)
         }
         
         self.seperator.snp.makeConstraints { (make) in

@@ -98,14 +98,14 @@ class MWTableViewCell: UITableViewCell {
             make.right.equalToSuperview()
         }
         self.redButton.snp.makeConstraints { (make) in
+            make.width.height.equalTo(buttonSize)
             make.top.equalTo(collectionView).offset(14)
             make.right.equalToSuperview().inset(10)
-            make.width.height.equalTo(buttonSize)
         }
         self.reloadButton.snp.makeConstraints { (make) in
+            make.width.height.equalTo(buttonSize)
             make.top.equalTo(collectionView).offset(14)
             make.right.equalToSuperview().inset(90)
-            make.width.height.equalTo(buttonSize)
         }
     }
     

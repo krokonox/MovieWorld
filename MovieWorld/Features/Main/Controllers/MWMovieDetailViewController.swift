@@ -18,6 +18,7 @@ class MWMovieDetailViewController: UIViewController {
     // MARK: - Variables
     
     private let dispatch = DispatchGroup()
+    private let urlPath = "movie/"
     
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
@@ -38,7 +39,7 @@ class MWMovieDetailViewController: UIViewController {
     private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
         refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshCntrl.addTarget(self, action: #selector(refresh),
+        refreshCntrl.addTarget(self, action: #selector(self.refresh),
                                for: UIControl.Event.valueChanged)
         return refreshCntrl
     }()
@@ -113,77 +114,85 @@ class MWMovieDetailViewController: UIViewController {
     
     // MARK: - UI Functions
     
-    private func setConstraints() {
-        self.scrollView.snp.makeConstraints{ (make) in
-            make.edges.equalToSuperview()
-        }
+    private func setupViews() {
+        self.view.addSubview(scrollView)
         
-        self.contentView.snp.makeConstraints{ (make) in
-            make.left.right.equalTo(self.view)
-            make.height.width.top.bottom.equalToSuperview()
-        }
+        self.scrollView.addSubview(refreshControl)
+        self.scrollView.addSubview(contentView)
         
-        self.movieCellView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.height.equalTo(142)
-        }
+        self.contentView.addSubview(movieCellView)
+        self.contentView.addSubview(videoView)
+        self.contentView.addSubview(descriptionView)
+        self.contentView.addSubview(collectionView)
         
-        self.videoView.snp.makeConstraints{ (make) in
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().inset(16)
-            make.top.equalTo(movieCellView.snp.bottom).offset(20)
-            make.height.equalTo(166)
-        }
+        self.descriptionText.text = self.movie?.overview
+        self.descriptionView.addSubview(descriptionTitleLabel)
+        self.descriptionView.addSubview(descriptionText)
         
-        self.playButton.snp.makeConstraints{ (make) in
-            make.center.equalToSuperview()
-        }
+        self.videoView.addSubview(playButton)
         
-        self.descriptionView.snp.makeConstraints{ (make) in
-            make.left.right.equalToSuperview().offset(16)
-            make.top.equalTo(videoView.snp.bottom).offset(60)
-        }
+        self.setConstraints()
         
-        self.descriptionTitleLabel.snp.makeConstraints{ (make) in
-            make.left.top.right.equalToSuperview()
-        }
-        
-        self.descriptionText.snp.makeConstraints{ (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(self.descriptionTitleLabel.snp.bottom).offset(8)
-        }
-        
-        self.collectionView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
-            make.height.equalTo(self.itemSize.height)
+        if let movieCellView = movieModel {
+            self.movieCellView.layout.set(movie: movieCellView)
         }
     }
     
-    private func setupViews() {
-         self.view.addSubview(scrollView)
-         
-         self.scrollView.addSubview(refreshControl)
-         self.scrollView.addSubview(contentView)
-         
-         self.contentView.addSubview(movieCellView)
-         self.contentView.addSubview(videoView)
-         self.contentView.addSubview(descriptionView)
-         self.contentView.addSubview(collectionView)
-         
-         self.descriptionText.text = self.movie?.overview
-         self.descriptionView.addSubview(descriptionTitleLabel)
-         self.descriptionView.addSubview(descriptionText)
-         
-         self.videoView.addSubview(playButton)
-         
-         self.setConstraints()
-         
-         if let movieCellView = movieModel {
-             self.movieCellView.layout.set(movie: movieCellView)
-         }
-     }
+    private func setConstraints() {
+        self.scrollView.snp.makeConstraints { (make) in
+            make.edges.height.width.equalToSuperview()
+        }
+        
+        self.contentView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+            make.height.width.equalToSuperview()
+        }
+        
+        self.movieCellView.snp.makeConstraints { (make) in
+            make.height.equalTo(142)
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+        }
+        
+        self.videoView.snp.makeConstraints { (make) in
+            make.height.equalTo(166)
+            make.top.equalTo(movieCellView.snp.bottom).offset(20)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().inset(16)
+        }
+        
+        self.playButton.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+        }
+        
+        self.descriptionView.snp.makeConstraints { (make) in
+            make.top.equalTo(videoView.snp.bottom).offset(60)
+            make.left.right.equalToSuperview().offset(16)
+        }
+        
+        self.descriptionTitleLabel.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+        }
+        
+        self.descriptionText.snp.makeConstraints { (make) in
+            make.top.equalTo(self.descriptionTitleLabel.snp.bottom).offset(8)
+            make.left.right.equalToSuperview()
+        }
+        
+        self.collectionView.snp.makeConstraints { (make) in
+            make.height.equalTo(self.itemSize.height)
+            make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
+            make.left.right.equalToSuperview()
+        }
+    }
+    
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupViews()
+        self.fetchMovieDetail()
+    }
     
     // MARK: - Private Functions
     
@@ -193,15 +202,13 @@ class MWMovieDetailViewController: UIViewController {
         }
         self.activityIndicator.startAnimating()
         self.dispatch.enter()
-        MWNet.sh.request(urlPath: "movie/" + String(movieId),
+        MWNet.sh.request(urlPath: self.urlPath + String(movieId),
                          parameters: ["append_to_response" : "videos,credits"],
                          successHandler: { [weak self] (_ response: MWMovieDetailResult) in  
                             guard let self = self else { return }
-                            self.activityIndicator.stopAnimating()
                             self.movie = response
                             self.setupViews()
                             self.dispatch.leave()
-                            
         }) { [weak self] (error) in
             self?.showError(error.description)
             self?.dispatch.leave()
@@ -249,14 +256,6 @@ class MWMovieDetailViewController: UIViewController {
     }
     
     @objc func refresh() {
-        self.fetchMovieDetail()
-    }
-    
-    // MARK: - Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupViews()
         self.fetchMovieDetail()
     }
     
