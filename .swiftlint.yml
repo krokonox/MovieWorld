@@ -3,8 +3,9 @@ disabled_rules:
   - comma
   - control_statement
   - trailing_whitespace
+  - variable_name
   
-warning_threshold: 15
+warning_threshold: 30
 
 excluded:
   - Pods
@@ -14,8 +15,8 @@ opt_in_rules:
 - empty_string
 
 identifier_name:
-allowed_symbols: "_"
-
+  -allowed_symbols: "_"
+  
 line_length:
     warning: 150
     error: 200

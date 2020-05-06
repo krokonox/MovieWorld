@@ -174,7 +174,6 @@ extension MWMoviesListViewController: UITableViewDelegate, UITableViewDataSource
         if let cell = cell as? TableViewCell<MovieDetailViewLayout> {
             if moviesToShow.isEmpty {
                 cell.layout.set(movie: movies[indexPath.row])
-                
             } else {
                 cell.layout.set(movie: moviesToShow[indexPath.row])
             }

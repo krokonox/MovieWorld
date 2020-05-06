@@ -226,7 +226,7 @@ class MWMovieDetailViewController: UIViewController {
         XCDYouTubeClient.default().getVideoWithIdentifier(video.key) {
             [weak self] (video, error) in
             guard let video = video, error == nil else { return }
-
+            
             let streamURL: URL
             if let url = video.streamURLs[XCDYouTubeVideoQuality.HD720.rawValue] {
                 streamURL = url
