@@ -12,22 +12,33 @@ struct MWMovieDetailResult: Decodable {
     let id: Int
     let title: String
     let genres: [Genre]?
-    let poster_path: String?
-    let release_date = "release_date"
-    let vote_average: Double
+    let posterPath: String?
+    let releaseDate: String
+    let voteAverage: Double
     let overview: String
     var videos: MWMovieVideoResponse?
     var credits: MWCreditsResponse?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case genres
+        case voteAverage = "vote_average"
+        case posterPath = "poster_path"
+        case overview
+        case releaseDate = "release_date"
+        case videos
+        case credits
+    }
     
     func returnAsMovie() -> MWMovie {
         let genreIds = genres?.compactMap { $0.id } ?? []
         return MWMovie(id: id,
                        title: title,
-                       genre_ids: genreIds,
-                       release_date: release_date,
-                       poster_path: poster_path,
-                       vote_average: vote_average,
-                       overview: overview
-                       )
+                       genreIds: genreIds,
+                       releaseDate: releaseDate,
+                       posterPath: posterPath,
+                       voteAverage: voteAverage,
+                       overview: overview)
     }
 }

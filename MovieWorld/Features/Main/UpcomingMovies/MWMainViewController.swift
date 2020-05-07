@@ -5,32 +5,28 @@
 //  Created by Admin on 20/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
-import Foundation
+
 import UIKit
 import SnapKit
 
-class MWMainViewController: UIViewController {
+class MWMainViewController: MWViewController {
     
     // MARK: - Variables
     
+    private let paths = URLPaths.allCases
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
     
-    private let paths = URLPaths.allCases
-    private let MWNetwork: MWNet = MWNet.sh
-    private let cellId = "cellId"
+    var movies: [String: [MWMovie]] = [:]
     
-    var movies: [String: [MWMovie]] = [:] {
-        didSet {}
-    }
-  
+    // MARK: - Gui Variables
+    
     private lazy var tableView: UITableView = {
-        let tv = UITableView(frame: self.view.bounds, style: .plain)
+        let tv = UITableView(frame: .zero, style: .plain)
         tv.delegate = self
         tv.dataSource = self
-        tv.addSubview(self.refreshControl)
-        tv.rowHeight = 305
-        tv.register(MWTableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.rowHeight = 290
+        tv.register(MWTableViewCell.self, forCellReuseIdentifier: MWTableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
     
         return tv
@@ -38,7 +34,7 @@ class MWMainViewController: UIViewController {
     
     private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
-        refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshCntrl.attributedTitle =  NSAttributedString(string: "Pull to refresh".localized)
         refreshCntrl.addTarget(self, action: #selector(refresh),
                                for: UIControl.Event.valueChanged)
         return refreshCntrl
@@ -48,24 +44,36 @@ class MWMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Main"
-        self.view.backgroundColor = .white
         
-        self.view.addSubview(tableView)
+        self.title = "Main".localized
+        
+        self.setupViews()
         self.makeConstraints()
         self.fetchMovies()
     }
     
     // MARK: - Private functions
+    
+    private func setupViews() {
+        self.view.addSubview(tableView)
+        self.tableView.addSubview(self.refreshControl)
+    }
+    
+    private func makeConstraints() {
+        self.tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
 
     private func initRequest(path: URLPaths) {
         self.dispatch.enter()
-        self.MWNetwork.request(urlPath: path.rawValue,
-                          successHandler: { [weak self] (_ response: MWApiResults) in
-                            self?.movies[path.description] = response.results
-                            self?.dispatch.leave()
+        MWNet.sh.request(urlPath: path.rawValue,
+                             successHandler: { [weak self] (_ response: MWApiResults) in
+                                self?.movies[path.description] = response.results
+                                self?.dispatch.leave()
         }) { [weak self] (error) in
-            self?.showError(error.localizedDescription)
+            self?.showError(error.description)
+            self?.dispatch.leave()
         }
     }
     
@@ -83,31 +91,14 @@ class MWMainViewController: UIViewController {
         }
     }
     
-    private func makeConstraints() {
-        self.tableView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-    }
-    
     private func showError(_ error: String) {
-        print(error)
+        self.alert(message: error.description, title: "")
     }
     
     // MARK: - Functions
     
     @objc func refresh(sender: AnyObject) {
         self.fetchMovies()
-    }
-    
-    @objc func reloadMovieCategory(_ sender: UIButton) {
-        let cellPosition = sender.convert(sender.bounds.origin, to: tableView)
-        
-        if let indexPath = self.tableView.indexPathForRow(at: cellPosition) {
-            let rowIndex = indexPath.row
-            self.initRequest(path: self.paths[rowIndex])
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-        
     }
 }
 
@@ -121,17 +112,23 @@ extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movieCategory = self.paths[indexPath.row].description
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MWTableViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWTableViewCell.reuseIdentifier, for: indexPath)
         
-        cell.collection.reloadButton.addTarget(self, action: #selector(reloadMovieCategory(_:)), for: .touchUpInside)
-        
-        if let movies = movies[movieCategory] {
-            cell.set(movies: movies, title: movieCategory, category: paths[indexPath.row].rawValue)
-            return cell
-        } else {
-            cell.set(movies: [], title: "", category: paths[indexPath.row].rawValue)
-            return cell
+        if let cell = cell as? MWTableViewCell {
+            cell.reloadButtonAction = { [weak self] in
+                self?.initRequest(path: (self?.paths[indexPath.row])!)
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            
+            if let movies = movies[movieCategory] {
+                cell.set(movies: movies, title: movieCategory, category: paths[indexPath.row].rawValue)
+                return cell
+            } else {
+                cell.set(movies: [], title: "", category: paths[indexPath.row].rawValue)
+                return cell
+            }
         }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MWCollectionViewGenreCell: UICollectionViewCell {
@@ -23,14 +22,15 @@ class MWCollectionViewGenreCell: UICollectionViewCell {
     // MARK: - Private functions
 
     private func setupView() {
-        self.backgroundColor = UIColor(named: "RedColor")
-        self.layer.cornerRadius = 5.0
         self.addSubview(self.collectionViewCellTitle)
         self.setUpConstrants()
+        
+        self.backgroundColor = UIColor(named: "RedColor")
+        self.layer.cornerRadius = 5.0
     }
     
     private func setUpConstrants() {
-        self.collectionViewCellTitle.snp.makeConstraints { (make) in
+        self.collectionViewCellTitle.snp.updateConstraints { (make) in
             make.edges.equalToSuperview()
         }
     }

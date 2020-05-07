@@ -7,25 +7,24 @@
 //
 
 import UIKit
-import Foundation
 
-struct MWGenericCollectionViewCellModel: Equatable {
+struct MWGenericCollectionViewCellModel {
     let image: String?
     let firstTitle: String
     let secondTitle: String
     let imageSize: Int
     
     init(movie: MWMovie) {
-        image = movie.poster_path
-        firstTitle = movie.title
-        secondTitle = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.release_date)"
-        imageSize = 185
+        self.image = movie.posterPath
+        self.firstTitle = movie.title
+        self.secondTitle = "\(movie.genres.map { $0 }.joined(separator: ", ")), \(movie.releaseDate)"
+        self.imageSize = 185
     }
     
     init(cast: Cast) {
-        image = cast.profile_path
-        firstTitle = cast.name.components(separatedBy: " ")[1]
-        secondTitle = cast.character
-        imageSize = 92
+        self.image = cast.profile_path
+        self.firstTitle = cast.name.components(separatedBy: " ")[1]
+        self.secondTitle = cast.character
+        self.imageSize = 92
     }
 }

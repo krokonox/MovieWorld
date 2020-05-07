@@ -6,17 +6,23 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
+<<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift.orig
 <<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift
 import UIKit
 
 final class MWCollectionView: UIView {
 =======
+=======
+>>>>>>> MovieDetailScreen:MovieWorld/Features/Main/Views/MWTableViewCell.swift
 import SnapKit
 import UIKit
 
 class MWTableViewCell: UITableViewCell {
     
     // MARK: Variables
+<<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift.orig
+>>>>>>> MovieDetailScreen:MovieWorld/Features/Main/Views/MWTableViewCell.swift
+=======
 >>>>>>> MovieDetailScreen:MovieWorld/Features/Main/Views/MWTableViewCell.swift
     
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
@@ -35,9 +41,12 @@ class MWTableViewCell: UITableViewCell {
         }
     }
     
+<<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift.orig
 <<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift
      lazy var collectionView: UICollectionView = {
 =======
+=======
+>>>>>>> MovieDetailScreen:MovieWorld/Features/Main/Views/MWTableViewCell.swift
     var reloadButtonAction: (() -> Void)?
     
     private lazy var collectionView: UICollectionView = {
@@ -125,6 +134,7 @@ class MWTableViewCell: UITableViewCell {
         self.items = items
         self.titleLabel.text = NSLocalizedString(title, comment: "")
         self.category = category
+<<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift.orig
 <<<<<<< HEAD:MovieWorld/Features/Main/Views/MWCollectionView.swift
         self.itemSize = itemSize
     }
@@ -137,6 +147,8 @@ class MWTableViewCell: UITableViewCell {
         
         self.setupConstraints()
 =======
+=======
+>>>>>>> MovieDetailScreen:MovieWorld/Features/Main/Views/MWTableViewCell.swift
         self.needsUpdateConstraints()
     }
     

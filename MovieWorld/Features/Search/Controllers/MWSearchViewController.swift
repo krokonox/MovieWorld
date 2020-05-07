@@ -6,16 +6,14 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class MWSearchViewController: UIViewController {
+class MWSearchViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Search"
-        self.view.backgroundColor = .white
+        self.title = "Search".localized
         MWI.sh.push(vc: UIViewController())
     }
 }

@@ -10,7 +10,14 @@ import Foundation
 
 struct MWApiResults: Decodable {
     let page: Int?
-    let total_results: Int?
-    let total_pages: Int?
+    let totalResults: Int?
+    let totalPages: Int?
     let results: [MWMovie]
+    
+    enum CodingKeys: String, CodingKey {
+        case page
+        case totalResults = "total_results"
+        case totalPages = "total_pages"
+        case results
+    }
 }

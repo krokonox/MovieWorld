@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct MWConfiguration: Decodable {
+struct MWConfiguration: Decodable {
     var images: Image
 }
 
@@ -16,14 +16,13 @@ struct Image: Decodable {
     var base_url: String
     var secure_base_url: String
     var logo_sizes: [ImageSizes]
-
+    
     enum ImageSizes: String, Decodable {
         case w45, w92, w154, w185, w300, w500, original, unknown
-
+        
         init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             self = try ImageSizes(rawValue: (container.decode(RawValue.self))) ?? .unknown
         }
-
     }
 }

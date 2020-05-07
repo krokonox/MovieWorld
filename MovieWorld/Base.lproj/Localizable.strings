@@ -9,3 +9,13 @@
 "Popular" = "Popular";
 "Upcoming" = "Upcoming";
 "Latest" = "Latest";
+
+"Main" = "Main";
+"Category" = "Category";
+"Search" = "Search";
+
+"You have entered the wrong URL, try another one." = "You have entered the wrong URL, try another one.";
+"Server Error. Please, try again later." = "Server Error. Please, try again later.";
+"Failed to connect. Please, try again later." = "Failed to connect. Please, try again later.";
+"Failed to decode data, try again." = "Failed to decode data, try again.";
+"Something went wrong, try again later." = "Something went wrong, try again later.";

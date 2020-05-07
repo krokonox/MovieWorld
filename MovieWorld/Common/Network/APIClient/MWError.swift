@@ -8,57 +8,27 @@
 
 import Foundation
 
-public enum MWError: Error {
+enum MWError: Error, LocalizedError {
     case incorrectUrl
     case networkError
     case serverError
     case parsingError
-    
     case unknown
     
     var description: String {
         switch self {
         case .incorrectUrl:
-            return ErrorMessages.Default.incorrectUrl
+            return ("You have entered the wrong URL, try another one.").localized
         case .serverError:
-            return ErrorMessages.Default.serverError
+            return ("Server Error. Please, try again later.").localized
+                                     
         case .networkError:
-            return ErrorMessages.Default.networkError
+            return ("Failed to connect. Please, try again later.").localized
+                                     
         case .parsingError:
-            return ErrorMessages.Default.parsingError
+            return ("Failed to decode data, try again.").localized
         default:
-            return ErrorMessages.Default.unknownError
+            return ("Something went wrong, try again later.").localized
         }
     }
-}
-
-extension MWError: LocalizedError {
-    
-    public var errorDescription: String? {
-        switch self {
-        case .serverError:
-            return ErrorMessages.Default.serverError
-        case .networkError:
-            return ErrorMessages.Default.networkError
-        case .incorrectUrl, .unknown:
-            return ErrorMessages.Default.incorrectUrl
-        case .parsingError:
-            return ErrorMessages.Default.parsingError
-    }
-  }
-}
-extension MWError {
-    
-    struct ErrorMessages {
-        
-        struct Default {
-            static let serverError = "Server Error. Please, try again later."
-            static let parsingError = "Failed to decode data, try again."
-            static let incorrectUrl = "You have entered the wrong URL, try another one."
-            static let networkError = "Failed to connect. Please, try again later."
-            static let unknownError = "Something went wrong, try again later."
-        }
-        
-    }
-    
 }

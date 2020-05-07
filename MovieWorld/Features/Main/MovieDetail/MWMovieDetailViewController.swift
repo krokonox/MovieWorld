@@ -17,69 +17,66 @@ class MWMovieDetailViewController: UIViewController {
     
     // MARK: - Variables
     
-    private var activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
-    private var avPlayer: AVPlayer!
+    private let urlPath = "movie/"
+    
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+    private var sectionInset = UIEdgeInsets(top: 30, left: 15, bottom: 10, right: 15)
     private var itemSize = CGSize(width: 90, height: 150)
-   
-    var movieCell: MWMovie? {
-        didSet {
-            self.updateMovieDetail()
-        }
-    }
+    private var activityIndicator = UIActivityIndicatorView()
+    private var avPlayer: AVPlayer?
+    
+    var movieModel: MWMovie?
     var movie: MWMovieDetailResult? {
         didSet {
             self.setupViews()
-            self.collectionView.collectionView.reloadData()
+            self.collectionView.reloadData()
         }
     }
     
     // MARK: - Lazy variables
     
-    private lazy var refreshControl: UIRefreshControl = { // Is it possible to reuse it from MWMainViewController?
+    private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
         refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshCntrl.addTarget(self, action: #selector(refresh),
+        refreshCntrl.addTarget(self, action: #selector(self.refresh),
                                for: UIControl.Event.valueChanged)
         return refreshCntrl
     }()
     
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView(frame: UIScreen.main.bounds)
-        view.addSubview(self.refreshControl)
-        view.addSubview(self.contentView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.addSubview(self.cell)
-        view.addSubview(self.videoView)
-        view.addSubview(self.descriptionView)
-        view.addSubview(self.collectionView)
-        return view
-    }()
-
-    lazy var cell: View<MovieDetailViewLayout> = {
-        var movieCell = View<MovieDetailViewLayout>(frame: .zero)
-        return movieCell
+    private lazy var contentView: UIView = UIView()
+    
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = self.sectionInset
+        layout.itemSize = self.itemSize
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8.0
+        layout.minimumInteritemSpacing = 10.0
+        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.backgroundColor = .white
+        cv.delegate = self
+        cv.dataSource = self
+        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: MWMovieCell.reuseIdentifier)
+        cv.reloadData()
+        return cv
     }()
     
-    lazy var videoView: UIView = {
+    private lazy var movieCellView: View<MovieDetailViewLayout> = View<MovieDetailViewLayout>(frame: .zero)
+
+    private lazy var videoView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(named: "GreyColor")?.withAlphaComponent(0.15)
-        view.addSubview(self.playButton)
         return view
     }()
     
-    private lazy var descriptionView: UIView = {
-        let view = UIView()
-        view.addSubview(self.descriptionTitleLabel)
-        view.addSubview(self.descriptionText)
-        return view
-    }()
+    private lazy var descriptionView: UIView = UIView()
     
     private lazy var descriptionTitleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -100,44 +97,121 @@ class MWMovieDetailViewController: UIViewController {
         button.clipsToBounds = true
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.setImage(UIImage(named: "PlayButton"), for: .normal)
-        button.addTarget(self, action: #selector(playVideoButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(playVideoButtonTapped), for: .allTouchEvents)
         return button
     }()
     
+    // MARK: - Initialization
     
+    init(movie: MWMovie) {
+        self.movieModel = movie
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    private lazy var collectionView: MWCollectionView = {
-        let collection = MWCollectionView(frame: .zero, itemSize: self.itemSize)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - UI Functions
+    
+    private func setupViews() {
+        self.view.addSubview(scrollView)
         
-            
+        self.scrollView.addSubview(refreshControl)
+        self.scrollView.addSubview(contentView)
         
+        self.contentView.addSubview(movieCellView)
+        self.contentView.addSubview(videoView)
+        self.contentView.addSubview(descriptionView)
+        self.contentView.addSubview(collectionView)
+        
+        self.descriptionText.text = self.movie?.overview
+        self.descriptionView.addSubview(descriptionTitleLabel)
+        self.descriptionView.addSubview(descriptionText)
+        
+        self.videoView.addSubview(playButton)
+        
+        self.setConstraints()
+        
+        if let movieCellView = movieModel {
+            self.movieCellView.layout.set(movie: movieCellView)
+        }
+    }
     
-        collection.collectionView.delegate = self
-        collection.collectionView.dataSource = self
-        collection.reloadButton.addTarget(self, action: #selector(reloadCast), for: .allTouchEvents)
-        collection.redButton.addTarget(self, action: #selector(pushVC), for: .touchUpInside)
-        return collection
-    }()
+    private func setConstraints() {
+        self.scrollView.snp.makeConstraints { (make) in
+            make.edges.height.width.equalToSuperview()
+        }
+        
+        self.contentView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+            make.height.width.equalToSuperview()
+        }
+        
+        self.movieCellView.snp.makeConstraints { (make) in
+            make.height.equalTo(142)
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+        }
+        
+        self.videoView.snp.makeConstraints { (make) in
+            make.height.equalTo(166)
+            make.top.equalTo(movieCellView.snp.bottom).offset(20)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().inset(16)
+        }
+        
+        self.playButton.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+        }
+        
+        self.descriptionView.snp.makeConstraints { (make) in
+            make.top.equalTo(videoView.snp.bottom).offset(60)
+            make.left.right.equalToSuperview().offset(16)
+        }
+        
+        self.descriptionTitleLabel.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+        }
+        
+        self.descriptionText.snp.makeConstraints { (make) in
+            make.top.equalTo(self.descriptionTitleLabel.snp.bottom).offset(8)
+            make.left.right.equalToSuperview()
+        }
+        
+        self.collectionView.snp.makeConstraints { (make) in
+            make.height.equalTo(self.itemSize.height)
+            make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
+            make.left.right.equalToSuperview()
+        }
+    }
+    
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupViews()
+        self.fetchMovieDetail()
+    }
     
     // MARK: - Private Functions
-    //"movie/" + String(movieId)
+    
     private func fetchMovieDetail() {
-        guard let movieId = movieCell?.id else {
+        guard let movieId = movieModel?.id else {
             return
         }
-        activityIndicator.startAnimating()
+        self.activityIndicator.startAnimating()
         self.dispatch.enter()
-        MWNet.sh.request(urlPath: Endpoints.getDetail(id: movieId).path,
+        MWNet.sh.request(urlPath: self.urlPath + String(movieId),
                          parameters: ["append_to_response" : "videos,credits"],
-                         successHandler: { [weak self] (_ response: MWMovieDetailResult) in
-                            
-                            self?.activityIndicator.stopAnimating()
-                            self?.movie = response
-                            self?.setupViews()
-                            self?.dispatch.leave()
-                            
+                         successHandler: { [weak self] (_ response: MWMovieDetailResult) in  
+                            guard let self = self else { return }
+                            self.movie = response
+                            self.setupViews()
+                            self.dispatch.leave()
         }) { [weak self] (error) in
-            self?.activityIndicator.stopAnimating()
+            self?.showError(error.description)
+            self?.dispatch.leave()
         }
         
         self.dispatch.notify(queue: .main) { [weak self] in
@@ -145,35 +219,16 @@ class MWMovieDetailViewController: UIViewController {
             self?.activityIndicator.stopAnimating()
         }
     }
-    
-    @objc func reloadCast() {
-        self.fetchMovieDetail()
-        self.collectionView.collectionView.reloadData()
-    }
-    
-    private func updateMovieDetail() {}
 
     private func playVideo() {
-        guard let movie = movie else { return }
-
-        guard let video = movie.videos?.results.first else { return }
-
+        guard let movie = movie, let video = movie.videos?.results.first else { return }
         
-        let playerVC = AVPlayerViewController()
-        present(playerVC, animated: true, completion: nil)
-        XCDYouTubeClient.default().getVideoWithIdentifier(video.key) {[weak self, weak playerVC] (video, error) in
-            if let _ = error {
-                self?.dismiss(animated: true, completion: nil)
-                return
-            }
-            guard let video = video else {
-                self?.dismiss(animated: true, completion: nil)
-
-                return
-            }
-
+        XCDYouTubeClient.default().getVideoWithIdentifier(video.key) {
+            [weak self] (video, error) in
+            guard let video = video, error == nil else { return }
+            
             let streamURL: URL
-            if let url = video.streamURLs[XCDYouTubeVideoQuality.HD720.rawValue]  {
+            if let url = video.streamURLs[XCDYouTubeVideoQuality.HD720.rawValue] {
                 streamURL = url
             } else if let url = video.streamURLs[XCDYouTubeVideoQuality.medium360.rawValue] {
                 streamURL = url
@@ -182,74 +237,17 @@ class MWMovieDetailViewController: UIViewController {
             } else if let urlDict = video.streamURLs.first {
                 streamURL = urlDict.value
             } else {
-                self?.dismiss(animated: true, completion: nil)
-
                 return
             }
-
-            playerVC?.player = AVPlayer(url: streamURL)
-            playerVC?.player?.play()
+            
+            let playerVC = AVPlayerViewController()
+            
+            playerVC.player = AVPlayer(url: streamURL)
+            playerVC.player?.play()
+            
+            self?.present(playerVC, animated: true, completion: nil)
         }
     }
-    
-    // MARK: - UI Functions
-    
-    private func setupViews() {
-        self.view.addSubview(scrollView)
-        self.cell.layout.set(movie: movieCell!)
-        self.descriptionText.text = self.movie?.overview
-        self.setConstraints()
-    }
-    
-    private func setConstraints() {
-        self.scrollView.snp.makeConstraints{ (make) in
-            make.edges.equalToSuperview()
-        }
-        
-        self.contentView.snp.makeConstraints{ (make) in
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalTo(self.view)
-            make.width.height.equalToSuperview()
-        }
-        
-        self.cell.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.height.equalTo(142)
-        }
-        
-        self.videoView.snp.makeConstraints{ (make) in
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().inset(16)
-            make.top.equalTo(cell.snp.bottom).offset(20)
-            make.height.equalTo(166)
-        }
-        
-        self.playButton.snp.makeConstraints{ (make) in
-            make.center.equalToSuperview()
-        }
-        
-        self.descriptionView.snp.makeConstraints{ (make) in
-            make.left.right.equalToSuperview().offset(16)
-            make.top.equalTo(videoView.snp.bottom).offset(60)
-        }
-        
-        self.descriptionTitleLabel.snp.makeConstraints{ (make) in
-            make.left.top.right.equalToSuperview()
-        }
-        
-        self.descriptionText.snp.makeConstraints{ (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(self.descriptionTitleLabel.snp.bottom).offset(8)
-        }
-        
-        self.collectionView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(self.descriptionText.snp.bottom).offset(20)
-            make.height.equalTo(280)
-        }
-    }
-    
     
     // MARK: - Functions
     
@@ -261,35 +259,17 @@ class MWMovieDetailViewController: UIViewController {
         self.fetchMovieDetail()
     }
     
-    @objc func pushVC() {
-        let vc = MWMovieCreditListViewController()
-        vc.set(credits: (self.movie?.credits?.cast) ?? [])
-        MWI.sh.push(vc: vc)
+    private func showError(_ error: String) {
+        self.alert(message: error.description, title: "")
     }
-    // MARK: - Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupViews()
-        self.fetchMovieDetail()
-    }
-    
-    init(movie: MWMovie) {
-        self.movieCell = movie
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-// MARK: - CollectionView Extension
-    
 }
+
+// MARK: - CollectionView Extension
+
 extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func updateCellWith(row: [MWMovieCell]) {
-        self.collectionView.collectionView.reloadData()
+        self.collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -297,8 +277,11 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MWMovieCell {
-            let cast = MWGenericCollectionViewCellModel(cast: (self.movie?.credits?.cast[indexPath.row])!)
+        let movieCast = self.movie?.credits?.cast[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWMovieCell.reuseIdentifier, for: indexPath)
+        
+        if let cell = cell as? MWMovieCell, let cast = movieCast {
+            let cast = MWGenericCollectionViewCellModel(cast: cast)
             cell.item = cast
             return cell
         }
@@ -312,7 +295,4 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return edgeInsets
     }
-    
 }
-
-

@@ -16,11 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         let frame = UIScreen.main.bounds
-        
         window = UIWindow(frame: frame)
-        MWI.sh.setup(window: window ?? UIWindow())
+        if let window = window {
+            MWI.sh.setup(window: window)
+        }
         
         return true
     }
@@ -29,4 +29,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MWCoreDataManager.sh.saveContext()
     }
 }
-

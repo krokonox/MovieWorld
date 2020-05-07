@@ -6,33 +6,36 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
-import CoreData
 
 typealias MWI = MWInterface
 
 class MWInterface {
     
+    // MARK: - Variables
+    
     static let sh = MWInterface()
     
-    weak var window: UIWindow?
+    private weak var window: UIWindow?
     
     private lazy var tabBarController = MWMainTabBarController()
     private lazy var initController = MWInitController()
+    
+    // MARK: - Initialization
+    
     private init() {}
+    
+    // MARK: - Functions
     
     func setup(window: UIWindow) {
         self.window = window
         self.setUpNavigationBarStyle()
-        initController.container = MWCoreDataManager.sh.persistentContainer
         window.rootViewController = initController
         window.makeKeyAndVisible()
     }
     
     func setupTabBarController() {
         self.window?.rootViewController = self.tabBarController
-        self.window?.makeKeyAndVisible()
     }
     
     private func setUpNavigationBarStyle() {
@@ -47,9 +50,7 @@ class MWInterface {
             newVavBar.configureWithDefaultBackground()
             newVavBar.configureWithDefaultBackground()
             standartNavBar.scrollEdgeAppearance = newVavBar
-        } else {
-            // Fallback on earlier versions
-        }
+        } 
     }
     
     func push(vc: UIViewController) {

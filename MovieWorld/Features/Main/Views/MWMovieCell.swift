@@ -5,15 +5,14 @@
 //  Created by Admin on 25/02/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
-import Foundation
+
 import UIKit
 import SnapKit
 
 class MWMovieCell: UICollectionViewCell {
     
     // MARK: - Variables
-
-    private let group = DispatchGroup()
+    
     var item: MWGenericCollectionViewCellModel? {
         didSet {
             guard let item = item else { return }
@@ -21,6 +20,12 @@ class MWMovieCell: UICollectionViewCell {
             self.setupView()
         }
     }
+    var imageSize: Int {
+        return self.item?.imageSize ?? 185
+    }
+    private let imageBaseUrl = "https://image.tmdb.org/t/p/w"
+    
+    // MARK: - Gui Variables 
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -31,10 +36,10 @@ class MWMovieCell: UICollectionViewCell {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let Title = UILabel()
-        Title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        Title.textAlignment = .left
-        return Title
+        let title = UILabel()
+        title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        title.textAlignment = .left
+        return title
     }()
     
     private lazy var genreAndYear: UILabel = {
@@ -62,24 +67,24 @@ class MWMovieCell: UICollectionViewCell {
         self.addSubview(imageView)
         self.addSubview(titleLabel)
         self.addSubview(genreAndYear)
-        setUpConstrants()
+        self.setUpConstrants()
     }
     
     private func setUpConstrants() {
-        let imageSize = self.item?.imageSize ?? 185
         self.imageView.snp.makeConstraints { (make) in
             make.height.equalTo(imageSize)
             make.left.right.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview()
         }
         
         self.titleLabel.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().offset(15)
             make.top.equalTo(imageView).offset(imageSize)
+            make.left.right.equalToSuperview().offset(15)
         }
         
         self.genreAndYear.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().offset(15)
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.left.right.equalToSuperview().offset(15)
         }
     }
     
@@ -87,7 +92,7 @@ class MWMovieCell: UICollectionViewCell {
 
     func configure(item: MWGenericCollectionViewCellModel) {
         if let posterPath = item.image,
-            let imageURL = URL(string: Endpoints.getImage(size: item.imageSize, profilePath: posterPath).path) {
+            let imageURL = URL(string: "\(imageBaseUrl)\(item.imageSize)\(posterPath)") {
             self.imageView.load(url: imageURL)
         } else {
             self.imageView.image = UIImage(named: "movieImage")

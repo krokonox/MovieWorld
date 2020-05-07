@@ -6,33 +6,27 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
-import CoreData
 
-class MWInitController: UIViewController {
+class MWInitController: MWViewController {
     
+    // MARK: - Variables
+    
+    let genreURL = "genre/movie/list"
+    let configURL = "configuration"
     let dispatchGroup = DispatchGroup()
-    
-    var container: NSPersistentContainer!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard self.container != nil else {
-            fatalError("This view needs a persistent container")
-        }
         
-        self.view.backgroundColor = .white
-        
-        if (MWCoreDataManager.sh.entityIsEmpty(entity: "GenreModel")) == true {
+        if MWCoreDataManager.sh.entityIsEmpty(entity: .GenreModel) {
             self.loadGenres()
         }
         self.loadConfiguration()
-        
-        self.dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.fetchAllGenres()
+        self.dispatchGroup.notify(queue: .main) {
+            MWCoreDataManager.sh.fetchAllGenres()
             MWI.sh.setupTabBarController()
         }
     }
@@ -41,38 +35,30 @@ class MWInitController: UIViewController {
     
     func loadGenres() {
         self.dispatchGroup.enter()
-        MWNet.sh.request(urlPath: "genre/movie/list",
+        MWNet.sh.request(urlPath: self.genreURL,
                          successHandler: { (_ response: GenreResults) in
                             response.genres.forEach { genre in
-                                MWCoreDataManager.sh.saveGenre(name: genre.name, id: genre.id)
+                                MWCoreDataManager.sh.saveGenre(genre: genre)
+                                self.dispatchGroup.leave()
                             }
         },
                          errorHandler: { ( MWError ) in
-                            print(MWError.localizedDescription)})
-        dispatchGroup.leave()
+                            print(MWError.localizedDescription)
+                            self.dispatchGroup.leave()
+        })
     }
     
     func loadConfiguration() {
         self.dispatchGroup.enter()
-        MWNet.sh.request(urlPath: "configuration",
+        MWNet.sh.request(urlPath: self.configURL,
                          successHandler: { (_ response: MWConfiguration) in
                             MWSys.sh.setConfiguration(response.images)
-            },
+                            self.dispatchGroup.leave()
+                            
+        },
                          errorHandler: {  ( MWError ) in
-                            print(MWError.localizedDescription)})
-        self.dispatchGroup.leave()
-    }
-    
-    func fetchAllGenres() {
-        let managedContext = MWCoreDataManager.sh.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<GenreModel> = GenreModel.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        do {
-            let genres = try managedContext.fetch(fetchRequest)
-            MWSys.sh.setGenres(genres)
-        } catch let error as NSError {
-            fatalError("Could not fetch. \(error), \(error.userInfo)")
-        }
+                            print(MWError.localizedDescription)
+                            self.dispatchGroup.leave()
+        })
     }
 }

@@ -6,8 +6,7 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
-import  UIKit
+import UIKit
 
 typealias MWNet = MWNetwork
 
@@ -16,45 +15,45 @@ class MWNetwork {
     // MARK: - Variables
     
     static let sh = MWNetwork()
-    
-    private init() {}
  
     private let baseURL = "https://api.themoviedb.org/3/"
-    let api_key = "79d5894567be5b76ab7434fc12879584"
     
-    private var URLParameters: [String: String] {
-        return ["api_key" : api_key]
+    private(set) public var apiKey = "79d5894567be5b76ab7434fc12879584"
+    private var urlParameters: [String: String] {
+        return ["api_key": apiKey]
     }
-   
     private var dataTask: URLSessionDataTask?
     
     private lazy var session = URLSession(configuration: .default)
+    
+    // MARK: - Initialization
+    
+    private init() {}
     
     // MARK: - Request function
     
     func request<T: Decodable>(urlPath: String,
                                parameters: [String: String]? = nil,
-                               successHandler: @escaping(_ response: T) -> Void,
-                               errorHandler: @escaping(Error) -> Void) {
+                               successHandler: @escaping (_ response: T) -> Void,
+                               errorHandler: @escaping (MWError) -> Void) {
         
         let url = "\(baseURL)\(urlPath)"
-        
-        
-        var urlComponents: URLComponents {
-            var components = URLComponents(string: url)!
+ 
+        var urlComponents: URLComponents? {
+            var components = URLComponents(string: url)
             
-            var queryItems = [URLQueryItem(name: "api_key", value: api_key)]
-            
+            var queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
             
             if let params = parameters {
                 queryItems.append(contentsOf: params.map {
                     return URLQueryItem(name: "\($0)", value: "\($1)")
                 })
             }
-            components.queryItems = queryItems
+            components?.queryItems = queryItems
             return components
         }
         
+<<<<<<< HEAD:MovieWorld/Common/Network/APIClient/MWNetwork.swift
 //        let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
         
 //        guard let fullURL = URL(string: fullPath) else {
@@ -62,6 +61,11 @@ class MWNetwork {
 //            return
 //        }
         let request = URLRequest(url: urlComponents.url!)
+=======
+        guard let components = urlComponents?.url else { return }
+        let request = URLRequest(url: components)
+        
+>>>>>>> MovieDetailScreen:MovieWorld/Common/Network/MWNetwork.swift
         session.dataTask(with: request) { [weak self] data, response, error in
             
             if error != nil {
@@ -93,6 +97,7 @@ class MWNetwork {
         }.resume()
     }
     
+<<<<<<< HEAD:MovieWorld/Common/Network/APIClient/MWNetwork.swift
 //    func initRequest(path: URLPaths) {
 //        self.dispatch.enter()
 //        self.request(urlPath: path.rawValue,
@@ -107,6 +112,9 @@ class MWNetwork {
 //        request(urlPath: <#T##String#>, parameters: <#T##[String : String]?#>, successHandler: <#T##(Decodable) -> Void#>, errorHandler: <#T##(Error) -> Void#>)
 //    }
     private func handleErrors(errorHandler: @escaping(_ error: Error) -> Void, error: Error) {
+=======
+    private func handleErrors(errorHandler: @escaping (_ error: MWError) -> Void, error: MWError) {
+>>>>>>> MovieDetailScreen:MovieWorld/Common/Network/MWNetwork.swift
         DispatchQueue.main.async {
             errorHandler(error)
         }

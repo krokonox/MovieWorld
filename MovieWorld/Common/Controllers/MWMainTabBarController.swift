@@ -6,7 +6,6 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MWMainTabBarController: UITabBarController {
@@ -17,7 +16,6 @@ class MWMainTabBarController: UITabBarController {
     }
     
     func setupTabBar() {
-        
         self.view.backgroundColor = .white
         self.tabBar.tintColor = UIColor(named: "RedColor")
         self.tabBar.barTintColor = .white
@@ -26,10 +24,10 @@ class MWMainTabBarController: UITabBarController {
         let categoryController = self.createNavigationController(MWCategoryViewController(), title: "category")
         let searchController = self.createNavigationController(MWSearchViewController(), title: "search")
 
-        viewControllers = [mainController, searchController, categoryController]
+        self.viewControllers = [mainController, searchController, categoryController]
     }
     
-    func createNavigationController(_ viewController: UIViewController, title: String) -> UINavigationController {
+    private func createNavigationController(_ viewController: UIViewController, title: String) -> UINavigationController {
           let navController = UINavigationController(rootViewController: viewController)
           navController.tabBarItem.title = title
           navController.tabBarItem.image = UIImage(named: title)
