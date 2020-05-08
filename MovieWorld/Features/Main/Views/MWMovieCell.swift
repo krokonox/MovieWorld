@@ -13,6 +13,8 @@ class MWMovieCell: UICollectionViewCell {
     
     // MARK: - Variables
     
+    private let imageBaseUrl = "https://image.tmdb.org/t/p/w"
+    
     var item: MWGenericCollectionViewCellModel? {
         didSet {
             guard let item = item else { return }
@@ -23,7 +25,6 @@ class MWMovieCell: UICollectionViewCell {
     var imageSize: Int {
         return self.item?.imageSize ?? 185
     }
-    private let imageBaseUrl = "https://image.tmdb.org/t/p/w"
     
     // MARK: - Gui Variables 
     

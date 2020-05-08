@@ -30,7 +30,7 @@ class MWMovieDetailViewController: UIViewController {
     var movie: MWMovieDetailResult? {
         didSet {
             self.setupViews()
-            self.collectionView.reloadData()
+            self.collectionView.collectionView.reloadData()
         }
     }
     
@@ -52,20 +52,14 @@ class MWMovieDetailViewController: UIViewController {
     
     private lazy var contentView: UIView = UIView()
     
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = self.sectionInset
-        layout.itemSize = self.itemSize
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 8.0
-        layout.minimumInteritemSpacing = 10.0
-        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.delegate = self
-        cv.dataSource = self
-        cv.register(MWMovieCell.self, forCellWithReuseIdentifier: MWMovieCell.reuseIdentifier)
-        cv.reloadData()
-        return cv
+    private lazy var collectionView: MWCollectionView = {
+        let collection = MWCollectionView(frame: .zero, itemSize: self.itemSize)
+        collection.collectionView.delegate = self
+        collection.collectionView.dataSource = self
+        collection.pushVCButtonAction = { [weak self] in
+            self?.pushVC()
+        }
+        return collection
     }()
     
     private lazy var movieCellView: View<MovieDetailViewLayout> = View<MovieDetailViewLayout>(frame: .zero)
@@ -136,6 +130,8 @@ class MWMovieDetailViewController: UIViewController {
         if let movieCellView = movieModel {
             self.movieCellView.layout.set(movie: movieCellView)
         }
+        
+        self.collectionView.hideButton()
     }
     
     private func setConstraints() {
@@ -259,6 +255,12 @@ class MWMovieDetailViewController: UIViewController {
         self.fetchMovieDetail()
     }
     
+    @objc func pushVC() {
+        let vc = MWMovieCreditListViewController()
+        vc.set(credits: (self.movie?.credits?.cast) ?? [])
+        MWI.sh.push(vc: vc)
+    }
+    
     private func showError(_ error: String) {
         self.alert(message: error.description, title: "")
     }
@@ -269,7 +271,7 @@ class MWMovieDetailViewController: UIViewController {
 extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func updateCellWith(row: [MWMovieCell]) {
-        self.collectionView.reloadData()
+        self.collectionView.collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

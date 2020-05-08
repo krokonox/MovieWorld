@@ -53,25 +53,14 @@ class MWNetwork {
             return components
         }
         
-<<<<<<< HEAD:MovieWorld/Common/Network/APIClient/MWNetwork.swift
-//        let fullPath = getUrlWithParams(fullPath: url, params: URLParameters)
-        
-//        guard let fullURL = URL(string: fullPath) else {
-//            errorHandler(MWError.incorrectUrl)
-//            return
-//        }
-        let request = URLRequest(url: urlComponents.url!)
-=======
         guard let components = urlComponents?.url else { return }
         let request = URLRequest(url: components)
-        
->>>>>>> MovieDetailScreen:MovieWorld/Common/Network/MWNetwork.swift
+ 
         session.dataTask(with: request) { [weak self] data, response, error in
             
             if error != nil {
                 self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
             }
-            print(urlComponents.url!)
             guard let httpResponse = response as? HTTPURLResponse,
                 let receivedData = data else {
                     self?.handleErrors(errorHandler: errorHandler, error: MWError.networkError)
@@ -97,27 +86,10 @@ class MWNetwork {
         }.resume()
     }
     
-<<<<<<< HEAD:MovieWorld/Common/Network/APIClient/MWNetwork.swift
-//    func initRequest(path: URLPaths) {
-//        self.dispatch.enter()
-//        self.request(urlPath: path.rawValue,
-//                          successHandler: { [weak self] (_ response: MWApiResults) in
-//                            self?.movies[path.description] = response.results
-//                            self?.dispatch.leave()
-//        }) { [weak self] (error) in
-//            self?.showError(error.localizedDescription)
-//        }
-//    }
-//    func getMovieDetail(with movieId: Int) {
-//        request(urlPath: <#T##String#>, parameters: <#T##[String : String]?#>, successHandler: <#T##(Decodable) -> Void#>, errorHandler: <#T##(Error) -> Void#>)
-//    }
-    private func handleErrors(errorHandler: @escaping(_ error: Error) -> Void, error: Error) {
-=======
     private func handleErrors(errorHandler: @escaping (_ error: MWError) -> Void, error: MWError) {
->>>>>>> MovieDetailScreen:MovieWorld/Common/Network/MWNetwork.swift
         DispatchQueue.main.async {
             errorHandler(error)
         }
     }
 }
- 
+

@@ -111,7 +111,7 @@ final class MWMovieCreditCell: CreditViewLayout {
                             self?.credit = response
                             self?.set()
             }) { [weak self] (error) in
-                print("")
+                print(error.description)
         }
     }
     
@@ -119,7 +119,7 @@ final class MWMovieCreditCell: CreditViewLayout {
     
     func set() {
         guard let credit = credit else { return }
-        print(credit)
+
         if let profilePath = credit.profile_path,
             let imageURL = URL(string: Endpoints.getImage(size: 92, profilePath: profilePath).path) {
             

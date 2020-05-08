@@ -31,7 +31,8 @@ class MWMovieCreditListViewController: UIViewController {
         tv.dataSource = self
         tv.rowHeight = 90
         tv.separatorStyle = .none
-        tv.register(CreditTableViewCell<MWMovieCreditCell>.self, forCellReuseIdentifier: "cell")
+        tv.register(CreditTableViewCell<MWMovieCreditCell>.self,
+                    forCellReuseIdentifier: CreditTableViewCell<MWMovieCreditCell>.reuseIdentifier)
         return tv
     }()
     
@@ -95,20 +96,22 @@ extension MWMovieCreditListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CreditTableViewCell<MWMovieCreditCell>
-            else {
-                return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier:  CreditTableViewCell<MWMovieCreditCell>.reuseIdentifier, for: indexPath)
+        if let cell = cell as? CreditTableViewCell<MWMovieCreditCell> {
+            let creditId = self.credits[indexPath.row].id
+            cell.selectionStyle = .none
+            cell.layout.creditId = creditId
+            return cell
         }
-        cell.layout.creditId = self.credits[indexPath.row].id
-        cell.selectionStyle = .none
-        
-        return cell
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let creditId = self.credits[indexPath.row].id
+        MWI.sh.push(vc: MWMovieCreditDetailViewController(castId: creditId))
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 }
-
-
-
