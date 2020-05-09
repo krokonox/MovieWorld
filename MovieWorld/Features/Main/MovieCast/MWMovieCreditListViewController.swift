@@ -10,38 +10,30 @@ import UIKit
 
 class MWMovieCreditListViewController: UIViewController {
     
-    var credits: [Cast] = [] {
-        didSet {
-            setupUI()
-        }
-    }
-    
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
+    private let dataSource = MWMovieCreditDataSource()
     
     private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)  // Not sure about the best variable order here
     private var sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 5, right: 15)
     private var itemSize = CGSize(width: 105, height: 26)
     private var category: String = ""
+    
+    var credits: [Cast] = [] {
+        didSet {
+            setupUI()
+        }
+    }
 
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: self.view.bounds, style: .plain)
-        tv.addSubview(self.refreshControl)
-        tv.delegate = self
-        tv.dataSource = self
+        tv.delegate = self.dataSource
+        tv.dataSource = self.dataSource
         tv.rowHeight = 90
         tv.separatorStyle = .none
         tv.register(CreditTableViewCell<MWMovieCreditCell>.self,
                     forCellReuseIdentifier: CreditTableViewCell<MWMovieCreditCell>.reuseIdentifier)
         return tv
-    }()
-    
-    private lazy var refreshControl: UIRefreshControl = {
-        let refreshCntrl = UIRefreshControl()
-        refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshCntrl.addTarget(self, action: #selector(refresh),
-                               for: UIControl.Event.valueChanged)
-        return refreshCntrl
     }()
     
     // MARK: - Lifecycle
@@ -51,7 +43,7 @@ class MWMovieCreditListViewController: UIViewController {
         self.setupUI()
     }
     
-    // MARK: - Private Functions
+    // MARK: - UI Functions
     
     private func setConstraints() {
         self.tableView.snp.makeConstraints { (make) in
@@ -63,55 +55,18 @@ class MWMovieCreditListViewController: UIViewController {
         self.title = "Cast"
         self.view.backgroundColor = .white
         self.view.addSubview(tableView)
-//        self.tableView.addSubview(refreshControl)
         self.setConstraints()
     }
-    // MARK: - Functions
+    
+    // MARK: - Setter
     
     func set(credits: [Cast]) {
-        self.credits = credits
+        self.dataSource.credits = credits
     }
     
-    @objc func refresh(sender: AnyObject) {
-        self.activityIndicator.startAnimating()
-//        self.initRequest(path: self.category)
-        self.dispatch.notify(queue: .main) { [weak self] in
-            self?.activityIndicator.stopAnimating()
-            self?.refreshControl.endRefreshing()
-            self?.tableView.reloadData()
-        }
-    }
+    // MARK: - Functions
     
     private func showError(_ error: String) {
         print(error)
-    }
-}
-
-// MARK: - TableView Extension
-
-extension MWMovieCreditListViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return credits.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:  CreditTableViewCell<MWMovieCreditCell>.reuseIdentifier, for: indexPath)
-        if let cell = cell as? CreditTableViewCell<MWMovieCreditCell> {
-            let creditId = self.credits[indexPath.row].id
-            cell.selectionStyle = .none
-            cell.layout.creditId = creditId
-            return cell
-        }
-        return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let creditId = self.credits[indexPath.row].id
-        MWI.sh.push(vc: MWMovieCreditDetailViewController(castId: creditId))
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
     }
 }

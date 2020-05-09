@@ -34,7 +34,7 @@ class MWMovieDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - Lazy variables
+    // MARK: - Gui variables
     
     private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
@@ -146,8 +146,7 @@ class MWMovieDetailViewController: UIViewController {
         
         self.movieCellView.snp.makeConstraints { (make) in
             make.height.equalTo(142)
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
+            make.top.left.right.equalToSuperview()
         }
         
         self.videoView.snp.makeConstraints { (make) in
