@@ -22,7 +22,7 @@ class MWMoviesListViewController: UIViewController {
     private var category: String = ""
 
     var moviesToShow: [MWMovie] = []
-    var movies: [MWMovie] = [] 
+    var movies: [MWMovie]
         
     let genres = MWSys.sh.genres
     
@@ -70,7 +70,18 @@ class MWMoviesListViewController: UIViewController {
                                  for: UIControl.Event.valueChanged)
         return refreshCntrl
     }()
-
+    
+    // MARK: - Initialization
+    
+    init(movies: [MWMovie]) {
+        self.movies = movies
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UI Functions
     
     private func setupViews() {

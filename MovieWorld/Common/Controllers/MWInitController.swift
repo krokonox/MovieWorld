@@ -24,11 +24,9 @@ class MWInitController: MWViewController {
         if MWCoreDataManager.sh.entityIsEmpty(entity: .GenreModel) {
             self.loadGenres()
         }
-        self.loadConfiguration()
-        self.dispatchGroup.notify(queue: .main) {
-            MWCoreDataManager.sh.fetchAllGenres()
-            MWI.sh.setupTabBarController()
-        }
+        MWCoreDataManager.sh.fetchAllGenres()
+        MWI.sh.setupTabBarController()
+        
     }
     
     // MARK: - Functions
@@ -36,16 +34,15 @@ class MWInitController: MWViewController {
     func loadGenres() {
         self.dispatchGroup.enter()
         MWNet.sh.request(urlPath: self.genreURL,
-                         successHandler: { (_ response: GenreResults) in
+                         successHandler: { [weak self] (_ response: GenreResults) in
                             response.genres.forEach { genre in
                                 MWCoreDataManager.sh.saveGenre(genre: genre)
-                                self.dispatchGroup.leave()
                             }
-        },
-                         errorHandler: { ( MWError ) in
+                            self?.dispatchGroup.leave()
+        }) { [weak self] ( MWError ) in
                             print(MWError.localizedDescription)
-                            self.dispatchGroup.leave()
-        })
+                            self?.dispatchGroup.leave()
+        }
     }
     
     func loadConfiguration() {

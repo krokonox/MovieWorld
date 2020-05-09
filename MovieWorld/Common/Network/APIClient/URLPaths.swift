@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum URLPaths: String, CaseIterable {
+enum URLPaths: String, CaseIterable {
     case popular = "movie/popular"
     case latest = "movie/now_playing"
     case topRated = "movie/top_rated"
@@ -43,6 +43,7 @@ enum Endpoints {
     case getCredits(id: Int)
     case getPersonDetail(id: Int)
     case getImage(size: Int, profilePath: String)
+    case getMovieDiscover(year: Int?)
 }
 
 extension Endpoints {
@@ -62,6 +63,8 @@ extension Endpoints {
             return "person/\(id)"
         case .getImage(let id, let path):
             return "https://image.tmdb.org/t/p/w\(id)\(path)"
+        case .getMovieDiscover:
+            return "/discover/movie"
         }
     }
 }

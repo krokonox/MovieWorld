@@ -15,6 +15,7 @@ class MWCategoryViewController: MWViewController {
     
     let cellText = "Top 250 films"
     let cellID = "cell"
+    let genres: [GenreModel] = MWSys.sh.genres
     
     // MARK: - Gui Variables
     
@@ -22,7 +23,7 @@ class MWCategoryViewController: MWViewController {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.delegate = self
         tv.dataSource = self
-        tv.rowHeight = 305
+        tv.rowHeight = 40
         tv.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
         
@@ -33,7 +34,7 @@ class MWCategoryViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(genres.count)
         self.makeConstraints()
         self.title = NSLocalizedString("Category",
                                        comment: "")
@@ -42,9 +43,25 @@ class MWCategoryViewController: MWViewController {
     // MARK: - Constraints
     
     func makeConstraints() {
+        self.view.addSubview(tableView)
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func fetchMovieList(with genreId: Int16) {
+        MWNetwork.sh.request(urlPath: "discover/movie",
+                            parameters: ["with_genres" : "\(genreId)"],
+                             successHandler: { [weak self] (_ response: MWApiResults) in
+                                self?.pushVC(movies: response.results)
+        }) { [weak self] (error) in
+            self?.alert(message: error.description)
+        }
+    }
+    
+    private func pushVC(movies: [MWMovie]) {
+        let vc = MWMoviesListViewController(movies: movies)
+        MWI.sh.push(vc: vc)
     }
 }
 
@@ -53,13 +70,18 @@ class MWCategoryViewController: MWViewController {
 extension MWCategoryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 25
+        return self.genres.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseIdentifier, for: indexPath)
         cell.backgroundColor = UIColor.white
-        cell.textLabel?.text = self.cellText
+        cell.textLabel?.text = self.genres[indexPath.row].name
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let genreId = self.genres[indexPath.row].id
+        self.fetchMovieList(with: genreId)
     }
 }
