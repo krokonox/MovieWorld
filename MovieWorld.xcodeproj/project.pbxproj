@@ -22,6 +22,10 @@
 		84833E19242CBFA600C8E67B /* MWMovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */; };
 		84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84833E1A242CDB8700C8E67B /* MWMovieCast.swift */; };
 		84A255652466BB5E00FEC0DE /* MWMovieCreditDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A255642466BB5E00FEC0DE /* MWMovieCreditDataSource.swift */; };
+		84A255672469556B00FEC0DE /* MWCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A255662469556B00FEC0DE /* MWCountry.swift */; };
+		84A2556C2469630700FEC0DE /* MWSearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2556B2469630700FEC0DE /* MWSearchFilterViewController.swift */; };
+		84A2556E2469631F00FEC0DE /* MWSearchCountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2556D2469631F00FEC0DE /* MWSearchCountriesViewController.swift */; };
+		84A255712469851300FEC0DE /* SearchTableViewDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A255702469851300FEC0DE /* SearchTableViewDS.swift */; };
 		84A649B12423B55A00B809E8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84A649AF2423B55A00B809E8 /* Model.xcdatamodeld */; };
 		84A649B32426812B00B809E8 /* MWCollectionViewGenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A649B22426812B00B809E8 /* MWCollectionViewGenreCell.swift */; };
 		84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4461123FA7F7500505A0B /* UIColor+Hex.swift */; };
@@ -98,6 +102,10 @@
 		84833E18242CBFA600C8E67B /* MWMovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieDetailViewController.swift; sourceTree = "<group>"; };
 		84833E1A242CDB8700C8E67B /* MWMovieCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCast.swift; sourceTree = "<group>"; };
 		84A255642466BB5E00FEC0DE /* MWMovieCreditDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCreditDataSource.swift; sourceTree = "<group>"; };
+		84A255662469556B00FEC0DE /* MWCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCountry.swift; sourceTree = "<group>"; };
+		84A2556B2469630700FEC0DE /* MWSearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSearchFilterViewController.swift; sourceTree = "<group>"; };
+		84A2556D2469631F00FEC0DE /* MWSearchCountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSearchCountriesViewController.swift; sourceTree = "<group>"; };
+		84A255702469851300FEC0DE /* SearchTableViewDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewDS.swift; sourceTree = "<group>"; };
 		84A649B02423B55A00B809E8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		84A649B22426812B00B809E8 /* MWCollectionViewGenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCollectionViewGenreCell.swift; sourceTree = "<group>"; };
 		84E4461123FA7F7500505A0B /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -214,14 +222,6 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		8406073D23FFE58B0071C42A /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				84FBD7D623FF00AF00245B17 /* MWSearchViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		8406073F23FFE59D0071C42A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +307,24 @@
 			isa = PBXGroup;
 			children = (
 				84A255642466BB5E00FEC0DE /* MWMovieCreditDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		84A255682469628900FEC0DE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				84FBD7D623FF00AF00245B17 /* MWSearchViewController.swift */,
+				84A2556B2469630700FEC0DE /* MWSearchFilterViewController.swift */,
+				84A2556D2469631F00FEC0DE /* MWSearchCountriesViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		84A2556F2469670900FEC0DE /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				84A255702469851300FEC0DE /* SearchTableViewDS.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -439,7 +457,8 @@
 		84FBD7D223FF006C00245B17 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				8406073D23FFE58B0071C42A /* Controllers */,
+				84A2556F2469670900FEC0DE /* DataSource */,
+				84A255682469628900FEC0DE /* Controllers */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -516,6 +535,7 @@
 				84FF85CD2412283D00A7E848 /* MWMovieDetailResult.swift */,
 				84FCABBE2440765600F2B76B /* MWCreditDetail.swift */,
 				84FCABC0244077F800F2B76B /* MWCreditsResponse.swift */,
+				84A255662469556B00FEC0DE /* MWCountry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -781,6 +801,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FBD7D723FF00AF00245B17 /* MWSearchViewController.swift in Sources */,
+				84A2556E2469631F00FEC0DE /* MWSearchCountriesViewController.swift in Sources */,
 				84E4461223FA7F7500505A0B /* UIColor+Hex.swift in Sources */,
 				84060744240037640071C42A /* MWMainTabBarController.swift in Sources */,
 				84FC4522241BF19800E931D6 /* MWMoviesListViewController.swift in Sources */,
@@ -792,6 +813,7 @@
 				8403B3022461317200641677 /* CaseIterable+Ex.swift in Sources */,
 				84FBD7E023FF017A00245B17 /* MWInterface.swift in Sources */,
 				8414D60D243B3CED0087D00F /* MWMovieCreditListViewController.swift in Sources */,
+				84A2556C2469630700FEC0DE /* MWSearchFilterViewController.swift in Sources */,
 				84FF85C02410DE1F00A7E848 /* UIImageView+Ex.swift in Sources */,
 				84FCABBF2440765600F2B76B /* MWCreditDetail.swift in Sources */,
 				84FCE258240581B20070A11C /* MWMovieCell.swift in Sources */,
@@ -814,6 +836,7 @@
 				8414D615243E3A6B0087D00F /* MWCollectionView.swift in Sources */,
 				84FCABC1244077F800F2B76B /* MWCreditsResponse.swift in Sources */,
 				84833E1B242CDB8700C8E67B /* MWMovieCast.swift in Sources */,
+				84A255712469851300FEC0DE /* SearchTableViewDS.swift in Sources */,
 				84FCABC72440790300F2B76B /* MWMovieCreditCell.swift in Sources */,
 				84A649B32426812B00B809E8 /* MWCollectionViewGenreCell.swift in Sources */,
 				84FF85D4241294CB00A7E848 /* MWInitController.swift in Sources */,
@@ -821,6 +844,7 @@
 				84F4F6AC240A3EC100C01562 /* MWApiResults.swift in Sources */,
 				84F4F6AA240A3D5500C01562 /* MWError.swift in Sources */,
 				84FC4526241E901400E931D6 /* String+Ex.swift in Sources */,
+				84A255672469556B00FEC0DE /* MWCountry.swift in Sources */,
 				8403B3062462801100641677 /* URLParameters.swift in Sources */,
 				84A255652466BB5E00FEC0DE /* MWMovieCreditDataSource.swift in Sources */,
 				84FF85C924121E2600A7E848 /* MWSystem.swift in Sources */,

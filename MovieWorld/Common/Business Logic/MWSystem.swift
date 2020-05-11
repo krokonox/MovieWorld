@@ -15,12 +15,17 @@ class MWSystem {
     static let sh = MWSystem()
     
     var genres: [GenreModel] = []
+    var countries: [CountryModel] = []
     var image: Image?
     
     private init() {}
     
     func setGenres(_ genres: [GenreModel]) {
         self.genres = genres
+    }
+    
+    func setCountries(_ countries: [CountryModel]) {
+        self.countries = countries
     }
     
     func setConfiguration(_ image: Image) {
@@ -32,5 +37,12 @@ class MWSystem {
             .filter({ $0.id == genreId })
             .first else { return nil }
         return genre.name
+    }
+    
+    func getCountryName(for countryCode: String) -> String? {
+        guard let country = countries
+            .filter({ $0.code == countryCode })
+            .first else { return nil }
+        return country.name
     }
 }

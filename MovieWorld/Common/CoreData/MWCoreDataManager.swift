@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 enum Entity: String {
-    case GenreModel, Configuration
+    case GenreModel, CountryModel
 }
 
 class MWCoreDataManager {
@@ -52,15 +52,15 @@ class MWCoreDataManager {
         }
     }
     
-    func update(genre: Genre) {
+    func saveCountry(country: Country) {
         let managedContext = persistentContainer.viewContext
-        let genreEntity = GenreModel(context: managedContext)
-        genreEntity.id = genre.id
-        genreEntity.name = genre.name
+        let countryEntity = CountryModel(context: managedContext)
+        countryEntity.code = country.code
+        countryEntity.name = country.name
         do {
             try managedContext.save()
         } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
     
@@ -72,6 +72,19 @@ class MWCoreDataManager {
         do {
             let genres = try managedContext.fetch(fetchRequest)
             MWSys.sh.setGenres(genres)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func fetchAllCountries() {
+        let managedContext = self.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<CountryModel> = CountryModel.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        do {
+            let countries = try managedContext.fetch(fetchRequest)
+            MWSys.sh.setCountries(countries)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }

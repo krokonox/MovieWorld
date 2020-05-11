@@ -14,6 +14,8 @@ class MWInitController: MWViewController {
     
     let genreURL = "genre/movie/list"
     let configURL = "configuration"
+    let countryURL = "configuration/countries"
+    
     let dispatchGroup = DispatchGroup()
     
     // MARK: - Lifecycle
@@ -24,7 +26,13 @@ class MWInitController: MWViewController {
         if MWCoreDataManager.sh.entityIsEmpty(entity: .GenreModel) {
             self.loadGenres()
         }
+        if MWCoreDataManager.sh.entityIsEmpty(entity: .CountryModel) {
+            self.loadCountries()
+        }
+     
         MWCoreDataManager.sh.fetchAllGenres()
+        MWCoreDataManager.sh.fetchAllCountries()
+        
         MWI.sh.setupTabBarController()
         
     }
@@ -51,11 +59,25 @@ class MWInitController: MWViewController {
                          successHandler: { (_ response: MWConfiguration) in
                             MWSys.sh.setConfiguration(response.images)
                             self.dispatchGroup.leave()
-                            
         },
                          errorHandler: {  ( MWError ) in
                             print(MWError.localizedDescription)
                             self.dispatchGroup.leave()
         })
+    }
+    
+    func loadCountries() {
+        self.dispatchGroup.enter()
+        MWNet.sh.request(urlPath: self.countryURL,
+                         successHandler: { [weak self] (_ response: [Country]) in
+                            response.forEach { country in
+                                MWCoreDataManager.sh.saveCountry(country: country)
+                            }
+                            self?.dispatchGroup.leave()
+            })
+        {[weak self] ( MWError ) in
+            print(MWError.localizedDescription)
+            self?.dispatchGroup.leave()
+        }
     }
 }

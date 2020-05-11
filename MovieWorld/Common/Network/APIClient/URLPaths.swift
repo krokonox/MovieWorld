@@ -43,7 +43,7 @@ enum Endpoints {
     case getCredits(id: Int)
     case getPersonDetail(id: Int)
     case getImage(size: Int, profilePath: String)
-    case getMovieDiscover(year: Int?)
+    case getMovieDiscover(year: Int?, voteMin: Int?, voteMax: Int?, countries: [String]?)
 }
 
 extension Endpoints {
