@@ -17,14 +17,19 @@ class MWSearchViewController: MWViewController {
     
     var movies: [MWMovie] = [] {
         didSet {
-            self.setupUI()
+            self.set()
+            self.tableView.reloadData()
         }
     }
     
     // MARK: - Gui variables
     
-    private lazy var searchBar: UISearchBar = {
-        let search = UISearchBar()
+    private lazy var searchBar: UISearchController = {
+        let search = UISearchController()
+        search.searchResultsUpdater = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.definesPresentationContext = true
+        search.searchBar.placeholder = "Search Movie"
         return search
     }()
     
@@ -37,17 +42,29 @@ class MWSearchViewController: MWViewController {
     private lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.dataSource = self.dataSource
+        tv.delegate = self.dataSource
+        tv.rowHeight = 120
+        tv.separatorStyle = .none
+        tv.register(TableViewCell<MovieDetailViewLayout>.self,
+                    forCellReuseIdentifier: TableViewCell<MovieDetailViewLayout>.reuseIdentifier)
+        
         return tv
     }()
     
     // MARK: - UI Functions
     
     private func setupConstraints() {
-        
+        self.tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
     }
     
     private func setupUI() {
         self.view.addSubview(tableView)
+        self.navigationItem.searchController = searchBar
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarButton)
+        
+        self.setupConstraints()
     }
     
     // MARK: - Lifecycle
@@ -56,27 +73,33 @@ class MWSearchViewController: MWViewController {
            super.viewDidLoad()
            
            self.title = "Search".localized
-           MWI.sh.push(vc: UIViewController())
+           self.setupUI()
        }
 
     // MARK: - Private Functions
     
     private func searchMovie(name: String) {
-        MWNet.sh.request(urlPath: Endpoints.search(searchText: name).path,
+        MWNet.sh.request(urlPath: Endpoints.search.path,
+                         parameters: ["query" : name],
                          successHandler: { [weak self] (_ response: MWApiResults) in
                             self?.movies = response.results
         }) { [weak self] (error) in
-            self?.alert(message: error.description)
+            DispatchQueue.main.async {
+                 self?.alert(message: error.description)
+            }
         }
     }
     
-    private func search() {
-        
-    }
-    
-    // MARK: - Functions
-
-    func set() {
+    private func set() {
         self.dataSource.movies = movies
+    }
+}
+
+extension MWSearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = self.searchBar.searchBar.text, text.count > 3 else {
+            return
+        }
+        self.searchMovie(name: text)
     }
 }

@@ -37,7 +37,7 @@ enum URLPaths: String, CaseIterable {
 enum Endpoints {
     
     case getByGenreId(genreId: Int)
-    case search(searchText: String)
+    case search
     case getDetail(id: Int)
     case getVideos(id: Int)
     case getCredits(id: Int)
