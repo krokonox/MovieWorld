@@ -43,7 +43,7 @@ enum Endpoints {
     case getCredits(id: Int)
     case getPersonDetail(id: Int)
     case getImage(size: Int, profilePath: String)
-    case getMovieDiscover(year: Int?, voteMin: Int?, voteMax: Int?, countries: [String]?)
+    case getMovieDiscover
 }
 
 extension Endpoints {
@@ -64,7 +64,7 @@ extension Endpoints {
         case .getImage(let id, let path):
             return "https://image.tmdb.org/t/p/w\(id)\(path)"
         case .getMovieDiscover:
-            return "/discover/movie"
+            return "discover/movie"
         }
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class MWSearchViewController: MWViewController {
+class MWSearchViewController: MWViewController, SearchDelegate {
     
     // MARK: - Variables
     
@@ -36,6 +36,7 @@ class MWSearchViewController: MWViewController {
     private lazy var rightBarButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "settings"), for: .normal)
+        button.addTarget(self, action: #selector(pushVC), for: .touchUpInside)
         return button
     }()
     
@@ -71,7 +72,7 @@ class MWSearchViewController: MWViewController {
     
     override func viewDidLoad() {
            super.viewDidLoad()
-           
+         
            self.title = "Search".localized
            self.setupUI()
        }
@@ -92,6 +93,17 @@ class MWSearchViewController: MWViewController {
     
     private func set() {
         self.dataSource.movies = movies
+    }
+    
+    func buttonPressed(_ movies: [MWMovie]) {
+        self.movies = movies
+        print(movies)
+    }
+    
+    @objc func pushVC() {
+        let vc = MWSearchFilterViewController()
+        vc.delegate = self
+        MWI.sh.push(vc: vc)
     }
 }
 
