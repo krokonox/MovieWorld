@@ -19,18 +19,71 @@ class MWSearchFilterViewController: MWViewController {
     
     weak var delegate: SearchDelegate?
     
-    private var buttonSize = CGSize(width: 62, height: 25)
+    private let pickerDataSource = UIPickerViewDS()
+    private let collectionDataSource = GenreCollectionViewDS()
+    
+    private var buttonSize = CGSize(width: 344, height: 44)
     private var year: String = ""
     private var voteMin: String = ""
     private var voteMax: String = ""
     
     var countries: [String] = []
+    var genres: [GenreModel] = []
     
     // MARK: - Gui variables
     
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alignment = .fill
+        stack.spacing = 30
+        return stack
+    }()
+    private lazy var datePicker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.dataSource = self.pickerDataSource
+        picker.delegate = self.pickerDataSource
+        picker.isHidden = true
+        return picker
+    }()
+  
+    private lazy var countryLabel: MWSearchViewWithAroow = {
+        let label = MWSearchViewWithAroow()
+        let gesture = UIGestureRecognizer(target: self, action: #selector(openTableView))
+        label.secondLabel.addGestureRecognizer(gesture)
+        label.firstLabel.text = "Country"
+        return label
+    }()
+    
+    private lazy var yearLabel: MWSearchViewWithAroow = {
+        let label = MWSearchViewWithAroow()
+        label.secondLabel.isUserInteractionEnabled = true
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(yearChanged))
+        gesture.view?.endEditing(true)
+        label.secondLabel.addGestureRecognizer(gesture)
+        label.firstLabel.text = "Year"
+        return label
+    }()
+    
+    private lazy var genreCollection: MWGenreCollectionView = {
+        let collection = MWGenreCollectionView()
+        collection.collectionView.delegate = self.collectionDataSource
+        collection.collectionView.dataSource = self.collectionDataSource
+        
+        return collection
+    }()
+
+    private lazy var rating: MWSearchWithSlider = {
+        let slider = MWSearchWithSlider()
+        
+        return slider
+    }()
+ 
     private lazy var requestButton: MWRedButton = {
         let button = MWRedButton()
         button.addTarget(self, action: #selector(sendRequest), for: .touchUpInside)
+        button.setTitle("Show", for: .normal)
         return button
     }()
     
@@ -38,14 +91,48 @@ class MWSearchFilterViewController: MWViewController {
     
     private func setupUI() {
         self.view.addSubview(requestButton)
-       
+        self.view.addSubview(stackView)
+        
+        self.stackView.addArrangedSubview(yearLabel)
+        self.stackView.addArrangedSubview(countryLabel)
+      //  self.stackView.addArrangedSubview(rating)
+        self.view.addSubview(rating)
+        self.view.addSubview(datePicker)
+        self.view.addSubview(genreCollection)
+        
+        self.pickerDataSource.delegate = self
+        self.collectionDataSource.delegate = self
+        
         self.setupConstraints()
     }
     
     private func setupConstraints() {
+        self.genreCollection.snp.makeConstraints { (make) in
+            make.height.equalTo(80)
+            make.top.equalToSuperview().offset(140)
+            make.left.right.equalToSuperview()
+        }
         self.requestButton.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
             make.width.height.equalTo(buttonSize)
+            make.bottom.equalToSuperview().inset(100)
+        }
+        
+        self.stackView.snp.makeConstraints { (make) in
+            make.top.equalTo(genreCollection.snp.bottom).offset(15)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().inset(16)
+        }
+        
+        self.rating.snp.makeConstraints { (make) in
+            make.top.equalTo(self.stackView.snp.bottom).offset(25)
+            make.height.equalTo(60)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().inset(16)
+        }
+        
+        self.datePicker.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
         }
     }
     // MARK: - Lifecycle
@@ -77,8 +164,41 @@ class MWSearchFilterViewController: MWViewController {
     @objc private func popVC() {
         MWI.sh.popVC()
     }
+    
+    @objc private func yearChanged(sender: UIDatePicker) {
+        self.datePicker.isHidden = false
+        self.yearLabel.secondLabel.inputView = datePicker
+    }
+    
+    @objc private func openTableView() {
+        
+    }
+
     // MARK: - Functions
+    
     @objc func sendRequest() {
         self.discoverMovie(year: "2019", counries: countries)
+    }
+}
+
+// MARK: - Extensions
+
+extension MWSearchFilterViewController: UIPickerDelegate {
+    func didChooseYear(_ year: Int) {
+        self.yearLabel.secondLabel.text = String(year)
+    }
+}
+
+extension MWSearchFilterViewController: UITextFieldDelegate {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.yearLabel.inputView?.endEditing(true)
+        self.datePicker.isHidden = true
+    }
+}
+
+extension MWSearchFilterViewController: GenreCollectionViewDelegate {
+    func genreChosen(genre: GenreModel) {
+        self.genres.append(genre)
+        print(genres.count)
     }
 }
