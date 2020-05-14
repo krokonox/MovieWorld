@@ -42,19 +42,25 @@ class MWNetwork {
         var urlComponents: URLComponents? {
             var components = URLComponents(string: url)
             
+            let allowedCharacterSet = (CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[] ").inverted)
             var queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
             
             if let params = parameters {
                 queryItems.append(contentsOf: params.map {
-                    return URLQueryItem(name: "\($0)", value: "\($1)")
+                    return URLQueryItem(name: "\($0)",
+                        value: "\($1)")
                 })
             }
+            
             components?.queryItems = queryItems
+            let componentsCopy = components
+            components?.percentEncodedQuery = componentsCopy?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2C")
+            components?.percentEncodedQuery?.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)
             return components
         }
-        
+       
         guard let components = urlComponents?.url else { return }
-        print(components)
+    
         let request = URLRequest(url: components)
         
         session.dataTask(with: request) { [weak self] data, response, error in

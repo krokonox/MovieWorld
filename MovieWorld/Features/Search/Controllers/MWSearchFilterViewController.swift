@@ -149,7 +149,7 @@ class MWSearchFilterViewController: MWViewController {
     private func discoverMovie(year: String? = "", voteMin: String? = "", voteMax: String? = "", counries: [String]) {
         MWNet.sh.request(urlPath: Endpoints.getMovieDiscover.path,
                          parameters: ["year" : year ?? "",
-                                      "region" : String(counries.joined(separator: "%2C")),
+                                      "region" : (countries.joined(separator: "+")),
                             "vote_average.gte" : voteMin ?? "",
                             "vote_average.lte" : voteMax ?? ""],
                          successHandler: { [weak self] (_ response: MWApiResults) in
@@ -180,7 +180,7 @@ class MWSearchFilterViewController: MWViewController {
     // MARK: - Functions
     
     @objc func sendRequest() {
-        self.discoverMovie(year: "2019", counries: countries)
+        self.discoverMovie(year: "2019", counries: self.countries)
     }
 }
 

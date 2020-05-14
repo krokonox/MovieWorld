@@ -48,6 +48,7 @@
 		84F9336223F835F00046F243 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F9336023F835F00046F243 /* LaunchScreen.storyboard */; };
 		84F9336D23F835F00046F243 /* MovieWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9336C23F835F00046F243 /* MovieWorldTests.swift */; };
 		84F9337823F835F10046F243 /* MovieWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9337723F835F10046F243 /* MovieWorldUITests.swift */; };
+		84F98ED7246DA1330088BA52 /* Array+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F98ED6246DA1330088BA52 /* Array+Ex.swift */; };
 		84FBD7D523FF009F00245B17 /* MWCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD7D423FF009F00245B17 /* MWCategoryViewController.swift */; };
 		84FBD7D723FF00AF00245B17 /* MWSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD7D623FF00AF00245B17 /* MWSearchViewController.swift */; };
 		84FBD7D923FF00C200245B17 /* MWMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD7D823FF00C200245B17 /* MWMainViewController.swift */; };
@@ -142,6 +143,7 @@
 		84F9337323F835F10046F243 /* MovieWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F9337723F835F10046F243 /* MovieWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieWorldUITests.swift; sourceTree = "<group>"; };
 		84F9337923F835F10046F243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84F98ED6246DA1330088BA52 /* Array+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ex.swift"; sourceTree = "<group>"; };
 		84FBD7D423FF009F00245B17 /* MWCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCategoryViewController.swift; sourceTree = "<group>"; };
 		84FBD7D623FF00AF00245B17 /* MWSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSearchViewController.swift; sourceTree = "<group>"; };
 		84FBD7D823FF00C200245B17 /* MWMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainViewController.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				84068913245A8B7F00A96E7E /* UITableViewCell+Ex.swift */,
 				84068917245BDFD000A96E7E /* UIViewController+ex.swift */,
 				8403B3012461317200641677 /* CaseIterable+Ex.swift */,
+				84F98ED6246DA1330088BA52 /* Array+Ex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -840,6 +843,7 @@
 				84A2557A246BC1C600FEC0DE /* MWGenreCollectionView.swift in Sources */,
 				84FC4522241BF19800E931D6 /* MWMoviesListViewController.swift in Sources */,
 				84068918245BDFD000A96E7E /* UIViewController+ex.swift in Sources */,
+				84F98ED7246DA1330088BA52 /* Array+Ex.swift in Sources */,
 				84068914245A8B7F00A96E7E /* UITableViewCell+Ex.swift in Sources */,
 				84FCE25A2406D88E0070A11C /* MWTableViewCell.swift in Sources */,
 				84FC452C24234C6F00E931D6 /* MWCoreDataManager.swift in Sources */,
