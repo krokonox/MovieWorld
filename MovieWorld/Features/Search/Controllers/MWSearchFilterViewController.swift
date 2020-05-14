@@ -48,16 +48,18 @@ class MWSearchFilterViewController: MWViewController {
         return picker
     }()
   
-    private lazy var countryLabel: MWSearchViewWithAroow = {
-        let label = MWSearchViewWithAroow()
-        let gesture = UIGestureRecognizer(target: self, action: #selector(openTableView))
+    private lazy var countryLabel: MWSearchViewWithArrow = {
+        let label = MWSearchViewWithArrow()
+        label.secondLabel.isUserInteractionEnabled = true
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(openTableView(sender:)))
+        gesture.view?.endEditing(true)
         label.secondLabel.addGestureRecognizer(gesture)
         label.firstLabel.text = "Country"
         return label
     }()
     
-    private lazy var yearLabel: MWSearchViewWithAroow = {
-        let label = MWSearchViewWithAroow()
+    private lazy var yearLabel: MWSearchViewWithArrow = {
+        let label = MWSearchViewWithArrow()
         label.secondLabel.isUserInteractionEnabled = true
         let gesture = UITapGestureRecognizer(target: self, action: #selector(yearChanged))
         gesture.view?.endEditing(true)
@@ -95,7 +97,7 @@ class MWSearchFilterViewController: MWViewController {
         
         self.stackView.addArrangedSubview(yearLabel)
         self.stackView.addArrangedSubview(countryLabel)
-      //  self.stackView.addArrangedSubview(rating)
+        
         self.view.addSubview(rating)
         self.view.addSubview(datePicker)
         self.view.addSubview(genreCollection)
@@ -147,12 +149,11 @@ class MWSearchFilterViewController: MWViewController {
     private func discoverMovie(year: String? = "", voteMin: String? = "", voteMax: String? = "", counries: [String]) {
         MWNet.sh.request(urlPath: Endpoints.getMovieDiscover.path,
                          parameters: ["year" : year ?? "",
-                                      "region" : counries.joined(separator: "%2C%20"),
+                                      "region" : String(counries.joined(separator: "%2C")),
                             "vote_average.gte" : voteMin ?? "",
                             "vote_average.lte" : voteMax ?? ""],
                          successHandler: { [weak self] (_ response: MWApiResults) in
                             self?.delegate?.buttonPressed(response.results)
-                            
                             MWI.sh.popVC()
         }) { [weak self] (error) in
             DispatchQueue.main.async {
@@ -170,8 +171,10 @@ class MWSearchFilterViewController: MWViewController {
         self.yearLabel.secondLabel.inputView = datePicker
     }
     
-    @objc private func openTableView() {
-        
+    @objc private func openTableView(sender: UITextField) {
+        let vc = MWSearchCountriesViewController()
+        vc.tableViewDataSource.delegate = self
+        MWI.sh.push(vc: vc)
     }
 
     // MARK: - Functions
@@ -199,6 +202,19 @@ extension MWSearchFilterViewController: UITextFieldDelegate {
 extension MWSearchFilterViewController: GenreCollectionViewDelegate {
     func genreChosen(genre: GenreModel) {
         self.genres.append(genre)
-        print(genres.count)
+    }
+}
+
+extension MWSearchFilterViewController: CountriesTableViewControllerDelegate {
+    func countryDeselected(_ country: CountryModel) {
+        if countries.contains(country.code!) {
+            if let countryToDeleteIndex =  countries.firstIndex(of: country.code!) {
+                self.countries.remove(at: countryToDeleteIndex)
+            }
+        }
+    }
+    
+    func countrySelected(_ country: CountryModel) {
+        self.countries.append(country.code!)
     }
 }

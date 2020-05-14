@@ -97,7 +97,6 @@ class MWSearchViewController: MWViewController, SearchDelegate {
     
     func buttonPressed(_ movies: [MWMovie]) {
         self.movies = movies
-        print(movies)
     }
     
     @objc func pushVC() {

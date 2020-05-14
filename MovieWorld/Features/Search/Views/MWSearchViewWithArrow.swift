@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class MWSearchViewWithAroow: UIView {
+class MWSearchViewWithArrow: UIView {
     
     // MARK: - Gui Variables
     

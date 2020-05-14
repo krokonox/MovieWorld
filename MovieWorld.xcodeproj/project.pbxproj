@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2E766467A82F45B2EEB04405 /* Pods_MovieWorld_MovieWorldUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE27A0999FEBC42126A2D84D /* Pods_MovieWorld_MovieWorldUITests.framework */; };
 		53939C52370EA1FDA478A862 /* Pods_MovieWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D670443D9A78BF620656 /* Pods_MovieWorldTests.framework */; };
+		840046F7246D1EC100F50184 /* MWCountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840046F6246D1EC100F50184 /* MWCountryTableViewCell.swift */; };
+		840046F9246D200300F50184 /* SearchCountriesTableViewDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840046F8246D200300F50184 /* SearchCountriesTableViewDS.swift */; };
 		8403046E242FB43500924C97 /* MWGenericMovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403046D242FB43500924C97 /* MWGenericMovieDetailView.swift */; };
 		840304702434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */; };
 		8403B3022461317200641677 /* CaseIterable+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403B3012461317200641677 /* CaseIterable+Ex.swift */; };
@@ -95,6 +97,8 @@
 		0389D670443D9A78BF620656 /* Pods_MovieWorldTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorldTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		370E8CE6E5B398860C02D862 /* Pods-MovieWorldTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorldTests.release.xcconfig"; path = "Target Support Files/Pods-MovieWorldTests/Pods-MovieWorldTests.release.xcconfig"; sourceTree = "<group>"; };
 		48B47F2D75002E9B6A8011E8 /* Pods-MovieWorld-MovieWorldUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld-MovieWorldUITests/Pods-MovieWorld-MovieWorldUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		840046F6246D1EC100F50184 /* MWCountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCountryTableViewCell.swift; sourceTree = "<group>"; };
+		840046F8246D200300F50184 /* SearchCountriesTableViewDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCountriesTableViewDS.swift; sourceTree = "<group>"; };
 		8403046D242FB43500924C97 /* MWGenericMovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenericMovieDetailView.swift; sourceTree = "<group>"; };
 		8403046F2434A1DB00924C97 /* MWGenericCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenericCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		8403B3012461317200641677 /* CaseIterable+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Ex.swift"; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 				84A255702469851300FEC0DE /* SearchTableViewDS.swift */,
 				84A25572246AB03900FEC0DE /* UIPickerViewDS.swift */,
 				84A2557B246BC44600FEC0DE /* GenreCollectionViewDS.swift */,
+				840046F8246D200300F50184 /* SearchCountriesTableViewDS.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -349,6 +354,7 @@
 			children = (
 				84A25575246BB76400FEC0DE /* MWSearchViewWithArrow.swift */,
 				84A2557D246C4B1E00FEC0DE /* MWSearchWithSlider.swift */,
+				840046F6246D1EC100F50184 /* MWCountryTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -876,11 +882,13 @@
 				84F4F6AC240A3EC100C01562 /* MWApiResults.swift in Sources */,
 				84F4F6AA240A3D5500C01562 /* MWError.swift in Sources */,
 				84FC4526241E901400E931D6 /* String+Ex.swift in Sources */,
+				840046F9246D200300F50184 /* SearchCountriesTableViewDS.swift in Sources */,
 				84A255672469556B00FEC0DE /* MWCountry.swift in Sources */,
 				8403B3062462801100641677 /* URLParameters.swift in Sources */,
 				84A255652466BB5E00FEC0DE /* MWMovieCreditDataSource.swift in Sources */,
 				84FF85C924121E2600A7E848 /* MWSystem.swift in Sources */,
 				84F4F6AE240A79CA00C01562 /* URLPaths.swift in Sources */,
+				840046F7246D1EC100F50184 /* MWCountryTableViewCell.swift in Sources */,
 				84FCABC9244227BB00F2B76B /* MWRequests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
