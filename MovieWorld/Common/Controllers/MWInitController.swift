@@ -29,12 +29,15 @@ class MWInitController: MWViewController {
         if MWCoreDataManager.sh.entityIsEmpty(entity: .CountryModel) {
             self.loadCountries()
         }
-     
-        MWCoreDataManager.sh.fetchAllGenres()
-        MWCoreDataManager.sh.fetchAllCountries()
-        
-        MWI.sh.setupTabBarController()
-        
+//
+//        MWCoreDataManager.sh.fetchAllGenres()
+//        MWCoreDataManager.sh.fetchAllCountries()
+//
+        self.dispatchGroup.notify(queue: .main) {
+            MWCoreDataManager.sh.fetchAllGenres()
+            MWI.sh.setupTabBarController()
+            MWCoreDataManager.sh.fetchAllCountries()
+        }
     }
     
     // MARK: - Functions

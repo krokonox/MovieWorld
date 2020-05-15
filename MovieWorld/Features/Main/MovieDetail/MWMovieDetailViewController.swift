@@ -185,19 +185,20 @@ class MWMovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.setupViews()
         self.fetchMovieDetail()
     }
     
     // MARK: - Private Functions
-    
+   
     private func fetchMovieDetail() {
         guard let movieId = movieModel?.id else {
             return
         }
         self.activityIndicator.startAnimating()
         self.dispatch.enter()
-        MWNet.sh.request(urlPath: self.urlPath + String(movieId),
+        MWNet.sh.request(urlPath: Endpoints.getDetail(id: movieId).path,
                          parameters: ["append_to_response" : "videos,credits"],
                          successHandler: { [weak self] (_ response: MWMovieDetailResult) in  
                             guard let self = self else { return }

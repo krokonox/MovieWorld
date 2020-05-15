@@ -12,9 +12,7 @@ import SnapKit
 class MWCategoryViewController: MWViewController {
     
     // MARK: - Variables
-    
-    let cellText = "Top 250 films"
-    let cellID = "cell"
+  
     let genres: [GenreModel] = MWSys.sh.genres
     
     // MARK: - Gui Variables
@@ -34,14 +32,14 @@ class MWCategoryViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.makeConstraints()
+        self.setup()
         self.title = NSLocalizedString("Category",
                                        comment: "")
     }
     
     // MARK: - Constraints
     
-    func makeConstraints() {
+    private func setup() {
         self.view.addSubview(tableView)
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -49,7 +47,7 @@ class MWCategoryViewController: MWViewController {
     }
     
     private func fetchMovieList(with genreId: Int16) {
-        MWNetwork.sh.request(urlPath: "discover/movie",
+        MWNetwork.sh.request(urlPath: Endpoints.getMovieDiscover.path,
                             parameters: ["with_genres" : "\(genreId)"],
                              successHandler: { [weak self] (_ response: MWApiResults) in
                                 self?.pushVC(movies: response.results)

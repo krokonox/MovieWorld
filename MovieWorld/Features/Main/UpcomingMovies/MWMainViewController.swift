@@ -17,7 +17,9 @@ class MWMainViewController: MWViewController {
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
     
-    var movies: [String: [MWMovie]] = [:]
+    var movies: [String: [MWMovie]] = [:] {
+        didSet{self.setupViews()}
+    }
     
     // MARK: - Gui Variables
     
@@ -48,8 +50,8 @@ class MWMainViewController: MWViewController {
         self.title = "Main".localized
         
         self.setupViews()
-        self.makeConstraints()
         self.fetchMovies()
+        self.makeConstraints()
     }
     
     // MARK: - Private functions
