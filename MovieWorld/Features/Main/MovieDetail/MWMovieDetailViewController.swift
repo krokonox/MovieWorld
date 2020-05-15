@@ -289,6 +289,12 @@ extension MWMovieDetailViewController: UICollectionViewDelegate, UICollectionVie
         return UICollectionViewCell()
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let castId = self.movie?.credits?.cast[indexPath.row].id
+        let vc = MWMovieCreditDetailViewController(castId: castId ?? 0)
+        MWI.sh.push(vc: vc)
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

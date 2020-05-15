@@ -46,6 +46,7 @@ class MWSearchWithSlider: UIView {
         sldr.semanticContentAttribute = .forceLeftToRight
         return sldr
     }()
+    
     // MARK: - Initialization
     
     override init(frame: CGRect) {

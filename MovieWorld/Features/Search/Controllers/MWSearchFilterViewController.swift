@@ -25,10 +25,8 @@ class MWSearchFilterViewController: MWViewController {
     private var buttonSize = CGSize(width: 344, height: 44)
     private var year: String = ""
     private var voteMin: String = ""
-    private var voteMax: String = ""
-    
-    var countries: [String] = []
-    var genres: [GenreModel] = []
+    private var countries: [String] = []
+    private var genres: [String] = []
     
     // MARK: - Gui variables
     
@@ -144,14 +142,18 @@ class MWSearchFilterViewController: MWViewController {
         
         self.setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.countryLabel.secondLabel.text = countries.joined(separator: ",")
+    }
     // MARK: - Private Functions
     
-    private func discoverMovie(year: String? = "", voteMin: String? = "", voteMax: String? = "", counries: [String]) {
+    private func discoverMovie(year: String? = "", voteMin: String? = "", counries: [String], genres: [String]) {
         MWNet.sh.request(urlPath: Endpoints.getMovieDiscover.path,
                          parameters: ["year" : year ?? "",
                                       "region" : (countries.joined(separator: "+")),
-                            "vote_average.gte" : voteMin ?? "",
-                            "vote_average.lte" : voteMax ?? ""],
+                                      "vote_average.gte" : voteMin ?? "",
+                                      "with_genres" : genres.joined(separator: "+")],
                          successHandler: { [weak self] (_ response: MWApiResults) in
                             self?.delegate?.buttonPressed(response.results)
                             MWI.sh.popVC()
@@ -180,7 +182,10 @@ class MWSearchFilterViewController: MWViewController {
     // MARK: - Functions
     
     @objc func sendRequest() {
-        self.discoverMovie(year: "2019", counries: self.countries)
+        self.discoverMovie(year: self.year,
+                           voteMin: String(self.rating.valueFrom),
+                           counries: self.countries,
+                           genres: self.genres)
     }
 }
 
@@ -189,6 +194,7 @@ class MWSearchFilterViewController: MWViewController {
 extension MWSearchFilterViewController: UIPickerDelegate {
     func didChooseYear(_ year: Int) {
         self.yearLabel.secondLabel.text = String(year)
+        self.year = String(year)
     }
 }
 
@@ -200,17 +206,19 @@ extension MWSearchFilterViewController: UITextFieldDelegate {
 }
 
 extension MWSearchFilterViewController: GenreCollectionViewDelegate {
-    func genreChosen(genre: GenreModel) {
-        self.genres.append(genre)
+    func genreChosen(genre: Int16) {
+        self.genres.append(String(genre))
+    }
+    
+    func genreDeselected(genre: Int16) {
+        self.genres.removeElement(object: String(genre))
     }
 }
 
 extension MWSearchFilterViewController: CountriesTableViewControllerDelegate {
     func countryDeselected(_ country: CountryModel) {
-        if countries.contains(country.code!) {
-            if let countryToDeleteIndex =  countries.firstIndex(of: country.code!) {
-                self.countries.remove(at: countryToDeleteIndex)
-            }
+        if let code = country.code {
+            self.countries.removeElement(object: code)
         }
     }
     

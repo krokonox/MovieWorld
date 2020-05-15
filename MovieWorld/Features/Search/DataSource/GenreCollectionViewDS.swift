@@ -9,7 +9,8 @@
 import UIKit
 
 protocol GenreCollectionViewDelegate: class {
-    func genreChosen(genre: GenreModel)
+    func genreChosen(genre: Int16)
+    func genreDeselected(genre: Int16)
 }
 
 class GenreCollectionViewDS: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -23,8 +24,8 @@ class GenreCollectionViewDS: NSObject, UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier, for: indexPath)
-         if let cell = cell as? MWCollectionViewGenreCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier, for: indexPath)
+        if let cell = cell as? MWCollectionViewGenreCell {
             if let genre = self.genres[indexPath.row].name {
                 cell.set(text: genre)
             } else {
@@ -40,15 +41,16 @@ class GenreCollectionViewDS: NSObject, UICollectionViewDelegate, UICollectionVie
         
         if let cell = cell as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor.init(named: "RedColor")?.withAlphaComponent(0.6)
-            self.delegate?.genreChosen(genre: genres[indexPath.row])
+            self.delegate?.genreChosen(genre: genres[indexPath.row].id)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-
+        
         if let cell = cell as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor(named: "RedColor")
+            self.delegate?.genreDeselected(genre: genres[indexPath.row].id)
         }
     }
     

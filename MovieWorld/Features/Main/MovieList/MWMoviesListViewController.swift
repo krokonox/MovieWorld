@@ -43,26 +43,15 @@ class MWMoviesListViewController: UIViewController {
     private lazy var header = UIView(frame: CGRect(x: 0, y: 0,
                                                    width: tableView.frame.width,
                                                    height: 80))
-    
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = self.sectionInset
-        layout.itemSize = self.itemSize
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10.0
-        layout.minimumInteritemSpacing = 10.0
-        
-        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.register(MWCollectionViewGenreCell.self,
-                    forCellWithReuseIdentifier: MWCollectionViewGenreCell.reuseIdentifier)
-        cv.dataSource = self
-        cv.delegate = self
-        cv.allowsMultipleSelection = true
-        cv.reloadData()
-        return cv
+
+    private lazy var collectionView: MWGenreCollectionView = {
+        let collection = MWGenreCollectionView()
+        collection.collectionView.delegate = self
+        collection.collectionView.dataSource = self
+
+        return collection
     }()
-    
+
     private lazy var refreshControl: UIRefreshControl = {
         let refreshCntrl = UIRefreshControl()
         refreshCntrl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -140,15 +129,13 @@ class MWMoviesListViewController: UIViewController {
         for movie in self.moviesToShow {
             let genres = movie.genres.map { $0 }
             if genres.contains(genre) {
-                if let movieToDeleteIndex =  moviesToShow.firstIndex(of: movie) {
-                    self.moviesToShow.remove(at: movieToDeleteIndex)
-                }
+                self.moviesToShow.removeElement(object: movie)
             }
         }
     }
 
     private func updateCellWith(row: [MWMovieCell]) {
-        self.collectionView.reloadData()
+        self.collectionView.collectionView.reloadData()
     }
     
     private func showError(_ error: String) {

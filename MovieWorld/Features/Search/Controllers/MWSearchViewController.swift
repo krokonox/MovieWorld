@@ -71,13 +71,13 @@ class MWSearchViewController: MWViewController, SearchDelegate {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
-           super.viewDidLoad()
-         
-           self.title = "Search".localized
-           self.setupUI()
-       }
-
-    // MARK: - Private Functions
+        super.viewDidLoad()
+        
+        self.title = "Search".localized
+        self.setupUI()
+    }
+    
+    // MARK: - Functions
     
     private func searchMovie(name: String) {
         MWNet.sh.request(urlPath: Endpoints.search.path,
@@ -86,7 +86,7 @@ class MWSearchViewController: MWViewController, SearchDelegate {
                             self?.movies = response.results
         }) { [weak self] (error) in
             DispatchQueue.main.async {
-                 self?.alert(message: error.description)
+                self?.alert(message: error.description)
             }
         }
     }
@@ -95,16 +95,18 @@ class MWSearchViewController: MWViewController, SearchDelegate {
         self.dataSource.movies = movies
     }
     
-    func buttonPressed(_ movies: [MWMovie]) {
-        self.movies = movies
-    }
-    
-    @objc func pushVC() {
+    @objc private func pushVC() {
         let vc = MWSearchFilterViewController()
         vc.delegate = self
         MWI.sh.push(vc: vc)
     }
+    
+    func buttonPressed(_ movies: [MWMovie]) {
+        self.movies = movies
+    }
 }
+
+// MARK: - Extensions
 
 extension MWSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

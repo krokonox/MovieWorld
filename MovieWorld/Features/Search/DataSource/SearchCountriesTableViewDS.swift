@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol UIImageViewDelegate: class {
-    func hideImage(_ bool: Bool)
-}
-
 protocol CountriesTableViewControllerDelegate: class {
     func countrySelected(_ country: CountryModel)
     func countryDeselected(_ country: CountryModel)
@@ -41,7 +37,7 @@ class SearchCountriesTableViewDS: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-         self.delegate?.countryDeselected(countries[indexPath.row])
+        self.delegate?.countryDeselected(countries[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

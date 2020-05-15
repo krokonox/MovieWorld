@@ -34,7 +34,6 @@ class MWCategoryViewController: MWViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(genres.count)
         self.makeConstraints()
         self.title = NSLocalizedString("Category",
                                        comment: "")

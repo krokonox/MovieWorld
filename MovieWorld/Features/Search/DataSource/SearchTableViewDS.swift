@@ -36,4 +36,3 @@ class SearchTableViewDS: NSObject, UITableViewDataSource, UITableViewDelegate {
         return 130
     }
 }
-

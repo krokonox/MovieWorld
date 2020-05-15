@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MWCountryTableViewCell: UITableViewCell, UIImageViewDelegate {
+class MWCountryTableViewCell: UITableViewCell {
     
     // MARK: - Gui Variables
     
@@ -39,7 +39,7 @@ class MWCountryTableViewCell: UITableViewCell, UIImageViewDelegate {
     private func setupViews() {
         self.contentView.addSubview(checkImage)
         self.checkImage.isHidden = true
-       
+        
         self.setupConstraints()
     }
     
@@ -48,11 +48,5 @@ class MWCountryTableViewCell: UITableViewCell, UIImageViewDelegate {
             make.width.height.equalTo(24)
             make.top.right.equalToSuperview()
         }
-    }
-    // MARK: - Functions
-    
-    func hideImage(_ bool: Bool) {
-        self.checkImage.isHidden = bool
-        print(bool)
     }
 }

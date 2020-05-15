@@ -17,7 +17,7 @@ class MWSearchCountriesViewController: MWViewController {
     
     // MARK: - Gui variables
     
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.dataSource = self.tableViewDataSource
         tv.delegate = self.tableViewDataSource
@@ -46,5 +46,4 @@ class MWSearchCountriesViewController: MWViewController {
         
         self.setup()
     }
-    // MARK: - Private Functions
 }

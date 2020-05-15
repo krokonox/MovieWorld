@@ -11,13 +11,13 @@ import UIKit
 final class MWGenreCollectionView: UIView {
     
     // MARK: - Variables
-
+    
     private var sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 5, right: 15)
     private var itemSize = CGSize(width: 105, height: 26)
     
     // MARK: - Gui Variables
     
-     lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = self.sectionInset
         layout.itemSize = self.itemSize

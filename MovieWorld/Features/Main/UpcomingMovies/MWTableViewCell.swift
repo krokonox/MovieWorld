@@ -120,10 +120,10 @@ class MWTableViewCell: UITableViewCell {
     }
     
     @objc func pushVC() {
-        self.pushVCButtonAction?()
-//        let vc = MWMoviesListViewController()
-//        vc.set(movies: self.movies, category: self.category)
-//        MWI.sh.push(vc: vc)
+        //self.pushVCButtonAction?()
+        let vc = MWMoviesListViewController(movies: self.movies)
+        vc.set(movies: self.movies, category: self.category)
+        MWI.sh.push(vc: vc)
     }
     
     @objc func reload() {
