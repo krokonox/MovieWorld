@@ -20,3 +20,5 @@
 "Failed to connect. Please, try again later." = "Не удалось подключиться, попробуйте позже.";
 "Failed to decode data, try again." = "Не удалось прочитать данные, попробуйте еще раз.";
 "Something went wrong, try again later." = "Что-то пошло не так, попробуйте позже.";
+
+"Cast" = "Состав";

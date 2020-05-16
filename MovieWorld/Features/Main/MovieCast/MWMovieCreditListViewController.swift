@@ -10,11 +10,13 @@ import UIKit
 
 class MWMovieCreditListViewController: UIViewController {
     
+    // MARK: - Variables
+    
     private let activityIndicator = UIActivityIndicatorView()
     private let dispatch = DispatchGroup()
     private let dataSource = MWMovieCreditDataSource()
     
-    private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)  // Not sure about the best variable order here
+    private var edgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5) 
     private var sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 5, right: 15)
     private var itemSize = CGSize(width: 105, height: 26)
     private var category: String = ""
@@ -52,7 +54,7 @@ class MWMovieCreditListViewController: UIViewController {
     }
     
     private func setupUI() {
-        self.title = "Cast"
+        self.title = "Cast".localized
         self.view.backgroundColor = .white
         self.view.addSubview(tableView)
         self.setConstraints()

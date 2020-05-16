@@ -20,3 +20,5 @@
 "Failed to connect. Please, try again later." = "Verbindung nicht möglich. Bitte versuchen Sie es später noch einmal.";
 "Failed to decode data, try again." = "Daten konnten nicht dekodiert werden. Versuchen Sie es erneut.";
 "Something went wrong, try again later." = "Es ist ein Fehler aufgetreten. Versuchen Sie es später erneut.";
+
+"Cast" = "Besetzung";

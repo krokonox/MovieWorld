@@ -17,8 +17,11 @@ protocol CreditViewLayout {
 
 final class MWMovieCreditCell: CreditViewLayout {
     
+    // MARK: - Variables
+    
     private let ImageSize = CGSize(width: 70, height: 70)
     private let edgeInsets = UIEdgeInsets(top: 10, left: 135, bottom: 10, right: 20)
+    
     var creditId: Int? {
         didSet {
             fetchCreditDetail()
@@ -29,6 +32,8 @@ final class MWMovieCreditCell: CreditViewLayout {
             set()
         }
     }
+    
+    // MARK: - Gui Variables
     
     private lazy var creditStackView: UIStackView = {
         let stackView = UIStackView()
@@ -79,6 +84,10 @@ final class MWMovieCreditCell: CreditViewLayout {
         line.backgroundColor = UIColor.init(named: "GreyColor")?.withAlphaComponent(0.05)
         return line
     }()
+    
+    // MARK: - Initialization
+    
+    init() {}
     
     // MARK: - Private functions
 
@@ -132,8 +141,6 @@ final class MWMovieCreditCell: CreditViewLayout {
         self.birthLabel.text = credit.birthday
     }
     
-    init() {}
-    
     func layout(on view: UIView) {
         self.creditImageView.translatesAutoresizingMaskIntoConstraints = false
         self.creditStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -143,35 +150,5 @@ final class MWMovieCreditCell: CreditViewLayout {
         view.addSubview(seperator)
         
         makeConstraints()
-    }
-}
-
-class CreditView<Layout: CreditViewLayout> : UIView {
-    
-    public let layout: Layout
-    
-    override init(frame: CGRect) {
-        self.layout = Layout()
-        super.init(frame: frame)
-        layout.layout(on: self)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class CreditTableViewCell<Layout: CreditViewLayout> : UITableViewCell {
-    
-    public let layout: Layout
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        self.layout = Layout()
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout.layout(on: contentView)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
