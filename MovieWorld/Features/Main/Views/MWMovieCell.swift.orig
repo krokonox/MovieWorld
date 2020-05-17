@@ -1,0 +1,107 @@
+//
+//  MWMovieCell.swift
+//  MovieWorld
+//
+//  Created by Admin on 25/02/2020.
+//  Copyright © 2020 Admin. All rights reserved.
+//
+
+import UIKit
+import SnapKit
+
+class MWMovieCell: UICollectionViewCell {
+    
+    // MARK: - Variables
+    
+    var item: MWGenericCollectionViewCellModel? {
+        didSet {
+            guard let item = item else { return }
+            self.configure(item: item)
+            self.setupView()
+        }
+    }
+    var imageSize: Int {
+        return self.item?.imageSize ?? 185
+    }
+    private let imageBaseUrl = "https://image.tmdb.org/t/p/w"
+    
+    // MARK: - Gui Variables 
+    
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 5
+        imageView.layer.masksToBounds = false
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let title = UILabel()
+        title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        title.textAlignment = .left
+        return title
+    }()
+    
+    private lazy var genreAndYear: UILabel = {
+        let genreAndYear = UILabel()
+        genreAndYear.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        genreAndYear.textAlignment = .left
+        return genreAndYear
+    }()
+    
+    // MARK: - Lifecycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        self.setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("fatal error ")
+    }
+    
+    // MARK: - Private functions
+
+    private func setupView() {
+        self.addSubview(imageView)
+        self.addSubview(titleLabel)
+        self.addSubview(genreAndYear)
+        self.setUpConstrants()
+    }
+    
+    private func setUpConstrants() {
+        self.imageView.snp.makeConstraints { (make) in
+            make.height.equalTo(imageSize)
+            make.left.right.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview()
+        }
+        
+        self.titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(imageView).offset(imageSize)
+            make.left.right.equalToSuperview().offset(15)
+        }
+        
+        self.genreAndYear.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.left.right.equalToSuperview().offset(15)
+        }
+    }
+    
+    // MARK: - Functions
+
+    func configure(item: MWGenericCollectionViewCellModel) {
+        if let posterPath = item.image,
+<<<<<<< HEAD
+            let imageURL = URL(string: Endpoints.getImage(size: item.imageSize, profilePath: posterPath).path) {
+=======
+            let imageURL = URL(string: "\(imageBaseUrl)\(item.imageSize)\(posterPath)") {
+>>>>>>> MovieDetailScreen
+            self.imageView.load(url: imageURL)
+        } else {
+            self.imageView.image = UIImage(named: "movieImage")
+        }
+        self.titleLabel.text = item.firstTitle
+        self.genreAndYear.text = item.secondTitle
+    }
+}

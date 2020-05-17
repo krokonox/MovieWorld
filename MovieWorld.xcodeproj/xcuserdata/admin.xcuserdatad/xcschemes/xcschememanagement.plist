@@ -7,7 +7,25 @@
 		<key>MovieWorld.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>5</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>84F9335123F835F00046F243</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84F9336723F835F00046F243</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84F9337223F835F10046F243</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
