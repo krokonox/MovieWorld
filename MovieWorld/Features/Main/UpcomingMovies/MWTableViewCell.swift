@@ -25,7 +25,6 @@ class MWTableViewCell: UITableViewCell {
     }
     
     var reloadButtonAction: (() -> Void)?
-    var pushVCButtonAction: (() -> Void)?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -120,7 +119,6 @@ class MWTableViewCell: UITableViewCell {
     }
     
     @objc func pushVC() {
-        //self.pushVCButtonAction?()
         let vc = MWMoviesListViewController(movies: self.movies)
         vc.set(movies: self.movies, category: self.category)
         MWI.sh.push(vc: vc)
@@ -132,6 +130,7 @@ class MWTableViewCell: UITableViewCell {
 }
 
 // MARK: - CollectionView Extension
+
 extension MWTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func updateCellWith(row: [MWMovieCell]) {

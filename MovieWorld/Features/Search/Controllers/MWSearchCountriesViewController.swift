@@ -39,6 +39,7 @@ class MWSearchCountriesViewController: MWViewController {
             make.edges.equalToSuperview()
         }
     }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {

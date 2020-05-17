@@ -23,10 +23,18 @@ class MWSearchFilterViewController: MWViewController {
     private let collectionDataSource = GenreCollectionViewDS()
     
     private var buttonSize = CGSize(width: 344, height: 44)
-    private var year: String = ""
-    private var voteMin: String = ""
     private var countries: [String] = []
     private var genres: [String] = []
+    private var year: String? {
+        didSet {
+            self.yearLabel.secondLabel.text = year ?? ""
+        }
+    }
+    private var voteMin: String? {
+        didSet {
+            self.rating.secondLabel.text = voteMin ?? ""
+        }
+    }
     
     // MARK: - Gui variables
     
@@ -38,6 +46,7 @@ class MWSearchFilterViewController: MWViewController {
         stack.spacing = 30
         return stack
     }()
+    
     private lazy var datePicker: UIPickerView = {
         let picker = UIPickerView()
         picker.dataSource = self.pickerDataSource
@@ -135,6 +144,7 @@ class MWSearchFilterViewController: MWViewController {
             make.left.right.bottom.equalToSuperview()
         }
     }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -146,6 +156,7 @@ class MWSearchFilterViewController: MWViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.countryLabel.secondLabel.text = countries.joined(separator: ",")
     }
+    
     // MARK: - Private Functions
     
     private func discoverMovie(year: String? = "", voteMin: String? = "", counries: [String], genres: [String]) {
@@ -193,7 +204,7 @@ class MWSearchFilterViewController: MWViewController {
 
 extension MWSearchFilterViewController: UIPickerDelegate {
     func didChooseYear(_ year: Int) {
-        self.yearLabel.secondLabel.text = String(year)
+       // self.yearLabel.secondLabel.text = String(year)
         self.year = String(year)
     }
 }
@@ -223,6 +234,8 @@ extension MWSearchFilterViewController: CountriesTableViewControllerDelegate {
     }
     
     func countrySelected(_ country: CountryModel) {
-        self.countries.append(country.code!)
+        if let code = country.code {
+            self.countries.append(code)
+        }
     }
 }

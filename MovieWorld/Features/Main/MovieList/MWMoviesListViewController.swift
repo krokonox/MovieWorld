@@ -228,7 +228,7 @@ extension MWMoviesListViewController: UICollectionViewDelegate, UICollectionView
         
         if let cell = cell as? MWCollectionViewGenreCell {
             cell.backgroundColor = UIColor(named: "RedColor")
-            self.hideMoviesByGenre(genre: cell.collectionViewCellTitle.text!)
+            self.hideMoviesByGenre(genre: cell.collectionViewCellTitle.text ?? "")
             self.tableView.reloadData()
         }
     }
