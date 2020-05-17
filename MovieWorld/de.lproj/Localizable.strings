@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  MovieWorld
+
+  Created by Admin on 13/03/2020.
+  Copyright © 2020 Admin. All rights reserved.
+*/
+
+"Top Rated" = "Bestbewertet";
+"Popular" = "Beliebt";
+"Upcoming" = "Kommende";
+"Latest" = "Neueste";
+
+"Main" = "die Homepage";
+"Category" = "Kategorien";
+"Search" = "Suchen";
+
+"You have entered the wrong URL, try another one." = "Sie haben die falsche URL eingegeben, versuchen Sie es mit einer anderen..";
+"Server Error. Please, try again later." = "Serverfehler. Bitte versuchen Sie es später noch einmal.";
+"Failed to connect. Please, try again later." = "Verbindung nicht möglich. Bitte versuchen Sie es später noch einmal.";
+"Failed to decode data, try again." = "Daten konnten nicht dekodiert werden. Versuchen Sie es erneut.";
+"Something went wrong, try again later." = "Es ist ein Fehler aufgetreten. Versuchen Sie es später erneut.";
+
+"Cast" = "Besetzung";

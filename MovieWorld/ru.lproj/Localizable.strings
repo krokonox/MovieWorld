@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  MovieWorld
+
+  Created by Admin on 13/03/2020.
+  Copyright © 2020 Admin. All rights reserved.
+*/
+
+"Top Rated" = "Наивысшая оценка";
+"Popular" = "Популярные";
+"Upcoming" = "Скоро в кино";
+"Latest" = "Недавно вышли";
+
+"Main" = "Старт";
+"Category" = "Категории";
+"Search" = "Поиск";
+
+"You have entered the wrong URL, try another one." = "Вы ввели неправильный адрес, попробуйте еще раз.";
+"Server Error. Please, try again later." = "Ошибка на сервере, попробуйте позже";
+"Failed to connect. Please, try again later." = "Не удалось подключиться, попробуйте позже.";
+"Failed to decode data, try again." = "Не удалось прочитать данные, попробуйте еще раз.";
+"Something went wrong, try again later." = "Что-то пошло не так, попробуйте позже.";
+
+"Cast" = "Состав";

@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:MovieWorld/Common/CoreData/GenreModel+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:MovieWorld/Common/CoreData/GenreModel+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:MovieWorld.xcodeproj">
    </FileRef>
    <FileRef
